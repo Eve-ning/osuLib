@@ -1,6 +1,6 @@
 #include <QCoreApplication>
 #include <QDebug>
-#include "boundedint.h"
+#include "dbug.h"
 
 bool debugLib();
 
@@ -8,16 +8,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    BoundedInt one, two;
-
-    one = 1;
-    two = 2;
-
-    BoundedInt three;
-
-    three = one + two;
-
-    qDebug() << three;
+    Dbug::full_debug();
 
     debugLib();
 
