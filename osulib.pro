@@ -16,8 +16,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
     hitobject.cpp \
-    timingpoint.cpp
+    timingpoint.cpp \
+    boundedint.cpp
 
 HEADERS += \
     hitobject.h \
-    timingpoint.h
+    timingpoint.h \
+    boundedint.h
