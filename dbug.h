@@ -22,8 +22,6 @@ private:
     static bool debug_boundedInt();
     static bool debug_boundedDouble();
 
-    static bool compareDebug(const int &expected,
-                             const int &given);
     static bool compareDebug(const double &expected,
                              const double &given);
 };

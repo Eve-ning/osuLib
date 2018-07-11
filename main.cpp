@@ -1,20 +1,17 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include "dbug.h"
-
-bool debugLib();
+#include "hitobject.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    Dbug::full_debug();
+    // Dbug::full_debug();
 
-    debugLib();
+    NormalNote normal_note;
+    normal_note.debugInfo();
 
     return a.exec();
 }
 
-bool debugLib(){
-    return true;
-}

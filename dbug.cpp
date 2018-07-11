@@ -16,7 +16,6 @@ bool Dbug::debug_boundedInt() {
     // H: 4, R: 4
     a += b * 4; compareDebug(4, a); // Check with another Bounded
 
-
     return true;
 }
 
@@ -27,22 +26,16 @@ bool Dbug::debug_boundedDouble() {
     // H: 11, R: 10
     a += 10; compareDebug(10, a); //  Max Bound
 
-    // H: 6, R: 6
+    // H: 6.5, R: 6.5
     a -= 5.5; compareDebug(5.5, a); // Value Check
 
-    // H: -4, R: 0
+    // H: -4.5, R: 0
     a -= 10; compareDebug(0, a); // Min Bound
 
-    // H: 4, R: 4
-    a += b * 4; compareDebug(4, a); // Check with another Bounded
+    // H: 3.5, R: 3.5
+    a += b * 4; compareDebug(3.5, a); // Check with another Bounded
 
     return true;
-}
-
-bool Dbug::compareDebug(const int &expected, const int &given)
-{
-    qDebug() << (expected == given) << " | Expected: " << expected << " | Given: " << given;
-    return expected == given;
 }
 
 bool Dbug::compareDebug(const double &expected, const double &given)

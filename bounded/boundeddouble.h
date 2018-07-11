@@ -5,15 +5,15 @@
 class BoundedDouble
 {
 public:
-    explicit BoundedDouble(const int &value = 0,
-                        const int &min = std::numeric_limits<int>::min(),
-                        const int &max = std::numeric_limits<int>::max()) :
-                        m_value(value), m_min(min), m_max(max){
+    explicit BoundedDouble(const double &value = 0,
+                           const double &min = std::numeric_limits<double>::min(),
+                           const double &max = std::numeric_limits<double>::max()) :
+        m_value(value), m_min(min), m_max(max){
         setValue(value);
     }
 
-    BoundedDouble operator =(const int &value){
-        // This clamps value, inclusive of boundaries.
+    BoundedDouble operator =(const double &value){
+
         setValue(value);
         return *this;
     }
@@ -27,10 +27,11 @@ public:
     }
 
     void setValue(const double &value){
-        m_value = value < m_min ? m_min : (value > m_max ? m_max : value);
+        m_value = value;
     }
 
     double value() const {
+        // This clamps value, inclusive of boundaries.
         return m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value);
     }
 

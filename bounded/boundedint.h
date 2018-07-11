@@ -13,7 +13,6 @@ public:
     }
 
     BoundedInt& operator =(const int &value){
-        // This clamps value, inclusive of boundaries.
         setValue(value);
         return *this;
     }
@@ -31,14 +30,15 @@ public:
     }
 
     int value() const {
-        return (m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value));
+        // This clamps value, inclusive of boundaries.
+        return m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value);
     }
 
     int hiddenValue() const {
         return m_value;
     }
     void forceClamp() {
-        m_value = (m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value));
+        m_value = m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value);
     }
 
     BoundedInt& operator +=(const int &value){
