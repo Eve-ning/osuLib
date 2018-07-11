@@ -4,10 +4,18 @@ bool Dbug::debug_boundedInt() {
     BoundedInt a(1, 0, 10);
     BoundedInt b(2, 0, 10);
 
-    a += 10; if (a != 10) { return false; } // Max Bound
-    a -= 5;  if (a != 5)  { return false; } // Value Check
-    a -= 10; if (a != 0)  { return false; } // Min Bound
-    a += b;  if (a != 2)  { return false; } // Check with another Bounded
+    // H: 11, R: 10
+    a += 10; compareDebug(10, a); //  Max Bound
+
+    // H: 6, R: 6
+    a -= 5; compareDebug(6, a); // Value Check
+
+    // H: -4, R: 0
+    a -= 10; compareDebug(0, a); // Min Bound
+
+    // H: 4, R: 4
+    a += b * 4; compareDebug(4, a); // Check with another Bounded
+
 
     return true;
 }
@@ -16,10 +24,29 @@ bool Dbug::debug_boundedDouble() {
     BoundedDouble a(1.0, 0.0, 10.0);
     BoundedDouble b(2.0, 0.0, 10.0);
 
-    a += 10.0; if (a != 10.0) { return false; } // Max Bound
-    a -= 5.0;  if (a != 5.0)  { return false; } // Value Check
-    a -= 10.0; if (a != 0)    { return false; } // Min Bound
-    a += b;    if (a != 2.0)  { return false; } // Check with another Bounded
+    // H: 11, R: 10
+    a += 10; compareDebug(10, a); //  Max Bound
+
+    // H: 6, R: 6
+    a -= 5.5; compareDebug(5.5, a); // Value Check
+
+    // H: -4, R: 0
+    a -= 10; compareDebug(0, a); // Min Bound
+
+    // H: 4, R: 4
+    a += b * 4; compareDebug(4, a); // Check with another Bounded
 
     return true;
+}
+
+bool Dbug::compareDebug(const int &expected, const int &given)
+{
+    qDebug() << (expected == given) << " | Expected: " << expected << " | Given: " << given;
+    return expected == given;
+}
+
+bool Dbug::compareDebug(const double &expected, const double &given)
+{
+    qDebug() << (expected == given) << " | Expected: " << expected << " | Given: " << given;
+    return expected == given;
 }

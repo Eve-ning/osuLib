@@ -2,13 +2,13 @@
 #define HITOBJECT_H
 
 #include "bounded/boundedint.h"
-#include "bounded/boundeddouble.h".h"
+#include "bounded/boundeddouble.h"
 
 class HitObject
 {
 public:
     HitObject() {
-        m_column = BoundedInt(1, 1, 18)
+        m_column = BoundedInt(1, 1, 18);
     }
 
     enum SampleSet {

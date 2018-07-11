@@ -2,7 +2,7 @@
 #define TIMINGPOINT_H
 
 #include "bounded/boundedint.h"
-#include "bounded/boundeddouble.h".h"
+#include "bounded/boundeddouble.h"
 
 class TimingPoint
 {

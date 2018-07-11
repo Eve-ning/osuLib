@@ -19,11 +19,11 @@ public:
     }
 
     operator int() const {
-        return m_value;
+        return value();
     }
 
     explicit operator double() const {
-        return double(m_value);
+        return double(value());
     }
 
     void setValue(const int &value){
@@ -31,14 +31,14 @@ public:
     }
 
     int value() const {
-        return m_value < m_min ? m_min : (value > m_max ? m_max : value);
+        return (m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value));
     }
 
     int hiddenValue() const {
         return m_value;
     }
-    void forceClamp() const {
-        m_value = m_value < m_min ? m_min : (value > m_max ? m_max : value);
+    void forceClamp() {
+        m_value = (m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value));
     }
 
     BoundedInt& operator +=(const int &value){
