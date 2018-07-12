@@ -94,7 +94,7 @@ bool Dbug::debug_timingPoint()
                                        SampleSet::NORMAL,
                                        2, 50, true);
 
-    TPStr = "100,-50.0,4,1,2,50,0,1";
+    TPStr = "100,-50,4,1,2,50,0,1";
     compareDebug(TPStr,SV.toString());
 
     // Check loading of Long Note String
@@ -104,11 +104,11 @@ bool Dbug::debug_timingPoint()
     compareDebug(TPStr, loadFromString->toString());
 
     // Check loading via args
-    BPM BPM_ = BPM(100, 2.0, 4,
+    BPM BPM_ = BPM(100, 150, 4,
                    SampleSet::NORMAL,
                    2, 50, true);
 
-    TPStr = "100,-50.0,4,1,2,50,1,1";
+    TPStr = "100,400,4,1,2,50,1,1";
     compareDebug(TPStr,BPM_.toString());
 
     return true;

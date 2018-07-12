@@ -6,7 +6,7 @@ class BoundedDouble
 {
 public:
     explicit BoundedDouble(const double &value = 0,
-                           const double &min = std::numeric_limits<double>::min(),
+                           const double &min = std::numeric_limits<double>::lowest(),
                            const double &max = std::numeric_limits<double>::max()) :
         m_value(value), m_min(min), m_max(max){
         setValue(value);
@@ -32,14 +32,14 @@ public:
 
     double value() const {
         // This clamps value, inclusive of boundaries.
-        return m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value);
+        return (m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value));
     }
 
     double hiddenValue() const {
         return m_value;
     }
     void forceClamp(){
-        m_value = m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value);
+        m_value = (m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value));
     }
 
     BoundedDouble& operator +=(const double &value){

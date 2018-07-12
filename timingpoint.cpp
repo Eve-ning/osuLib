@@ -135,7 +135,7 @@ QString SliderVelocity::toString() const
     QString output = "";
 
     output += QString::number(m_offset)
-            + "," + QString::number(m_code) //error here
+            + "," + QString::number(m_code)
             + "," + QString::number(m_metronome)
             + "," + QString::number(static_cast<int>(m_sample))
             + "," + QString::number(m_sampleSetIndex)

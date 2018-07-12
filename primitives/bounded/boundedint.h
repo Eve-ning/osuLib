@@ -31,14 +31,14 @@ public:
 
     int value() const {
         // This clamps value, inclusive of boundaries.
-        return m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value);
+        return (m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value));
     }
 
     int hiddenValue() const {
         return m_value;
     }
     void forceClamp() {
-        m_value = m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value);
+        m_value = (m_value < m_min ? m_min : (m_value > m_max ? m_max : m_value));
     }
 
     BoundedInt& operator +=(const int &value){
