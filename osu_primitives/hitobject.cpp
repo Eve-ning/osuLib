@@ -1,4 +1,4 @@
-#include "hitobject.h"
+#include "osu_primitives/hitobject.h"
 
 int HitObject::column() const
 {

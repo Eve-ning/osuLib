@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include "dbug.h"
-#include "hitobject.h"
+#include "osu_primitives/hitobject.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +13,10 @@ int main(int argc, char *argv[])
     normal_note.debugInfo();
 
     normal_note.setColumn(3);
+
+    SliderVelocity sv = SliderVelocity(100, 2.0);
+
+    sv.debugInfo();
 
     qDebug() << normal_note.toString(4);
 

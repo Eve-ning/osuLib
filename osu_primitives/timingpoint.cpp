@@ -1,4 +1,4 @@
-#include "timingpoint.h"
+#include "osu_primitives/timingpoint.h"
 
 double TimingPoint::offset() const
 {
@@ -135,7 +135,7 @@ QString SliderVelocity::toString() const
     QString output = "";
 
     output += QString::number(m_offset)
-            + "," + QString::number(m_code)
+            + "," + QString::number(m_code, 'g', 15)
             + "," + QString::number(m_metronome)
             + "," + QString::number(static_cast<int>(m_sample))
             + "," + QString::number(m_sampleSetIndex)
@@ -166,7 +166,7 @@ QString BPM::toString() const
     QString output = "";
 
     output += QString::number(m_offset)
-            + "," + QString::number(m_code)
+            + "," + QString::number(m_code, 'g', 15)
             + "," + QString::number(m_metronome)
             + "," + QString::number(static_cast<int>(m_sample))
             + "," + QString::number(m_sampleSetIndex)

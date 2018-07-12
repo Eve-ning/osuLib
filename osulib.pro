@@ -15,16 +15,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += main.cpp \
-    hitobject.cpp \
-    timingpoint.cpp \
     primitives/bounded/boundedint.cpp \
     primitives/bounded/boundeddouble.cpp \
-    dbug.cpp
+    dbug.cpp \
+    osu_primitives/hitobject.cpp \
+    osu_primitives/timingpoint.cpp \
+    osu_primitives/hitobjectlist.cpp \
+    osu_primitives/timingpointlist.cpp
 
 HEADERS += \
-    hitobject.h \
-    timingpoint.h \
     primitives/bounded/boundedint.h \
     primitives/bounded/boundeddouble.h \
     dbug.h \
-    primitives/sampleset.h
+    primitives/sampleset.h \
+    osu_primitives/hitobject.h \
+    osu_primitives/timingpoint.h \
+    osu_primitives/hitobjectlist.h \
+    osu_primitives/timingpointlist.h

@@ -3,8 +3,8 @@
 
 #include "primitives/bounded/boundedint.h"
 #include "primitives/bounded/boundeddouble.h"
-#include "hitobject.h"
-#include "timingpoint.h"
+#include "osu_primitives/hitobject.h"
+#include "osu_primitives/timingpoint.h"
 #include <QDebug>
 
 class Dbug
@@ -21,7 +21,7 @@ public:
         qDebug() << "--";
         if (debug_hitObject()) { qDebug() << "HitObject Pass."; }
         qDebug() << "--";
-        if (debug_timingPoint()) { qDebug() << "HitObject Pass."; }
+        if (debug_timingPoint()) { qDebug() << "TimingPoint Pass."; }
         qDebug() << "--";
     }
 
