@@ -17,13 +17,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     hitobject.cpp \
     timingpoint.cpp \
-    bounded/boundedint.cpp \
-    bounded/boundeddouble.cpp \
+    primitives/bounded/boundedint.cpp \
+    primitives/bounded/boundeddouble.cpp \
     dbug.cpp
 
 HEADERS += \
     hitobject.h \
     timingpoint.h \
-    bounded/boundedint.h \
-    bounded/boundeddouble.h \
-    dbug.h
+    primitives/bounded/boundedint.h \
+    primitives/bounded/boundeddouble.h \
+    dbug.h \
+    primitives/sampleset.h

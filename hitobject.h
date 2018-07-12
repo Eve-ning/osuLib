@@ -1,8 +1,9 @@
 #ifndef HITOBJECT_H
 #define HITOBJECT_H
 
-#include "bounded/boundedint.h"
-#include "bounded/boundeddouble.h"
+#include "primitives/bounded/boundedint.h"
+#include "primitives/bounded/boundeddouble.h"
+#include "primitives/sampleset.h"
 
 class HitObject
 {
@@ -10,13 +11,6 @@ public:
 
     virtual ~HitObject() {
     }
-
-    enum SampleSet {
-        AUTO,
-        NORMAL,
-        SOFT,
-        DRUM
-    };
 
     int column() const;
     void setColumn(const int &column);
@@ -43,7 +37,7 @@ public:
     void setHitsoundFile(const QString &hitsoundFile);
 
     virtual void debugInfo() const = 0;
-    virtual QString toString() const = 0;
+    virtual QString toString(const int &keys) const = 0;
 
     static std::shared_ptr<HitObject> fromString(QString string,
                                                  const int &keys);
@@ -82,14 +76,14 @@ public:
         m_column = column;
         m_offset = offset;
     }
-    NormalNote(const BoundedInt    &column,
-               const BoundedDouble &offset,
-               const SampleSet     &hitsound,
-               const SampleSet     &sample,
-               const SampleSet     &addition,
-               const BoundedInt    &custom,
-               const BoundedInt    &volume,
-               const QString       &hitsoundFile) {
+    NormalNote(const int &column,
+               const double &offset,
+               const SampleSet &hitsound,
+               const SampleSet &sample,
+               const SampleSet &addition,
+               const int &custom,
+               const int &volume,
+               const QString &hitsoundFile) {
         m_column       = column;
         m_offset       = offset;
         m_hitsound     = hitsound;
@@ -100,7 +94,7 @@ public:
         m_hitsoundFile = hitsoundFile;
     }
     void debugInfo() const override;
-    QString toString() const override;
+    QString toString(const int &keys) const override;
 };
 
 struct LongNote final : public HitObject
@@ -119,15 +113,15 @@ public:
         m_offset    = offset;
         m_offsetEnd = offsetEnd;
     }
-    LongNote(const BoundedInt    &column,
-             const BoundedDouble &offset,
-             const SampleSet     &hitsound,
-             const SampleSet     &sample,
-             const SampleSet     &addition,
-             const BoundedInt    &custom,
-             const BoundedInt    &volume,
-             const QString       &hitsoundFile,
-             const BoundedDouble &offsetEnd) {
+    LongNote(const int &column,
+             const double &offset,
+             const SampleSet &hitsound,
+             const SampleSet &sample,
+             const SampleSet &addition,
+             const int &custom,
+             const int &volume,
+             const QString &hitsoundFile,
+             const double &offsetEnd) {
         m_column       = column;
         m_offset       = offset;
         m_hitsound     = hitsound;
@@ -139,7 +133,7 @@ public:
         m_offsetEnd    = offsetEnd;
     }
     void debugInfo() const override;
-    QString toString() const override;
+    QString toString(const int &keys) const override;
 
     double offsetEnd() const;
     void setOffsetEnd(const double &offsetEnd);
