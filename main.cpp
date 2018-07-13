@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include "dbug.h"
-#include "osu_primitives/hitobject.h"
+#include "osu_primitives/hitobjectlist.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,16 +9,11 @@ int main(int argc, char *argv[])
 
     Dbug::full_debug();
 
-    NormalNote normal_note = NormalNote(4, 100);
-    normal_note.debugInfo();
+    HitObjectList test = HitObjectList();
 
-    normal_note.setColumn(3);
+    test.append(std::make_shared<NormalNote>(NormalNote()));
 
-    SliderVelocity sv = SliderVelocity(100, 2.0);
-
-    sv.debugInfo();
-
-    qDebug() << normal_note.toString(4);
+    test[0]->debugInfo();
 
     return a.exec();
 }
