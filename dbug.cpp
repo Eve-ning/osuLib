@@ -114,6 +114,36 @@ bool Dbug::debug_timingPoint()
     return true;
 }
 
+bool Dbug::debug_hitObjectList()
+{
+    int keys = 4;
+
+    // Check loading from QStringList
+    QStringList HOListStr({"64,192,11528,1,0,0:0:0:0:",
+                           "448,192,11528,1,0,0:0:0:0:",
+                           "192,192,11700,1,0,0:0:0:0:",
+                           "448,192,11873,1,0,0:0:0:0:",
+                           "192,192,12045,1,0,0:0:0:0:"});
+
+    HitObjectList loadFromString = HitObjectList(HOListStr, keys);
+    compareDebug(HOListStr, loadFromString.toStringList(keys));
+
+
+}
+
+bool Dbug::debug_timingPointList()
+{
+    QStringList TPListStr({"494,344.827586206897,4,1,1,5,1,0",
+                           "55666,-100,4,1,1,5,0,1",
+                           "77045,-100,4,1,1,5,0,0",
+                           "121873,-100,4,1,1,5,0,1",
+                           "143942,-100,4,1,1,5,0,0",
+                           "188080,-100,4,1,1,5,0,1"});
+
+    TimingPointList loadFromString = TimingPointList(TPListStr);
+    compareDebug(TPListStr, loadFromString.toStringList());
+}
+
 bool Dbug::compareDebug(const double &expected, const double &given)
 {
     qDebug() << (expected == given) << "\t| Expected: " << expected << " \t| Given: " << given;
@@ -125,5 +155,15 @@ bool Dbug::compareDebug(const QString &expected, const QString &given)
     qDebug() << (expected == given) << endl <<
                 "Expected:" << expected << endl <<
                 "Given:\t " << given << endl;
+    return expected == given;
+}
+
+bool Dbug::compareDebug(const QStringList &expected, const QStringList &given)
+{
+    for (int i = 0; i < expected.length(); ++i) {
+        qDebug() << (expected[i] == given[i]) << endl <<
+                    "Expected:" << expected[i] << endl <<
+                    "Given:\t " << given[i] << endl;
+    }
     return expected == given;
 }

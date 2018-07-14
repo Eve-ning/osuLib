@@ -7,8 +7,8 @@
 
 #include "primitives/bounded/boundedint.h"
 #include "primitives/bounded/boundeddouble.h"
-#include "osu_primitives/hitobject.h"
-#include "osu_primitives/timingpoint.h"
+#include "osu_primitives/hitobjectlist.h"
+#include "osu_primitives/timingpointlist.h"
 #include <QDebug>
 
 class Dbug
@@ -35,34 +35,15 @@ public:
         if (debug_timingPoint()) { DEBUGPASS("TimingPoint"); }
         DEBUGSEP;
 
+        DEBUGTITLE("HitObjectList");
+        if (debug_hitObjectList()) { DEBUGPASS("HitObjectList"); }
+        DEBUGSEP;
+
+        DEBUGTITLE("TimingPointList");
+        if (debug_timingPointList()) { DEBUGPASS("TimingPointList"); }
+        DEBUGSEP;
+
         DEBUGPASS("Debug");
-
-//        debug idea
-//        QStringList input({"64,192,11528,1,0,0:0:0:0:",
-//                          "448,192,11528,1,0,0:0:0:0:",
-//                          "192,192,11700,1,0,0:0:0:0:",
-//                          "448,192,11873,1,0,0:0:0:0:",
-//                          "192,192,12045,1,0,0:0:0:0:"});
-
-//        HitObjectList test = HitObjectList(input, 4);
-//        QStringList output = test.toStringList(4);
-//        qDebug() << output;
-
-//        test[4]->debugInfo();
-
-
-//        QStringList input_2({"494,344.827586206897,4,1,1,5,1,0",
-//                             "55666,-100,4,1,1,5,0,1",
-//                             "77045,-100,4,1,1,5,0,0",
-//                             "121873,-100,4,1,1,5,0,1",
-//                             "143942,-100,4,1,1,5,0,0",
-//                             "188080,-100,4,1,1,5,0,1"});
-
-//        TimingPointList test_2 = TimingPointList(input_2);
-//        QStringList output_2 = test_2.toStringList();
-//        qDebug() << output_2;
-
-//        test_2[0]->debugInfo();
     }
 
 private:
@@ -71,11 +52,15 @@ private:
     static bool debug_boundedDouble();
     static bool debug_hitObject();
     static bool debug_timingPoint();
+    static bool debug_hitObjectList();
+    static bool debug_timingPointList();
 
     static bool compareDebug(const double &expected,
                              const double &given);
     static bool compareDebug(const QString &expected,
                              const QString &given);
+    static bool compareDebug(const QStringList &expected,
+                             const QStringList &given);
 };
 
 #endif // DBUG_H
