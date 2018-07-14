@@ -60,7 +60,7 @@ void TimingPoint::setVolume(const int &volume)
     m_volume = volume;
 }
 
-bool TimingPoint::getIsKiai() const
+bool TimingPoint::isKiai() const
 {
     return m_isKiai;
 }

@@ -30,7 +30,7 @@ public:
     int volume() const;
     void setVolume(const int &volume);
 
-    bool getIsKiai() const;
+    bool isKiai() const;
     void setIsKiai(const bool &isKiai);
 
     virtual void debugInfo() const = 0;

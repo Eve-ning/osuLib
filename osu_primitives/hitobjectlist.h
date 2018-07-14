@@ -5,6 +5,11 @@
 class HitObjectList
 {
 public:
+    HitObjectList(){}
+
+    // Load from String
+    HitObjectList(QStringList stringList, const int &keys);
+
     ~HitObjectList(){}
 
     std::shared_ptr<HitObject> operator [](int i) const { return at(i); }
@@ -39,15 +44,16 @@ public:
     QList<int> volumeList() const;
     QList<QString> hitsoundFileList() const;
 
-    void setColumnList       (const QList<int>       &value) { if (!sameSize(value)) { return; } for (int i; i < size(); ++i) {m_value[i]->setColumn      (value[i]);}}
-    void setOffsetList       (const QList<double>    &value) { if (!sameSize(value)) { return; } for (int i; i < size(); ++i) {m_value[i]->setOffset      (value[i]);}}
-    void setHitsoundList     (const QList<SampleSet> &value) { if (!sameSize(value)) { return; } for (int i; i < size(); ++i) {m_value[i]->setHitsound    (value[i]);}}
-    void setSampleList       (const QList<SampleSet> &value) { if (!sameSize(value)) { return; } for (int i; i < size(); ++i) {m_value[i]->setSample      (value[i]);}}
-    void setAdditionList     (const QList<SampleSet> &value) { if (!sameSize(value)) { return; } for (int i; i < size(); ++i) {m_value[i]->setAddition    (value[i]);}}
-    void setCustomList       (const QList<int>       &value) { if (!sameSize(value)) { return; } for (int i; i < size(); ++i) {m_value[i]->setCustom      (value[i]);}}
-    void setVolumeList       (const QList<int>       &value) { if (!sameSize(value)) { return; } for (int i; i < size(); ++i) {m_value[i]->setVolume      (value[i]);}}
-    void setHitsoundFileList (const QList<QString>   &value) { if (!sameSize(value)) { return; } for (int i; i < size(); ++i) {m_value[i]->setHitsoundFile(value[i]);}}
+    void setColumnList       (const QList<int>       &value);
+    void setOffsetList       (const QList<double>    &value);
+    void setHitsoundList     (const QList<SampleSet> &value);
+    void setSampleList       (const QList<SampleSet> &value);
+    void setAdditionList     (const QList<SampleSet> &value);
+    void setCustomList       (const QList<int>       &value);
+    void setVolumeList       (const QList<int>       &value);
+    void setHitsoundFileList (const QList<QString>   &value);
 
+    QStringList toStringList(const int &keys);
 
 protected:
 
