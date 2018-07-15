@@ -34,6 +34,16 @@ public:
         return *std::max_element(offset_list.begin(), offset_list.end()) -
                *std::min_element(offset_list.begin(), offset_list.end());
     }
+    double distance() const;
+    double average() const;
+    double length(int index) const;
+
+    auto begin() const{
+        return m_value.begin();
+    }
+    auto end() const{
+        return m_value.end();
+    }
 
     QList<double> offsetList() const;
     QList<double> codeList() const;
@@ -52,6 +62,11 @@ public:
     void setIsKiaiList         (const QList<bool>      &value);
 
     QStringList toStringList();
+
+    TimingPointList toSliderVelocity();
+    TimingPointList toBPM();
+
+
 
 protected:
 

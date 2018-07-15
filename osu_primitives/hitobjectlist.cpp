@@ -32,6 +32,7 @@ void HitObjectList::sort(bool isAscending)
     });
 }
 
+
 QList<int> HitObjectList::columnList() const {
     QList<int> output = {};
     for (std::shared_ptr<HitObject> HO : m_value) { output.append(HO->column()); }

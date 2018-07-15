@@ -3,20 +3,24 @@
 
 #define DEBUGTITLE(title) qDebug() << "[ -- " << title << " TEST -- ]"
 #define DEBUGPASS(title) qDebug() << "[ -- " << title << " TEST PASS -- ]"
+#define DEBUGLABEL(title) qDebug() << "[ ## " << title << " ## ]"
 #define DEBUGSEP qDebug() << endl << "- - - - - - - -" << endl
 
 #include "primitives/bounded/boundedint.h"
 #include "primitives/bounded/boundeddouble.h"
 #include "osu_primitives/hitobjectlist.h"
 #include "osu_primitives/timingpointlist.h"
+#include "osu_algorithms/osualgorithm.h"
 #include <QDebug>
+
+
 
 class Dbug
 {
 public:
     Dbug();
 
-    static void full_debug() {
+    static void primitive_debug() {
         DEBUGTITLE("Debug");
 
         DEBUGTITLE("BoundedInt");
@@ -45,6 +49,19 @@ public:
 
         DEBUGPASS("Debug");
     }
+    static void algorithm_debug() {
+        DEBUGTITLE("Debug");
+
+        DEBUGTITLE("countInRange");
+        if (debug_countInRange()) { DEBUGPASS("countInRange"); }
+        DEBUGSEP;
+
+        DEBUGTITLE("adjustToAverage");
+        if (debug_adjustToAverage()) { DEBUGPASS("adjustToAverage"); }
+        DEBUGSEP;
+
+        DEBUGPASS("Debug");
+    }
 
 private:
 
@@ -55,12 +72,21 @@ private:
     static bool debug_hitObjectList();
     static bool debug_timingPointList();
 
+    static bool debug_countInRange();
+    static bool debug_adjustToAverage();
+
     static bool compareDebug(const double &expected,
                              const double &given);
     static bool compareDebug(const QString &expected,
                              const QString &given);
     static bool compareDebug(const QStringList &expected,
                              const QStringList &given);
+
+    static TimingPointList getEgTP();
+    static HitObjectList getEgHO();
+
+private:
+
 };
 
 #endif // DBUG_H

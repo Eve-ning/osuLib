@@ -1,6 +1,6 @@
 QT -= gui
 
-CONFIG += c++11 console
+CONFIG += c++14 console
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     osu_primitives/hitobject.cpp \
     osu_primitives/timingpoint.cpp \
     osu_primitives/hitobjectlist.cpp \
-    osu_primitives/timingpointlist.cpp
+    osu_primitives/timingpointlist.cpp \
+    osu_algorithms/osualgorithm.cpp
 
 HEADERS += \
     primitives/bounded/boundedint.h \
@@ -31,4 +32,9 @@ HEADERS += \
     osu_primitives/hitobject.h \
     osu_primitives/timingpoint.h \
     osu_primitives/hitobjectlist.h \
-    osu_primitives/timingpointlist.h
+    osu_primitives/timingpointlist.h \
+    osu_algorithms/osualgorithm.h
+
+DISTFILES += \
+    eg_hitObjectList.txt \
+    eg_timingPointList.txt

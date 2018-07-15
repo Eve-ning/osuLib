@@ -32,6 +32,22 @@ void TimingPointList::sort(bool isAscending)
     });
 }
 
+double TimingPointList::distance() const
+{
+    double output = 0;
+    for (int i = 0; i < size() - 1; ++i){
+        output += (length(i) * m_value[i]->value());
+    }
+
+    return output;
+}
+
+double TimingPointList::average() const
+{
+    double dist = distance();
+    return dist / length();
+}
+
 QList<double> TimingPointList::offsetList() const {
     QList<double> output = {};
     for (std::shared_ptr<TimingPoint> TP : m_value) { output.append(TP->offset()); }
@@ -140,4 +156,43 @@ QStringList TimingPointList::toStringList()
     }
 
     return output;
+}
+
+TimingPointList TimingPointList::toSliderVelocity()
+{
+    TimingPointList output = {};
+
+    for (const auto &TP: m_value) {
+        auto isCasted = std::dynamic_pointer_cast<SliderVelocity>(TP);
+        if (isCasted) {
+            output.append(TP);
+        }
+    }
+    return output;
+}
+
+TimingPointList TimingPointList::toBPM()
+{
+    TimingPointList output = {};
+
+    for (const auto &TP: m_value) {
+        auto isCasted = std::dynamic_pointer_cast<BPM>(TP);
+        if (isCasted) {
+            output.append(TP);
+        }
+    }
+    return output;
+}
+
+
+
+double TimingPointList::length(int index) const
+{
+    if (index >= size() - 1 || index < 0) {
+        qDebug() << "length() function fail.";
+        return 0;
+    }
+
+    auto offsetL = offsetList();
+    return offsetL[index + 1] - offsetL[index];
 }

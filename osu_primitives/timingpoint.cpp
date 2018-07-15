@@ -10,16 +10,6 @@ void TimingPoint::setOffset(const double &offset)
     m_offset = offset;
 }
 
-double TimingPoint::code() const
-{
-    return m_code;
-}
-
-void TimingPoint::setCode(const double &code)
-{
-    m_code = code;
-}
-
 int TimingPoint::metronome() const
 {
     return m_metronome;
@@ -97,7 +87,7 @@ std::shared_ptr<TimingPoint> TimingPoint::fromString(QString string)
     if (isBPM) {
         return std::make_shared<BPM>(
                 BPM(offset,
-                    60000 / code,
+                    BPM::toValue(code),
                     metronome,
                     static_cast<SampleSet>(sample),
                     sampleSetIndex,
@@ -106,7 +96,7 @@ std::shared_ptr<TimingPoint> TimingPoint::fromString(QString string)
     } else {
         return std::make_shared<SliderVelocity>(
                 SliderVelocity(offset,
-                               -100 / code,
+                               SliderVelocity::toValue(code),
                                metronome,
                                static_cast<SampleSet>(sample),
                                sampleSetIndex,
@@ -119,8 +109,7 @@ void SliderVelocity::debugInfo() const
 {
     qDebug() << "[ Slider Velocity Info ]" << endl
              << "m_offset        : " << m_offset         << endl
-             << "m_code          : " << m_code           << endl
-             << "m_value(temp)   : " << toValue(m_code)  << endl
+             << "m_value         : " << m_value           << endl
              << "m_metronome     : " << m_metronome      << endl
              << "m_sample        : " << static_cast<int>(m_sample) << endl
              << "m_sampleSetIndex: " << m_sampleSetIndex << endl
@@ -135,7 +124,7 @@ QString SliderVelocity::toString() const
     QString output = "";
 
     output += QString::number(m_offset)
-            + "," + QString::number(m_code, 'g', 15)
+            + "," + QString::number(code(), 'g', 15)
             + "," + QString::number(m_metronome)
             + "," + QString::number(static_cast<int>(m_sample))
             + "," + QString::number(m_sampleSetIndex)
@@ -150,8 +139,7 @@ void BPM::debugInfo() const
 {
     qDebug() << "[ BPM Info ]" << endl
              << "m_offset        : " << m_offset         << endl
-             << "m_code          : " << m_code           << endl
-             << "m_value(temp)   : " << toValue(m_code)  << endl
+             << "m_value(temp)   : " << m_value          << endl
              << "m_metronome     : " << m_metronome      << endl
              << "m_sample        : " << static_cast<int>(m_sample) << endl
              << "m_sampleSetIndex: " << m_sampleSetIndex << endl
@@ -166,7 +154,7 @@ QString BPM::toString() const
     QString output = "";
 
     output += QString::number(m_offset)
-            + "," + QString::number(m_code, 'g', 15)
+            + "," + QString::number(code(), 'g', 15)
             + "," + QString::number(m_metronome)
             + "," + QString::number(static_cast<int>(m_sample))
             + "," + QString::number(m_sampleSetIndex)

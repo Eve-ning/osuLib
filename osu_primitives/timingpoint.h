@@ -15,8 +15,10 @@ public:
     double offset() const;
     void setOffset(const double &offset);
 
-    double code() const;
-    void setCode(const double &code);
+    virtual double value() const = 0;
+    virtual void setValue(const double &value) = 0;
+    virtual double code() const = 0;
+    virtual void setCode(const double &code) = 0;
 
     int metronome() const;
     void setMetronome(const int &metronome);
@@ -38,13 +40,12 @@ public:
 
     static std::shared_ptr<TimingPoint> fromString(QString string);
 
-    virtual double toValue(const double &code) const = 0;
-    virtual double toCode(const double &value) const = 0;
+
 
 protected:
 
     BoundedDouble m_offset         = BoundedDouble(0, 0);
-    BoundedDouble m_code           = BoundedDouble(-100);
+
     BoundedInt    m_metronome      = BoundedInt(4, 1, 99);
     SampleSet     m_sample         = SampleSet::AUTO;
     BoundedInt    m_sampleSetIndex = BoundedInt(0, 0, 99);
@@ -61,8 +62,8 @@ public:
     }
     SliderVelocity(const double &offset,
                    const double &value) {
+        m_value = value;
         m_offset = offset;
-        m_code = toCode(value);
     }
     SliderVelocity(const double &offset,
                    const double &value,
@@ -71,8 +72,8 @@ public:
                    const int &sampleSetIndex,
                    const int &volume,
                    const bool &isKiai) {
+        m_value          = value;
         m_offset         = offset;
-        m_code           = toCode(value);
         m_metronome      = metronome;
         m_sample         = sample;
         m_sampleSetIndex = sampleSetIndex;
@@ -82,12 +83,36 @@ public:
 
     void debugInfo() const override;
     QString toString() const override;
-    double toValue(const double &code) const override {
+
+    static double maxBound() { return m_max; }
+    static double minBound() { return m_min; }
+
+    double value() const override {
+        return m_value;
+    }
+    void setValue(const double &value) override {
+        m_value = value;
+    }
+    double code() const override {
+        return -100 / m_value;
+    }
+    void setCode(const double& value) override {
+        m_value = -100 / value;
+    }
+
+    static double toValue(const double &code) {
         return -100 / code;
     }
-    double toCode(const double &value) const override {
+    static double toCode(const double &value) {
         return -100 / value;
     }
+
+private:
+
+    BoundedDouble m_value = BoundedDouble(1.0, 0.1, 10.0);
+
+    static constexpr double m_max = 10.0;
+    static constexpr double m_min = 0.1;
 };
 
 class BPM final : public TimingPoint
@@ -100,7 +125,7 @@ public:
     BPM(const double &offset,
         const double &value) {
         m_offset = offset;
-        m_code = toCode(value);
+        m_value = value;
     }
     BPM(const double &offset,
         const double &value,
@@ -109,23 +134,47 @@ public:
         const int &sampleSetIndex,
         const int &volume,
         const bool &isKiai) {
+        m_value          = value;
         m_offset         = offset;
-        m_code           = toCode(value);
         m_metronome      = metronome;
         m_sample         = sample;
         m_sampleSetIndex = sampleSetIndex;
         m_volume         = volume;
-        m_isKiai         = isKiai;
+        m_isKiai         = isKiai;{}
     }
 
     void debugInfo() const override;
     QString toString() const override;
-    double toValue(const double &code) const override {
+
+    static double maxBound() { return m_max; }
+    static double minBound() { return m_min; }
+
+    double value() const override {
+        return m_value;
+    }
+    void setValue(const double &value) override {
+        m_value = value;
+    }
+    double code() const override {
+        return -100 / m_value;
+    }
+    void setCode(const double& value) override {
+        m_value = -100 / value;
+    }
+
+    static double toValue(const double &code) {
         return 60000 / code;
     }
-    double toCode(const double &value) const override {
+    static double toCode(const double &value) {
         return 60000 / value;
     }
+
+private:
+
+    BoundedDouble m_value = BoundedDouble(100, 0.00000001, std::numeric_limits<double>::max());
+
+    static constexpr double m_max = std::numeric_limits<double>::max();
+    static constexpr double m_min = 0.00000001;
 };
 
 #endif // TIMINGPOINT_H

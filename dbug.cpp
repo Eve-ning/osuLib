@@ -42,13 +42,13 @@ bool Dbug::debug_hitObject()
 {
     int keys = 4;
 
-    // Check loading of Normal Note String
+    DEBUGLABEL("Check loading of Normal Note String");
     QString HOStr = "448,192,18609,1,4,0:0:0:0:";
 
     std::shared_ptr<HitObject> loadFromString = HitObject::fromString(HOStr, keys);
     compareDebug(HOStr, loadFromString->toString(keys));
 
-    // Check loading via args
+    DEBUGLABEL("Check loading via args");
     NormalNote NN = NormalNote(4, 100,
                                SampleSet::AUTO,
                                SampleSet::DRUM,
@@ -60,13 +60,13 @@ bool Dbug::debug_hitObject()
     HOStr = "448,192,100,1,0,3:1:1:70:hitsound.wav";
     compareDebug(HOStr,NN.toString(keys));
 
-    // Check loading of Long Note String
+    DEBUGLABEL("Check loading of Long Note String");
     HOStr = "64,192,20725,128,0,21734:0:0:0:0:";
 
     loadFromString = HitObject::fromString(HOStr, keys);
     compareDebug(HOStr, loadFromString->toString(keys));
 
-    // Check loading via args
+    DEBUGLABEL("Check loading via args");
     LongNote LN = LongNote(4, 100,
                            SampleSet::AUTO,
                            SampleSet::DRUM,
@@ -83,13 +83,13 @@ bool Dbug::debug_hitObject()
 
 bool Dbug::debug_timingPoint()
 {
-    // Check loading of Normal Note String
-    QString TPStr = "18610,769.230769230769,4,1,0,41,1,0";
+    DEBUGLABEL("Check loading of SV");
+    QString TPStr = "18610,-100,4,1,0,41,0,0";
 
     std::shared_ptr<TimingPoint> loadFromString = TimingPoint::fromString(TPStr);
     compareDebug(TPStr, loadFromString->toString());
 
-    // Check loading via args
+    DEBUGLABEL("Check loading via args");
     SliderVelocity SV = SliderVelocity(100, 2.0, 4,
                                        SampleSet::NORMAL,
                                        2, 50, true);
@@ -97,13 +97,13 @@ bool Dbug::debug_timingPoint()
     TPStr = "100,-50,4,1,2,50,0,1";
     compareDebug(TPStr,SV.toString());
 
-    // Check loading of Long Note String
+    DEBUGLABEL("Check loading of BPM");
     TPStr = "18610,769.230769230769,4,1,0,41,1,0";
 
     loadFromString = TimingPoint::fromString(TPStr);
     compareDebug(TPStr, loadFromString->toString());
 
-    // Check loading via args
+    DEBUGLABEL("Check loading via args");
     BPM BPM_ = BPM(100, 150, 4,
                    SampleSet::NORMAL,
                    2, 50, true);
@@ -118,7 +118,7 @@ bool Dbug::debug_hitObjectList()
 {
     int keys = 4;
 
-    // Check loading from QStringList
+    DEBUGLABEL("Check loading from QStringList");
     QStringList HOListStr({"64,192,11528,1,0,0:0:0:0:",
                            "448,192,11528,1,0,0:0:0:0:",
                            "192,192,11700,1,0,0:0:0:0:",
@@ -129,10 +129,12 @@ bool Dbug::debug_hitObjectList()
     compareDebug(HOListStr, loadFromString.toStringList(keys));
 
 
+    return true;
 }
 
 bool Dbug::debug_timingPointList()
 {
+    DEBUGLABEL("Check loading from QStringList");
     QStringList TPListStr({"494,344.827586206897,4,1,1,5,1,0",
                            "55666,-100,4,1,1,5,0,1",
                            "77045,-100,4,1,1,5,0,0",
@@ -142,6 +144,56 @@ bool Dbug::debug_timingPointList()
 
     TimingPointList loadFromString = TimingPointList(TPListStr);
     compareDebug(TPListStr, loadFromString.toStringList());
+
+    DEBUGLABEL("Check toBPM");
+    TimingPointList BPM_Split = loadFromString.toBPM();
+    compareDebug("494,344.827586206897,4,1,1,5,1,0", BPM_Split.toStringList()[0]);
+
+    DEBUGLABEL("Check toSV");
+    TimingPointList SV_Split = loadFromString.toSliderVelocity();
+    compareDebug("55666,-100,4,1,1,5,0,1", SV_Split.toStringList()[0]);
+
+    return true;
+}
+
+bool Dbug::debug_countInRange()
+{
+    DEBUGLABEL("HitObjectList Count");
+    HitObjectList eg_HOList = getEgHO();
+
+    compareDebug(2301, OsuAlgorithm::countInRange(eg_HOList, 108639, 290322));
+
+    DEBUGLABEL("TimingPointList Count");
+    TimingPointList eg_TPList = getEgTP();
+
+    compareDebug(1001, OsuAlgorithm::countInRange(eg_TPList, 74047, 327771));
+
+    return true;
+}
+
+bool Dbug::debug_adjustToAverage()
+{
+    TimingPointList test = TimingPointList({"23945,-200,4,1,1,45,0,0",
+                                            "23996,-166.666666666667,4,1,1,45,0,0",
+                                            "24050,-142.857142857143,4,1,1,45,0,0",
+                                            "24098,-125,4,1,1,45,0,0",
+                                            "24149,-111.111111111111,4,1,1,45,0,0",
+                                            "24200,-100,4,1,1,45,0,0",
+                                            "24251,-90.9090909090909,4,1,1,45,0,0"});
+
+    qDebug() << "BEFORE: " << test.average();
+    OsuAlgorithm::adjustToAverage(test, 1, 0.6);
+    compareDebug(0.6, test.average());
+
+    qDebug() << "BEFORE: " << test.average();
+    OsuAlgorithm::adjustToAverage(test, 4, 1.0);
+    compareDebug(1.0, test.average());
+
+    qDebug() << "BEFORE: " << test.average();
+    OsuAlgorithm::adjustToAverage(test, 5, 1.8);
+    compareDebug(1.8, test.average());
+
+    return true;
 }
 
 bool Dbug::compareDebug(const double &expected, const double &given)
@@ -166,4 +218,39 @@ bool Dbug::compareDebug(const QStringList &expected, const QStringList &given)
                     "Given:\t " << given[i] << endl;
     }
     return expected == given;
+}
+
+TimingPointList Dbug::getEgTP() {
+    QString proPath = "D:\\qtdoc\\osulib";
+    TimingPointList eg_TPList;
+    QString eg_TPFileName = "eg_timingPointList.txt";
+
+    QFile eg_TPFile(proPath + "\\" + eg_TPFileName);
+    if (!eg_TPFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        qDebug() << "Fail to open : " << (proPath + "\\" + eg_TPFileName);
+    }
+
+    while (!eg_TPFile.atEnd()){
+        eg_TPList.append(TimingPoint::fromString(eg_TPFile.readLine()));
+    };
+
+    eg_TPFile.close();
+    return eg_TPList;
+}
+HitObjectList Dbug::getEgHO() {
+    QString proPath = "D:\\qtdoc\\osulib";
+    HitObjectList eg_HOList;
+    QString eg_HOFileName = "eg_hitObjectList.txt";
+
+    QFile eg_HOFile(proPath + "\\" + eg_HOFileName);
+    if (!eg_HOFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        qDebug() << "Fail to open : " << (proPath + "\\" + eg_HOFileName);
+    }
+
+    while (!eg_HOFile.atEnd()){
+        eg_HOList.append(HitObject::fromString(eg_HOFile.readLine(), 7));
+    };
+
+    eg_HOFile.close();
+    return eg_HOList;
 }

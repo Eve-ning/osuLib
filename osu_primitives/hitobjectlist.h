@@ -27,14 +27,6 @@ public:
     QList<std::shared_ptr<HitObject>> value() const;
     void setValue(const QList<std::shared_ptr<HitObject>> &value);
 
-    int size() const { return m_value.size(); }
-    void sort(bool isAscending = true);
-    double length() const {
-        auto offset_list = offsetList();
-        return *std::max_element(offset_list.begin(), offset_list.end()) -
-               *std::min_element(offset_list.begin(), offset_list.end());
-    }
-
     QList<int> columnList() const;
     QList<double> offsetList() const;
     QList<SampleSet> hitsoundList() const;
@@ -54,6 +46,21 @@ public:
     void setHitsoundFileList (const QList<QString>   &value);
 
     QStringList toStringList(const int &keys);
+
+    int size() const { return m_value.size(); }
+    void sort(bool isAscending = true);
+    double length() const {
+        auto offset_list = offsetList();
+        return *std::max_element(offset_list.begin(), offset_list.end()) -
+               *std::min_element(offset_list.begin(), offset_list.end());
+    }
+
+    auto begin() const {
+        return m_value.begin();
+    }
+    auto end() const {
+        return m_value.end();
+    }
 
 protected:
 
