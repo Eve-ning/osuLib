@@ -78,3 +78,57 @@ void OsuAlgorithm::adjustToAverage(TimingPointList &value, const int &index, con
     // Adjust to that value
     value[index]->setValue(indexNewValue);
 }
+
+void OsuAlgorithm::scale(TimingPointList &value, const double &scaleFactor, const double &scaleReference)
+{
+    auto v_offsetList = value.offsetList();
+    std::for_each(v_offsetList.begin(), v_offsetList.end(),
+                  [&](double &offset) {
+        offset -= scaleReference; // Zero the value according to reference
+        offset *= scaleFactor; // Scale it
+        offset += scaleReference;
+    });
+}
+
+void OsuAlgorithm::scale(HitObjectList &value, const double &scaleFactor, const double &scaleReference)
+{
+    auto v_offsetList = value.offsetList();
+    std::for_each(v_offsetList.begin(), v_offsetList.end(),
+                  [&](double &offset) {
+        offset -= scaleReference; // Zero the value according to reference
+        offset *= scaleFactor; // Scale it
+        offset += scaleReference;
+    });
+}
+
+void OsuAlgorithm::scale(TimingPointList &value, const double &scaleFactor, const OsuAlgorithm::SCALE_OPTIONS &scaleOption)
+{
+    auto v_offsetList = value.offsetList();
+    switch (scaleOption) {
+    case SCALE_OPTIONS::MIN_OFFSET:
+        scale(value, scaleFactor, *std::min_element(v_offsetList.begin(), v_offsetList.end()));
+        return;
+    case SCALE_OPTIONS::MAX_OFFSET:
+        scale(value, scaleFactor, *std::max_element(v_offsetList.begin(), v_offsetList.end()));
+        return;
+    default:
+        qDebug() << "Unexpected Error.";
+        break;
+    }
+}
+
+void OsuAlgorithm::scale(HitObjectList &value, const double &scaleFactor, const OsuAlgorithm::SCALE_OPTIONS &scaleOption)
+{
+    auto v_offsetList = value.offsetList();
+    switch (scaleOption) {
+    case SCALE_OPTIONS::MIN_OFFSET:
+        scale(value, scaleFactor, *std::min_element(v_offsetList.begin(), v_offsetList.end()));
+        return;
+    case SCALE_OPTIONS::MAX_OFFSET:
+        scale(value, scaleFactor, *std::max_element(v_offsetList.begin(), v_offsetList.end()));
+        return;
+    default:
+        qDebug() << "Unexpected Error.";
+        break;
+    }
+}

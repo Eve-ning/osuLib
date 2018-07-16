@@ -156,10 +156,10 @@ public:
         m_value = value;
     }
     double code() const override {
-        return -100 / m_value;
+        return 60000 / m_value;
     }
     void setCode(const double& value) override {
-        m_value = -100 / value;
+        m_value = 60000 / value;
     }
 
     static double toValue(const double &code) {
