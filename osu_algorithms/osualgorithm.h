@@ -43,12 +43,16 @@ void scale(HitObjectList &value,
            const double &scaleFactor,
            const SCALE_OPTIONS &scaleOption);
 
-void move(TimingPointList &value,
-          const double &moveFactor,
-          const SCALE_OPTIONS &scaleOption);
-void move(HitObjectList &value,
-          const double &moveFactor,
-          const SCALE_OPTIONS &scaleOption);
+// Moves List by an ms value
+void moveBy(TimingPointList &value, const double &moveFactor);
+void moveBy(HitObjectList &value,
+            const double &moveFactor);
+
+// Moves List by an ms value
+void moveTo(TimingPointList &value,
+            const double &moveFactor);
+void moveTo(HitObjectList &value,
+            const double &moveFactor);
 
 }
 

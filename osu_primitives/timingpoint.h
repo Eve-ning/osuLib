@@ -40,12 +40,10 @@ public:
 
     static std::shared_ptr<TimingPoint> fromString(QString string);
 
-
-
 protected:
 
     BoundedDouble m_offset         = BoundedDouble(0, 0);
-
+//    BoundedDouble m_value; //Uninitialized
     BoundedInt    m_metronome      = BoundedInt(4, 1, 99);
     SampleSet     m_sample         = SampleSet::AUTO;
     BoundedInt    m_sampleSetIndex = BoundedInt(0, 0, 99);
@@ -72,6 +70,7 @@ public:
                    const int &sampleSetIndex,
                    const int &volume,
                    const bool &isKiai) {
+        m_value = BoundedDouble(1.0, 0.1, 10.0);
         m_value          = value;
         m_offset         = offset;
         m_metronome      = metronome;
@@ -109,8 +108,6 @@ public:
 
 private:
 
-    BoundedDouble m_value = BoundedDouble(1.0, 0.1, 10.0);
-
     static constexpr double m_max = 10.0;
     static constexpr double m_min = 0.1;
 };
@@ -118,7 +115,7 @@ private:
 class BPM final : public TimingPoint
 {
 public:
-    BPM() {}
+    BPM(){}
     BPM(const double &offset) {
         m_offset = offset;
     }

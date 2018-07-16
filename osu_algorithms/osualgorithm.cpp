@@ -132,3 +132,15 @@ void OsuAlgorithm::scale(HitObjectList &value, const double &scaleFactor, const 
         break;
     }
 }
+
+void OsuAlgorithm::moveBy(TimingPointList &value, const double &moveFactor){
+    auto v_offsetList = value.offsetList();
+    std::for_each(v_offsetList.begin(), v_offsetList.end(),
+                  [&](double &offset) { offset += moveFactor; });
+}
+
+void OsuAlgorithm::moveBy(HitObjectList &value, const double &moveFactor){
+    auto v_offsetList = value.offsetList();
+    std::for_each(v_offsetList.begin(), v_offsetList.end(),
+                  [&](double &offset) { offset += moveFactor; });
+}
