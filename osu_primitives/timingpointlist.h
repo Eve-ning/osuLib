@@ -66,8 +66,6 @@ public:
     TimingPointList toSliderVelocity();
     TimingPointList toBPM();
 
-
-
 protected:
 
     template <typename T>

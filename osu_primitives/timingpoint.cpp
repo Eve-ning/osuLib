@@ -1,15 +1,5 @@
 #include "osu_primitives/timingpoint.h"
 
-double TimingPoint::offset() const
-{
-    return m_offset;
-}
-
-void TimingPoint::setOffset(const double &offset)
-{
-    m_offset = offset;
-}
-
 int TimingPoint::metronome() const
 {
     return m_metronome;
@@ -105,6 +95,8 @@ std::shared_ptr<TimingPoint> TimingPoint::fromString(QString string)
     }
 }
 
+
+
 void SliderVelocity::debugInfo() const
 {
     qDebug() << "[ Slider Velocity Info ]" << endl
@@ -164,3 +156,4 @@ QString BPM::toString() const
 
     return output;
 }
+

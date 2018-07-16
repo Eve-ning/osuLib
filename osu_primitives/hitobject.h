@@ -1,11 +1,9 @@
 #ifndef HITOBJECT_H
 #define HITOBJECT_H
 
-#include "primitives/bounded/boundedint.h"
-#include "primitives/bounded/boundeddouble.h"
-#include "primitives/sampleset.h"
+#include "osuobject.h"
 
-class HitObject
+class HitObject : public OsuObject
 {
 public:
 
@@ -14,9 +12,6 @@ public:
 
     int column() const;
     void setColumn(const int &column);
-
-    double offset() const;
-    void setOffset(const double &offset);
 
     SampleSet hitsound() const;
     void setHitsound(const SampleSet &hitsound);
@@ -54,7 +49,6 @@ public:
 protected:
 
     BoundedInt    m_column       = BoundedInt(1, 1, 18);
-    BoundedDouble m_offset       = BoundedDouble(0, 0);
     SampleSet     m_hitsound     = SampleSet::AUTO;
     SampleSet     m_sample       = SampleSet::AUTO;
     SampleSet     m_addition     = SampleSet::AUTO;

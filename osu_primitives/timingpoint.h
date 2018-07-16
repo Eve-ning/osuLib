@@ -1,24 +1,20 @@
 #ifndef TIMINGPOINT_H
 #define TIMINGPOINT_H
 
-#include "primitives/bounded/boundedint.h"
-#include "primitives/bounded/boundeddouble.h"
-#include "primitives/sampleset.h"
+#include "osuobject.h"
 
-class TimingPoint
+class TimingPoint : public OsuObject
 {
 public:
 
     virtual ~TimingPoint(){
     }
 
-    double offset() const;
-    void setOffset(const double &offset);
+    virtual double code() const = 0;
+    virtual void setCode(const double &code) = 0;
 
     virtual double value() const = 0;
     virtual void setValue(const double &value) = 0;
-    virtual double code() const = 0;
-    virtual void setCode(const double &code) = 0;
 
     int metronome() const;
     void setMetronome(const int &metronome);
@@ -40,10 +36,11 @@ public:
 
     static std::shared_ptr<TimingPoint> fromString(QString string);
 
+
+
 protected:
 
-    BoundedDouble m_offset         = BoundedDouble(0, 0);
-//    BoundedDouble m_value; //Uninitialized
+    BoundedDouble m_value;
     BoundedInt    m_metronome      = BoundedInt(4, 1, 99);
     SampleSet     m_sample         = SampleSet::AUTO;
     BoundedInt    m_sampleSetIndex = BoundedInt(0, 0, 99);
@@ -54,12 +51,14 @@ protected:
 class SliderVelocity final : public TimingPoint
 {
 public:
-    SliderVelocity() {}
-    SliderVelocity(const double &offset) {
+    SliderVelocity() {
+        m_value = BoundedDouble(1.0, 0.1, 10.0);
+    }
+    SliderVelocity(const double &offset) : SliderVelocity() {
         m_offset = offset;
     }
     SliderVelocity(const double &offset,
-                   const double &value) {
+                   const double &value) : SliderVelocity() {
         m_value = value;
         m_offset = offset;
     }
@@ -69,8 +68,7 @@ public:
                    const SampleSet &sample,
                    const int &sampleSetIndex,
                    const int &volume,
-                   const bool &isKiai) {
-        m_value = BoundedDouble(1.0, 0.1, 10.0);
+                   const bool &isKiai) : SliderVelocity() {
         m_value          = value;
         m_offset         = offset;
         m_metronome      = metronome;
@@ -115,12 +113,14 @@ private:
 class BPM final : public TimingPoint
 {
 public:
-    BPM(){}
-    BPM(const double &offset) {
+    BPM() {
+        m_value = BoundedDouble(100, 0.00000001, std::numeric_limits<double>::max());
+    }
+    BPM(const double &offset) : BPM() {
         m_offset = offset;
     }
     BPM(const double &offset,
-        const double &value) {
+        const double &value) : BPM() {
         m_offset = offset;
         m_value = value;
     }
@@ -130,7 +130,7 @@ public:
         const SampleSet &sample,
         const int &sampleSetIndex,
         const int &volume,
-        const bool &isKiai) {
+        const bool &isKiai) : BPM() {
         m_value          = value;
         m_offset         = offset;
         m_metronome      = metronome;

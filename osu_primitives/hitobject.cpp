@@ -10,16 +10,6 @@ void HitObject::setColumn(const int &column)
     m_column = column;
 }
 
-double HitObject::offset() const
-{
-    return m_offset;
-}
-
-void HitObject::setOffset(const double &offset)
-{
-    m_offset = offset;
-}
-
 SampleSet HitObject::hitsound() const
 {
     return m_hitsound;
