@@ -54,6 +54,13 @@ QList<double> TimingPointList::offsetList() const {
     return output;
 }
 
+QList<double> TimingPointList::valueList() const
+{
+    QList<double> output = {};
+    for (std::shared_ptr<TimingPoint> TP : m_value) { output.append(TP->value()); }
+    return output;
+}
+
 QList<double> TimingPointList::codeList() const {
     QList<double> output = {};
     for (std::shared_ptr<TimingPoint> TP : m_value) { output.append(TP->code()); }

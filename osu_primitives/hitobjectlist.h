@@ -1,8 +1,9 @@
 #ifndef HITOBJECTLIST_H
 #define HITOBJECTLIST_H
 #include "hitobject.h"
+#include "osuobjectlist.h"
 
-class HitObjectList
+class HitObjectList : public OsuObjectList
 {
 public:
     HitObjectList(){}
@@ -55,12 +56,8 @@ public:
                *std::min_element(offset_list.begin(), offset_list.end());
     }
 
-    auto begin() const {
-        return m_value.begin();
-    }
-    auto end() const {
-        return m_value.end();
-    }
+    QList<std::shared_ptr<HitObject>>::const_iterator begin() const { return m_value.begin(); }
+    QList<std::shared_ptr<HitObject>>::const_iterator end() const { return m_value.end(); }
 
 protected:
 

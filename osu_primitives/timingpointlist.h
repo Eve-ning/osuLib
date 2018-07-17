@@ -1,8 +1,9 @@
 #ifndef TIMINGPOINTLIST_H
 #define TIMINGPOINTLIST_H
 #include "timingpoint.h"
+#include "osuobjectlist.h"
 
-class TimingPointList
+class TimingPointList : public OsuObjectList
 {
 public:
     TimingPointList(){}
@@ -38,14 +39,8 @@ public:
     double average() const;
     double length(int index) const;
 
-    auto begin() const{
-        return m_value.begin();
-    }
-    auto end() const{
-        return m_value.end();
-    }
-
     QList<double> offsetList() const;
+    QList<double> valueList() const;
     QList<double> codeList() const;
     QList<int> metronomeList() const;
     QList<SampleSet> sampleList() const;
@@ -65,6 +60,9 @@ public:
 
     TimingPointList toSliderVelocity();
     TimingPointList toBPM();
+
+    QList<std::shared_ptr<TimingPoint>>::const_iterator begin() const { return m_value.begin(); }
+    QList<std::shared_ptr<TimingPoint>>::const_iterator end() const { return m_value.end(); }
 
 protected:
 

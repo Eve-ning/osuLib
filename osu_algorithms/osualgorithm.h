@@ -13,7 +13,7 @@ int countInRange(const HitObjectList &value,
                  const double &upperBound,
                  const bool &inclusive = true);
 // Count the number of TimingPoints in the offset range
-int countInRange(const TimingPointList &value,
+int countInRange(const std::shared_ptr<OsuObjectList> &value,
                  const double &lowerBound,
                  const double &upperBound,
                  const bool &inclusive = true);
@@ -27,26 +27,18 @@ enum class SCALE_OPTIONS {
     MIN_OFFSET,
     MAX_OFFSET
 };
-// Scales TimingPointList
-void scale(TimingPointList &value,
-           const double &scaleFactor,
-           const double &scaleReference);
-void scale(TimingPointList &value,
-           const double &scaleFactor,
-           const SCALE_OPTIONS &scaleOption);
 
-// Scales HitObjectList
-void scale(HitObjectList &value,
+// Scales ObjectList
+void scale(std::shared_ptr<OsuObjectList> &value,
            const double &scaleFactor,
            const double &scaleReference);
-void scale(HitObjectList &value,
+void scale(std::shared_ptr<OsuObjectList> &value,
            const double &scaleFactor,
            const SCALE_OPTIONS &scaleOption);
 
 // Moves List by an ms value
-void moveBy(TimingPointList &value, const double &moveFactor);
-void moveBy(HitObjectList &value,
-            const double &moveFactor);
+void moveBy(std::shared_ptr<OsuObjectList> &value, const
+            double &moveFactor);
 
 // Moves List by an ms value
 void moveTo(TimingPointList &value,
