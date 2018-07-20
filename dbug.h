@@ -6,14 +6,8 @@
 #define DEBUGLABEL(title) qDebug() << "[ ## " << title << " ## ]"
 #define DEBUGSEP qDebug() << endl << "- - - - - - - -" << endl
 
-#include "primitives/bounded/boundedint.h"
-#include "primitives/bounded/boundeddouble.h"
-#include "osu_primitives/hitobjectlist.h"
-#include "osu_primitives/timingpointlist.h"
 #include "osu_algorithms/osualgorithm.h"
 #include <QDebug>
-
-
 
 class Dbug
 {

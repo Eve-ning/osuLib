@@ -3,7 +3,7 @@
 #include "hitobject.h"
 #include "osuobjectlist.h"
 
-class HitObjectList : public OsuObjectList
+class HitObjectList : public OsuObjectList<HitObject>
 {
 public:
     HitObjectList(){}
@@ -22,13 +22,7 @@ public:
             return m_value.at(0);
         }
     }
-    void setAt(int i, HitObject const &value) const {
-        if (i < size() && i >= 0) {
-            m_value.at(i) = value;
-        } else {
-            qDebug() << "Index on HitObjectList out of range.";
-        }
-    }
+
     void operator +=(std::shared_ptr<HitObject> HO) { append(HO);}
     HitObjectList operator +(std::shared_ptr<HitObject> HO) { append(HO); return *this;}
 
@@ -69,9 +63,6 @@ public:
                *std::min_element(offset_list.begin(), offset_list.end());
     }
 
-    QList<std::shared_ptr<HitObject>>::const_iterator begin() const { return m_value.begin(); }
-    QList<std::shared_ptr<HitObject>>::const_iterator end() const { return m_value.end(); }
-
 protected:
 
     template <typename T>
@@ -79,8 +70,6 @@ protected:
         return this->size() == compare.size();
     }
 
-private:
-    QList<std::shared_ptr<HitObject>> m_value = {};
 };
 
 #endif // HITOBJECTLIST_H

@@ -159,14 +159,20 @@ bool Dbug::debug_timingPointList()
 bool Dbug::debug_countInRange()
 {
     DEBUGLABEL("HitObjectList Count");
-    HitObjectList eg_HOList = getEgHO();
+    std::shared_ptr<HitObjectList> eg_HOList = std::make_shared<HitObjectList>(getEgHO());
 
-    compareDebug(2301, OsuAlgorithm::countInRange(eg_HOList, 108639, 290322));
+    compareDebug(2301, OsuAlgorithm::countInRange<HitObject>(eg_HOList, 108639, 290322, true));
+
+    /*int countInRange(const std::shared_ptr<OsuObjectList<T>> &value,
+                 const double &lowerBound,
+                 const double &upperBound,
+                 const bool &inclusive = true);
+                 */
 
     DEBUGLABEL("TimingPointList Count");
     TimingPointList eg_TPList = getEgTP();
 
-    compareDebug(1001, OsuAlgorithm::countInRange(eg_TPList, 74047, 327771));
+    compareDebug(1001, OsuAlgorithm::countInRange<TimingPoint>(std::make_shared<TimingPointList>(eg_TPList), 74047, 327771));
 
     return true;
 }

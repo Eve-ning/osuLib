@@ -3,7 +3,7 @@
 #include "timingpoint.h"
 #include "osuobjectlist.h"
 
-class TimingPointList : public OsuObjectList
+class TimingPointList : public OsuObjectList<TimingPoint>
 {
 public:
     TimingPointList(){}
@@ -20,13 +20,6 @@ public:
         } else {
             qDebug() << "Index on TimingPointList out of range.";
             return m_value.at(0);
-        }
-    }
-    void setAt(int i, TimingPoint const &value) const {
-        if (i < size() && i >= 0) {
-            m_value.at(i) = value;
-        } else {
-            qDebug() << "Index on TimingPointList out of range.";
         }
     }
 
@@ -75,9 +68,6 @@ public:
     TimingPointList toSliderVelocity();
     TimingPointList toBPM();
 
-    QList<std::shared_ptr<TimingPoint>>::const_iterator begin() const { return m_value.begin(); }
-    QList<std::shared_ptr<TimingPoint>>::const_iterator end() const { return m_value.end(); }
-
 protected:
 
     template <typename T>
@@ -85,9 +75,6 @@ protected:
         return this->size() == compare.size();
     }
 
-private:
-    QList<std::shared_ptr<TimingPoint>> m_value = {};
-    // We do not use the offset and value in m_value, we use the m_baseValue
 };
 
 #endif // TIMINGPOINTLIST_H
