@@ -14,7 +14,21 @@ public:
     ~TimingPointList(){}
 
     std::shared_ptr<TimingPoint> operator [](int i) const { return at(i); }
-    std::shared_ptr<TimingPoint> at(int i) const { return m_value.at(i); }
+    std::shared_ptr<TimingPoint> at(int i) const {
+        if (i < size() && i >= 0) {
+            return m_value.at(i);
+        } else {
+            qDebug() << "Index on TimingPointList out of range.";
+            return m_value.at(0);
+        }
+    }
+    void setAt(int i, TimingPoint const &value) const {
+        if (i < size() && i >= 0) {
+            m_value.at(i) = value;
+        } else {
+            qDebug() << "Index on TimingPointList out of range.";
+        }
+    }
 
     void operator +=(std::shared_ptr<TimingPoint> TP) { append(TP);}
     TimingPointList operator +(std::shared_ptr<TimingPoint> TP) { append(TP); return *this;}
@@ -73,6 +87,7 @@ protected:
 
 private:
     QList<std::shared_ptr<TimingPoint>> m_value = {};
+    // We do not use the offset and value in m_value, we use the m_baseValue
 };
 
 #endif // TIMINGPOINTLIST_H

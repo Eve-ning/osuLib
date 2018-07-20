@@ -1,5 +1,6 @@
 #ifndef OSUOBJECTLIST_H
 #define OSUOBJECTLIST_H
+#include "osuobject.h"
 
 class OsuObjectList {
 public:
@@ -14,6 +15,10 @@ public:
     // virtual iterator impl
 
     // will need any_iter
+
+protected:
+
+    QList<std::shared_ptr<OsuObject>> m_baseValue = {};
 
 };
 #endif // OSUOBJECTLIST_H

@@ -14,8 +14,21 @@ public:
     ~HitObjectList(){}
 
     std::shared_ptr<HitObject> operator [](int i) const { return at(i); }
-    std::shared_ptr<HitObject> at(int i) const { return m_value.at(i); }
-
+    std::shared_ptr<HitObject> at(int i) const {
+        if (i < size() && i >= 0) {
+            return m_value.at(i);
+        } else {
+            qDebug() << "Index on HitObjectList out of range.";
+            return m_value.at(0);
+        }
+    }
+    void setAt(int i, HitObject const &value) const {
+        if (i < size() && i >= 0) {
+            m_value.at(i) = value;
+        } else {
+            qDebug() << "Index on HitObjectList out of range.";
+        }
+    }
     void operator +=(std::shared_ptr<HitObject> HO) { append(HO);}
     HitObjectList operator +(std::shared_ptr<HitObject> HO) { append(HO); return *this;}
 
