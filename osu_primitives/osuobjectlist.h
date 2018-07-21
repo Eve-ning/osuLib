@@ -9,9 +9,13 @@ public:
     virtual ~OsuObjectList(){}
 
     virtual QList<double> offsetList() const = 0;
+    virtual void setOffsetList (const QList<double> &value) = 0;
 
     virtual typename std::shared_ptr<ObjType> operator [](int i) const = 0;
     virtual typename std::shared_ptr<ObjType> at(int i) const = 0;
+
+    virtual double min() const = 0;
+    virtual double max() const = 0;
 
     virtual int size() const = 0;
     virtual void sort(bool isAscending = true) = 0;

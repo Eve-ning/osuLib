@@ -85,7 +85,7 @@ void HitObjectList::setColumnList(const QList<int> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setColumn(value[i]);
     }
 }
@@ -93,7 +93,7 @@ void HitObjectList::setOffsetList(const QList<double> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setOffset(value[i]);
     }
 }
@@ -101,7 +101,7 @@ void HitObjectList::setHitsoundList(const QList<SampleSet> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setHitsound(value[i]);
     }
 }
@@ -109,7 +109,7 @@ void HitObjectList::setSampleList(const QList<SampleSet> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setSample(value[i]);
     }
 }
@@ -117,7 +117,7 @@ void HitObjectList::setAdditionList(const QList<SampleSet> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setAddition(value[i]);
     }
 }
@@ -125,7 +125,7 @@ void HitObjectList::setCustomList(const QList<int> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setCustom(value[i]);
     }
 }
@@ -133,7 +133,7 @@ void HitObjectList::setVolumeList(const QList<int> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setVolume(value[i]);
     }
 }
@@ -141,7 +141,7 @@ void HitObjectList::setHitsoundFileList(const QList<QString> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setHitsoundFile(value[i]);
     }
 }

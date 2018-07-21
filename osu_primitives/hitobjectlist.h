@@ -3,12 +3,12 @@
 #include "hitobject.h"
 #include "osuobjectlist.h"
 
-class HitObjectList : public OsuObjectList<HitObject>
+class HitObjectList final : public OsuObjectList<HitObject>
 {
 public:
     HitObjectList(){}
 
-    // Load from String
+    // Load from StringList
     HitObjectList(QStringList stringList, const int &keys);
 
     ~HitObjectList(){}
@@ -58,9 +58,16 @@ public:
     int size() const { return m_value.size(); }
     void sort(bool isAscending = true);
     double length() const {
+        return max() - min();
+    }
+
+    double min() const override {
         auto offset_list = offsetList();
-        return *std::max_element(offset_list.begin(), offset_list.end()) -
-               *std::min_element(offset_list.begin(), offset_list.end());
+        return *std::min_element(offset_list.begin(), offset_list.end());
+    }
+    double max() const override {
+        auto offset_list = offsetList();
+        return *std::max_element(offset_list.begin(), offset_list.end());
     }
 
 protected:

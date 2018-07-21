@@ -54,6 +54,26 @@ public:
         if (debug_adjustToAverage()) { DEBUGPASS("adjustToAverage"); }
         DEBUGSEP;
 
+        DEBUGTITLE("scale");
+        if (debug_scale()) { DEBUGPASS("scale"); }
+        DEBUGSEP;
+
+        DEBUGTITLE("moveBy");
+        if (debug_moveBy()) { DEBUGPASS("moveBy"); }
+        DEBUGSEP;
+
+        DEBUGTITLE("moveTo");
+        if (debug_moveTo()) { DEBUGPASS("moveTo"); }
+        DEBUGSEP;
+
+        DEBUGTITLE("normalize");
+        if (debug_normalize()) { DEBUGPASS("normalize"); }
+        DEBUGSEP;
+
+        DEBUGTITLE("stutterSV");
+        if (debug_stutterSV()) { DEBUGPASS("stutterSV"); }
+        DEBUGSEP;
+
         DEBUGPASS("Debug");
     }
 
@@ -68,11 +88,24 @@ private:
 
     static bool debug_countInRange();
     static bool debug_adjustToAverage();
+    static bool debug_scale();
+    static bool debug_moveBy();
+    static bool debug_moveTo();
+    static bool debug_normalize();
+    static bool debug_stutterSV();
 
     static bool compareDebug(const double &expected,
                              const double &given);
     static bool compareDebug(const QString &expected,
                              const QString &given);
+    template <class T>
+    static bool compareDebug(const QList<T> &expected,
+                             const QList<T> &given) {
+        qDebug() << (expected == given) << endl <<
+                    "Expected:" << expected << endl <<
+                    "Given:\t " << given << endl;
+        return expected == given;
+    }
     static bool compareDebug(const QStringList &expected,
                              const QStringList &given);
 

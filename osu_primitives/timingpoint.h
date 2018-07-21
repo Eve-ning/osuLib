@@ -36,8 +36,6 @@ public:
 
     static std::shared_ptr<TimingPoint> fromString(QString string);
 
-
-
 protected:
 
     BoundedDouble m_value;

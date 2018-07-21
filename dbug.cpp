@@ -156,6 +156,7 @@ bool Dbug::debug_timingPointList()
     return true;
 }
 
+
 bool Dbug::debug_countInRange()
 {
     DEBUGLABEL("HitObjectList Count");
@@ -179,28 +180,120 @@ bool Dbug::debug_countInRange()
 
 bool Dbug::debug_adjustToAverage()
 {
-    TimingPointList test = TimingPointList({"23945,-200,4,1,1,45,0,0",
-                                            "23996,-166.666666666667,4,1,1,45,0,0",
-                                            "24050,-142.857142857143,4,1,1,45,0,0",
-                                            "24098,-125,4,1,1,45,0,0",
-                                            "24149,-111.111111111111,4,1,1,45,0,0",
-                                            "24200,-100,4,1,1,45,0,0",
-                                            "24251,-90.9090909090909,4,1,1,45,0,0"});
+    TimingPointList TPList = TimingPointList({"23945,-200,4,1,1,45,0,0",
+                                              "23996,-166.666666666667,4,1,1,45,0,0",
+                                              "24050,-142.857142857143,4,1,1,45,0,0",
+                                              "24098,-125,4,1,1,45,0,0",
+                                              "24149,-111.111111111111,4,1,1,45,0,0",
+                                              "24200,-100,4,1,1,45,0,0",
+                                              "24251,-90.9090909090909,4,1,1,45,0,0"});
 
-    qDebug() << "BEFORE: " << test.average();
-    OsuAlgorithm::adjustToAverage(test, 1, 0.6);
-    compareDebug(0.6, test.average());
+    qDebug() << "BEFORE: " << TPList.average();
+    TPList = OsuAlgorithm::adjustToAverage<SliderVelocity>(TPList, 1, 0.6);
+    compareDebug(0.6, TPList.average());
 
-    qDebug() << "BEFORE: " << test.average();
-    OsuAlgorithm::adjustToAverage(test, 4, 1.0);
-    compareDebug(1.0, test.average());
+    qDebug() << "BEFORE: " << TPList.average();
+    TPList = OsuAlgorithm::adjustToAverage<SliderVelocity>(TPList, 4, 1.0);
+    compareDebug(1.0, TPList.average());
 
-    qDebug() << "BEFORE: " << test.average();
-    OsuAlgorithm::adjustToAverage(test, 5, 1.8);
-    compareDebug(1.8, test.average());
+    qDebug() << "BEFORE: " << TPList.average();
+    TPList = OsuAlgorithm::adjustToAverage<SliderVelocity>(TPList, 5, 1.8);
+    compareDebug(1.8, TPList.average());
 
     return true;
 }
+
+bool Dbug::debug_scale()
+{
+    TimingPointList eg_TPList = TimingPointList({"0,-200,4,1,1,45,0,0",
+                                                 "100,-166.666666666667,4,1,1,45,0,0",
+                                                 "200,-142.857142857143,4,1,1,45,0,0"});
+    TimingPointList comp_TPList = TimingPointList({"0,-200,4,1,1,45,0,0",
+                                                   "200,-166.666666666667,4,1,1,45,0,0",
+                                                   "400,-142.857142857143,4,1,1,45,0,0"});
+
+    OsuAlgorithm::scale(eg_TPList, 2, 0);
+
+    DEBUGLABEL("Scale");
+    compareDebug(comp_TPList.toStringList(), eg_TPList.toStringList());
+
+    return true;
+}
+
+bool Dbug::debug_moveBy()
+{
+    TimingPointList eg_TPList = TimingPointList({"0,-200,4,1,1,45,0,0",
+                                                 "100,-166.666666666667,4,1,1,45,0,0",
+                                                 "200,-142.857142857143,4,1,1,45,0,0"});
+    TimingPointList comp_TPList = TimingPointList({"100,-200,4,1,1,45,0,0",
+                                                   "200,-166.666666666667,4,1,1,45,0,0",
+                                                   "300,-142.857142857143,4,1,1,45,0,0"});
+
+    OsuAlgorithm::moveBy(eg_TPList, 100);
+
+    DEBUGLABEL("Move By");
+    compareDebug(comp_TPList.toStringList(), eg_TPList.toStringList());
+
+    return true;
+}
+
+bool Dbug::debug_moveTo()
+{
+    TimingPointList eg_TPList = TimingPointList({"0,-200,4,1,1,45,0,0",
+                                                 "100,-166.666666666667,4,1,1,45,0,0",
+                                                 "200,-142.857142857143,4,1,1,45,0,0"});
+    TimingPointList comp_TPList = TimingPointList({"200,-200,4,1,1,45,0,0",
+                                                   "300,-166.666666666667,4,1,1,45,0,0",
+                                                   "400,-142.857142857143,4,1,1,45,0,0"});
+
+    OsuAlgorithm::moveTo(eg_TPList, 200, true);
+
+    DEBUGLABEL("Move To (Anchor Start)");
+    compareDebug(comp_TPList.toStringList(), eg_TPList.toStringList());
+
+    comp_TPList = TimingPointList({"300,-200,4,1,1,45,0,0",
+                                   "400,-166.666666666667,4,1,1,45,0,0",
+                                   "500,-142.857142857143,4,1,1,45,0,0"});
+
+    OsuAlgorithm::moveTo(eg_TPList, 500, false);
+
+    DEBUGLABEL("Move To (Anchor End)");
+    compareDebug(comp_TPList.toStringList(), eg_TPList.toStringList());
+
+    return true;
+}
+
+bool Dbug::debug_normalize()
+{
+    TimingPointList eg_TPList = TimingPointList({"0,600,4,1,1,45,1,0",     // BPM: 100
+                                                 "100,150,4,1,1,45,1,0",   // BPM: 400
+                                                 "200,300,4,1,1,45,1,0"}); // BPM: 200
+
+    TimingPointList test = OsuAlgorithm::normalize(eg_TPList, 200);
+
+    DEBUGLABEL("Normalize");
+    compareDebug(QList<double>({2.0, 0.5, 1.0}), test.valueList());
+
+    return true;
+}
+
+bool Dbug::debug_stutterSV()
+{
+//    TimingPointList eg_TPList = TimingPointList({"0,-200,4,1,1,45,0,0",
+//                                                 "100,-166,4,1,1,45,0,0"});
+
+//    TimingPointList test = OsuAlgorithm::stutterSV(eg_TPList, 0.5, 1.0, 1.0);
+
+    HitObjectList eg_HOList = HitObjectList(OsuAlgorithm::readEHO("00:00:000 (0|1,100|1,400|1) - "));
+    TimingPointList test = OsuAlgorithm::stutter<BPM>(eg_HOList, 0.5, 1.0, 1.0, BPM::minBound(), 100000);
+
+    DEBUGLABEL("StutterSV");
+    qDebug() << test.toStringList();
+
+    return true;
+}
+
+// -------------------- HELPER FUNCTIONS --------------------
 
 bool Dbug::compareDebug(const double &expected, const double &given)
 {

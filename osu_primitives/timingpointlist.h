@@ -3,7 +3,7 @@
 #include "timingpoint.h"
 #include "osuobjectlist.h"
 
-class TimingPointList : public OsuObjectList<TimingPoint>
+class TimingPointList final : public OsuObjectList<TimingPoint>
 {
 public:
     TimingPointList(){}
@@ -38,10 +38,18 @@ public:
     int size() const { return m_value.size(); }
     void sort(bool isAscending = true);
     double length() const {
-        auto offset_list = offsetList();
-        return *std::max_element(offset_list.begin(), offset_list.end()) -
-               *std::min_element(offset_list.begin(), offset_list.end());
+        return max() - min();
     }
+
+    double min() const override {
+        auto offset_list = offsetList();
+        return *std::min_element(offset_list.begin(), offset_list.end());
+    }
+    double max() const override {
+        auto offset_list = offsetList();
+        return *std::max_element(offset_list.begin(), offset_list.end());
+    }
+
     double distance() const;
     double average() const;
     double length(int index) const;

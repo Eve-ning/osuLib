@@ -101,7 +101,7 @@ void TimingPointList::setOffsetList(const QList<double> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setOffset(value[i]);
     }
 }
@@ -109,7 +109,7 @@ void TimingPointList::setCodeList(const QList<double> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setCode(value[i]);
     }
 }
@@ -117,7 +117,7 @@ void TimingPointList::setMetronomeList(const QList<int> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setMetronome(value[i]);
     }
 }
@@ -125,7 +125,7 @@ void TimingPointList::setSampleList(const QList<SampleSet> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setSample(value[i]);
     }
 }
@@ -133,7 +133,7 @@ void TimingPointList::setSampleSetIndexList(const QList<int> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setSampleSetIndex(value[i]);
     }
 }
@@ -141,7 +141,7 @@ void TimingPointList::setVolumeList(const QList<int> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setVolume(value[i]);
     }
 }
@@ -149,7 +149,7 @@ void TimingPointList::setIsKiaiList(const QList<bool> &value) {
     if (!sameSize(value)) {
         return;
     }
-    for (int i; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i) {
         m_value[i]->setIsKiai(value[i]);
     }
 }

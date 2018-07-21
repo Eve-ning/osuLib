@@ -1,33 +1,52 @@
 #include "osualgorithm.h"
 
-void OsuAlgorithm::adjustToAverage(TimingPointList &value, const int &index, const double &newAverage)
+
+
+TimingPointList OsuAlgorithm::normalize(const TimingPointList &value,
+                                        const double &referenceBPM){
+    TimingPointList c_value = value;
+    c_value = c_value.toBPM();
+
+    if (c_value.size() == 0) {
+        qDebug() << "Normalize called with no BPM.";
+        return TimingPointList();
+    }
+
+    TimingPointList normalizeList = {};
+
+    std::for_each(c_value.begin(), c_value.end(), [&](auto &TP){
+        std::shared_ptr<TimingPoint> test =
+                std::make_shared<SliderVelocity>(SliderVelocity(TP->offset(), referenceBPM / TP->value()));
+        normalizeList.append(test);
+    });
+
+    return normalizeList;
+}
+
+HitObjectList OsuAlgorithm::readEHO(const QString &value)
 {
-    if (index == value.size() - 1) {
-        qDebug() << "adjustToAverage cannot adjust the last TimingPoint.";
-        return;
-    } else if (index < 0 || index >= value.size()) {
-        qDebug() << "adjustToAverage index is invalid";
-        return;
+    QString rValue = value;
+    QTextStream ts(&rValue);
+
+    char delim;
+
+    // Find the open bracket
+    while (delim != '(' && !ts.atEnd()) {
+        ts >> delim;
     }
 
-    // Distance: Offset * Value
-    double curDistance = value.distance();
-    double newDistance = newAverage * value.length();
-    double netDistance = newDistance - curDistance;
+    double offset = 0;
+    double column = 0;
 
-    // We get the parameters of the index that wants to be adjusted
-    double indexCurValue = value[index]->value();
-    double indexCurLength = value.length(index);
+    HitObjectList HOList = {};
 
-    // Note that Net is the DIFFERENCE, New is the value we want to adjust to
-    double indexNetValue = netDistance / indexCurLength;
-    double indexNewValue = indexCurValue + indexNetValue;
-
-    if (indexNewValue > SliderVelocity::maxBound() ||
-        indexNewValue < SliderVelocity::minBound()) {
-        qDebug () << "Adjust out of bounds: " << indexNewValue;
+    while (!ts.atEnd()) {
+        ts >> offset >> delim >> column >> delim;
+        if (delim == ')') {
+            break;
+        }
+        HOList.append(std::make_shared<NormalNote>(NormalNote(column, offset)));
     }
 
-    // Adjust to that value
-    value[index]->setValue(indexNewValue);
+    return HOList;
 }
