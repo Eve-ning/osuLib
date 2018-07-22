@@ -74,6 +74,10 @@ public:
         if (debug_stutterSV()) { DEBUGPASS("stutterSV"); }
         DEBUGSEP;
 
+        DEBUGTITLE("copyTo");
+        if (debug_copyTo()) { DEBUGPASS("copyTo"); }
+        DEBUGSEP;
+
         DEBUGPASS("Debug");
     }
 
@@ -93,6 +97,7 @@ private:
     static bool debug_moveTo();
     static bool debug_normalize();
     static bool debug_stutterSV();
+    static bool debug_copyTo();
 
     static bool compareDebug(const double &expected,
                              const double &given);

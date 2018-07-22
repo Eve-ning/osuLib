@@ -42,10 +42,10 @@ HitObjectList OsuAlgorithm::readEHO(const QString &value)
 
     while (!ts.atEnd()) {
         ts >> offset >> delim >> column >> delim;
+        HOList.append(std::make_shared<NormalNote>(NormalNote(column, offset)));
         if (delim == ')') {
             break;
         }
-        HOList.append(std::make_shared<NormalNote>(NormalNote(column, offset)));
     }
 
     return HOList;

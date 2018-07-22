@@ -80,11 +80,13 @@ enum class SCALE_OPTIONS {
 };
 
 // Scales ObjectList
-template<class T>
-void scale(OsuObjectList<T> &value,
-           const double &scaleFactor,
-           const double &scaleReference) {
-    auto v_offsetList = value.offsetList();
+template<class OsuObjList>
+OsuObjList scale(const OsuObjList &value,
+                 const double &scaleFactor,
+                 const double &scaleReference) {
+    OsuObjList c_value = value;
+
+    auto v_offsetList = c_value.offsetList();
     std::for_each(v_offsetList.begin(),
                   v_offsetList.end(),
                   [&](double &offset) {
@@ -92,42 +94,45 @@ void scale(OsuObjectList<T> &value,
         offset *= scaleFactor; // Scale it
         offset += scaleReference;
     });
-    value.setOffsetList(v_offsetList);
+    c_value.setOffsetList(v_offsetList);
+    return c_value;
 }
 
-template<class T>
-void scale(OsuObjectList<T> &value,
-           const double &scaleFactor,
-           const SCALE_OPTIONS &scaleOption){
+template<class OsuObjList>
+OsuObjList scale(const OsuObjList &value,
+                 const double &scaleFactor,
+                 const SCALE_OPTIONS &scaleOption){
     auto v_offsetList = value.offsetList();
     switch (scaleOption) {
     case SCALE_OPTIONS::MIN_OFFSET:
-        scale(value, scaleFactor, *std::min_element(v_offsetList.begin(), v_offsetList.end()));
-        return;
+        return scale(value, scaleFactor, *std::min_element(v_offsetList.begin(), v_offsetList.end()));
     case SCALE_OPTIONS::MAX_OFFSET:
-        scale(value, scaleFactor, *std::max_element(v_offsetList.begin(), v_offsetList.end()));
-        return;
+        return scale(value, scaleFactor, *std::max_element(v_offsetList.begin(), v_offsetList.end()));
     default:
         qDebug() << "Unexpected Error.";
+        return OsuObjList();
         break;
     }
 }
 
 // Moves List by an ms value
-template<class T>
-void moveBy(OsuObjectList<T> &value,
-            const double &moveFactor){
-    auto v_offsetList = value.offsetList();
+template<class OsuObjList>
+OsuObjList moveBy(const OsuObjList &value,
+                  const double &moveFactor){
+    OsuObjList c_value = value;
+    QList<double> v_offsetList = c_value.offsetList();
     std::for_each(v_offsetList.begin(), v_offsetList.end(),
                   [&](double &offset) { offset += moveFactor; });
-    value.setOffsetList(v_offsetList);
+    c_value.setOffsetList(v_offsetList);
+
+    return c_value;
 }
 
 // Moves List by an ms value
-template<class T>
-void moveTo(OsuObjectList<T> &value,
-            const double &moveReference,
-            bool anchorOnStart = true){
+template<class OsuObjList>
+OsuObjList moveTo(OsuObjList value,
+                  const double &moveReference,
+                  bool anchorOnStart = true){
     // Anchor on start means that the whole pattern will START ON specified moveReference value
     // Anchor on end (!start) means it'll END ON specified moveReference value
     double moveFactor = 0;
@@ -138,11 +143,31 @@ void moveTo(OsuObjectList<T> &value,
         moveFactor = moveReference - value.max();
     }
 
-    moveBy(value, moveFactor);
+    return moveBy(value, moveFactor);
 }
 
 // Generate Normalize SVs
 TimingPointList normalize(const TimingPointList &value, const double &referenceBPM);
+
+// Copy Objects from ObjList to other ObjList's offset
+template<class CopyFrom, class CopyTo>
+std::shared_ptr<CopyFrom> copyTo(CopyFrom from,
+                                  CopyTo to,
+                                  bool anchorOnStart = true){
+
+//    CopyFrom output = {};
+
+//    QList<double> to_offsetList = {};
+//    to_offsetList = to.offsetList();
+
+//    std::for_each(to_offsetList.begin(), to_offsetList.end(), [=, &output](double &offset) mutable {
+//        std::shared_ptr<CopyFrom> newFrom = std::make_shared<CopyFrom>(moveTo(from, offset, anchorOnStart).Clone());
+//        output.append(newFrom);
+//    });
+
+//    qDebug() << output.toStringList();
+//    return std::make_shared<CopyFrom>(output);
+}
 
 // Get Unique Offset List
 template<class T>

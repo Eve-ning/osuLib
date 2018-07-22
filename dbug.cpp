@@ -156,7 +156,6 @@ bool Dbug::debug_timingPointList()
     return true;
 }
 
-
 bool Dbug::debug_countInRange()
 {
     DEBUGLABEL("HitObjectList Count");
@@ -212,7 +211,7 @@ bool Dbug::debug_scale()
                                                    "200,-166.666666666667,4,1,1,45,0,0",
                                                    "400,-142.857142857143,4,1,1,45,0,0"});
 
-    OsuAlgorithm::scale(eg_TPList, 2, 0);
+    eg_TPList = OsuAlgorithm::scale(eg_TPList, 2, 0);
 
     DEBUGLABEL("Scale");
     compareDebug(comp_TPList.toStringList(), eg_TPList.toStringList());
@@ -229,7 +228,7 @@ bool Dbug::debug_moveBy()
                                                    "200,-166.666666666667,4,1,1,45,0,0",
                                                    "300,-142.857142857143,4,1,1,45,0,0"});
 
-    OsuAlgorithm::moveBy(eg_TPList, 100);
+    eg_TPList = OsuAlgorithm::moveBy(eg_TPList, 100);
 
     DEBUGLABEL("Move By");
     compareDebug(comp_TPList.toStringList(), eg_TPList.toStringList());
@@ -246,7 +245,7 @@ bool Dbug::debug_moveTo()
                                                    "300,-166.666666666667,4,1,1,45,0,0",
                                                    "400,-142.857142857143,4,1,1,45,0,0"});
 
-    OsuAlgorithm::moveTo(eg_TPList, 200, true);
+    eg_TPList = OsuAlgorithm::moveTo(eg_TPList, 200, true);
 
     DEBUGLABEL("Move To (Anchor Start)");
     compareDebug(comp_TPList.toStringList(), eg_TPList.toStringList());
@@ -255,7 +254,7 @@ bool Dbug::debug_moveTo()
                                    "400,-166.666666666667,4,1,1,45,0,0",
                                    "500,-142.857142857143,4,1,1,45,0,0"});
 
-    OsuAlgorithm::moveTo(eg_TPList, 500, false);
+    eg_TPList = OsuAlgorithm::moveTo(eg_TPList, 500, false);
 
     DEBUGLABEL("Move To (Anchor End)");
     compareDebug(comp_TPList.toStringList(), eg_TPList.toStringList());
@@ -289,6 +288,18 @@ bool Dbug::debug_stutterSV()
 
     DEBUGLABEL("StutterSV");
     qDebug() << test.toStringList();
+
+    return true;
+}
+
+bool Dbug::debug_copyTo()
+{
+    TimingPointList TPList = TimingPointList({"0,-200,4,1,1,45,0,0",
+                                              "100,-166,4,1,1,45,0,0"});
+
+    HitObjectList HOList = OsuAlgorithm::readEHO("00:01:000 (1000|1,2000|1) - ");
+
+    OsuAlgorithm::copyTo(TPList, HOList, true);
 
     return true;
 }

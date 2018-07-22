@@ -8,13 +8,19 @@ class TimingPointList final : public OsuObjectList<TimingPoint>
 public:
     TimingPointList(){}
 
+    std::shared_ptr<OsuObjectList> Clone() override { return std::make_shared<TimingPointList>(*this); }
+
+    void append(std::shared_ptr<TimingPointList> TPList) { append(*TPList); }
+    void append(std::shared_ptr<TimingPoint> TP) override { m_value.append(TP); }
+    void append(TimingPointList TPList) { m_value.append(TPList.value()); }
+
     // Load from String
     TimingPointList(QStringList stringList);
 
     ~TimingPointList(){}
 
-    std::shared_ptr<TimingPoint> operator [](int i) const { return at(i); }
-    std::shared_ptr<TimingPoint> at(int i) const {
+    std::shared_ptr<TimingPoint> operator [](int i) const override  { return at(i); }
+    std::shared_ptr<TimingPoint> at(int i) const override {
         if (i < size() && i >= 0) {
             return m_value.at(i);
         } else {
@@ -29,15 +35,14 @@ public:
     void operator +=(TimingPointList TPList) { append(TPList);}
     TimingPointList operator +(TimingPointList TPList) { append(TPList); return *this;}
 
-    void append(std::shared_ptr<TimingPoint> TP) { m_value.append(TP); }
-    void append(TimingPointList TPList) { m_value.append(TPList.value()); }
 
-    QList<std::shared_ptr<TimingPoint>> value() const;
+
+    QList<std::shared_ptr<TimingPoint>> value() const override;
     void setValue(const QList<std::shared_ptr<TimingPoint>> &value);
 
-    int size() const { return m_value.size(); }
-    void sort(bool isAscending = true);
-    double length() const {
+    int size() const override  { return m_value.size(); }
+    void sort(bool isAscending = true) override ;
+    double length() const override {
         return max() - min();
     }
 
@@ -54,7 +59,7 @@ public:
     double average() const;
     double length(int index) const;
 
-    QList<double> offsetList() const;
+    QList<double> offsetList() const override ;
     QList<double> valueList() const;
     QList<double> codeList() const;
     QList<int> metronomeList() const;
@@ -63,7 +68,7 @@ public:
     QList<int> volumeList() const;
     QList<bool> isKiaiList() const;
 
-    void setOffsetList         (const QList<double>    &value);
+    void setOffsetList         (const QList<double>    &value) override ;
     void setCodeList           (const QList<double>    &value);
     void setMetronomeList      (const QList<int>       &value);
     void setSampleList         (const QList<SampleSet> &value);

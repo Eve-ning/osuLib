@@ -8,6 +8,8 @@ class HitObjectList final : public OsuObjectList<HitObject>
 public:
     HitObjectList(){}
 
+    std::shared_ptr<OsuObjectList> Clone() override { return std::make_shared<HitObjectList>(*this); }
+
     // Load from StringList
     HitObjectList(QStringList stringList, const int &keys);
 
