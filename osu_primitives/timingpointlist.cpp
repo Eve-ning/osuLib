@@ -9,6 +9,8 @@ TimingPointList::TimingPointList(QStringList stringList)
     setValue(input);
 }
 
+TimingPointList::TimingPointList(){}
+
 QList<std::shared_ptr<TimingPoint> > TimingPointList::value() const
 {
     return m_value;

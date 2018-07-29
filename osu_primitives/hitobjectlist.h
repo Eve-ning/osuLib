@@ -3,15 +3,24 @@
 #include "hitobject.h"
 #include "osuobjectlist.h"
 
-class HitObjectList final : public OsuObjectList<HitObject>
+class HitObjectList final
 {
 public:
-    HitObjectList(){}
-
-    std::shared_ptr<OsuObjectList> Clone() override { return std::make_shared<HitObjectList>(*this); }
+    HitObjectList();
 
     // Load from StringList
     HitObjectList(QStringList stringList, const int &keys);
+    HitObjectList(QList<std::shared_ptr<HitObject>> value) : m_value(value){}
+    HitObjectList(const HitObjectList& value) : m_value(value.m_value){}
+
+    HitObjectList& operator =(const HitObjectList &value){
+        m_value = std::move(value.m_value);
+        return *this;
+    }
+    HitObjectList& operator =(HitObjectList &&value) &{
+        m_value = std::move(value.m_value);
+        return *this;
+    }
 
     ~HitObjectList(){}
 
@@ -57,19 +66,28 @@ public:
 
     QStringList toStringList(const int &keys);
 
-    int size() const { return m_value.size(); }
+    int size() const {
+        return m_value.size();
+    }
     void sort(bool isAscending = true);
     double length() const {
         return max() - min();
     }
 
-    double min() const override {
+    double min() const {
         auto offset_list = offsetList();
         return *std::min_element(offset_list.begin(), offset_list.end());
     }
-    double max() const override {
+    double max() const {
         auto offset_list = offsetList();
         return *std::max_element(offset_list.begin(), offset_list.end());
+    }
+
+    auto begin() const {
+        return m_value.begin();
+    }
+    auto end() const {
+        return m_value.end();
     }
 
 protected:
@@ -78,6 +96,7 @@ protected:
     bool sameSize(QList<T> compare){
         return this->size() == compare.size();
     }
+    QList<std::shared_ptr<HitObject>> m_value = {};
 
 };
 

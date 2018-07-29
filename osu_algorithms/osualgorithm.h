@@ -8,8 +8,8 @@ namespace OsuAlgorithm
 {
 
 // Count the number of OsuObjects in the offset range
-template<class T>
-int countInRange(const std::shared_ptr<OsuObjectList<T>> &value,
+template<class OsuObjList>
+int countInRange(const OsuObjList &value,
                  const double &lowerBound,
                  const double &upperBound,
                  const bool &inclusive = true) {
@@ -17,14 +17,14 @@ int countInRange(const std::shared_ptr<OsuObjectList<T>> &value,
 
     // We call the if outside of the for loop so that it doesn't keep checking the bool
     if (inclusive){
-        for (const auto &obj : *value) {
+        for (const auto &obj : value) {
             // We check if it's NOT inside the bounds since it's more plausible, we then INVERT it
             if (!(obj->offset() < lowerBound || obj->offset() > upperBound)) {
                 counter += 1;
             }
         }
     } else {
-        for (const auto &obj : *value) {
+        for (const auto &obj : value) {
             if (!(obj->offset() <= lowerBound || obj->offset() >= upperBound)) {
                 counter += 1;
             }
@@ -150,28 +150,13 @@ OsuObjList moveTo(OsuObjList value,
 TimingPointList normalize(const TimingPointList &value, const double &referenceBPM);
 
 // Copy Objects from ObjList to other ObjList's offset
-template<class CopyFrom, class CopyTo>
-std::shared_ptr<CopyFrom> copyTo(CopyFrom from,
-                                  CopyTo to,
-                                  bool anchorOnStart = true){
-
-//    CopyFrom output = {};
-
-//    QList<double> to_offsetList = {};
-//    to_offsetList = to.offsetList();
-
-//    std::for_each(to_offsetList.begin(), to_offsetList.end(), [=, &output](double &offset) mutable {
-//        std::shared_ptr<CopyFrom> newFrom = std::make_shared<CopyFrom>(moveTo(from, offset, anchorOnStart).Clone());
-//        output.append(newFrom);
-//    });
-
-//    qDebug() << output.toStringList();
-//    return std::make_shared<CopyFrom>(output);
-}
+TimingPointList copyTo(const TimingPointList &from,
+                       const HitObjectList &to,
+                       bool anchorOnStart = true);
 
 // Get Unique Offset List
-template<class T>
-QList<double> unqOffsetList(const OsuObjectList<T> &value) {
+template<class OsuObjList>
+QList<double> unqOffsetList(const OsuObjList &value) {
     QList<double> v_offsetList = value.offsetList();
     QList<double> unq_offsetList = {};
 
@@ -188,8 +173,8 @@ QList<double> unqOffsetList(const OsuObjectList<T> &value) {
 HitObjectList readEHO(const QString &value);
 
 // Generate Stutter SVs in between offsets in OsuObjectList
-template<class ReturnType = SliderVelocity, class T>
-TimingPointList stutter(const OsuObjectList<T> &value,
+template<class ReturnType = SliderVelocity, class OsuObjList>
+TimingPointList stutter(const OsuObjList &value,
                         double initialValue,
                         double strength, // Strength indicates the offset of secValue (Secondary Value)
                         double averageValue,

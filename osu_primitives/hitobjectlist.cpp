@@ -1,5 +1,7 @@
 #include "hitobjectlist.h"
 
+HitObjectList::HitObjectList(){}
+
 HitObjectList::HitObjectList(QStringList stringList, const int &keys)
 {
     QList<std::shared_ptr<HitObject> > input;
