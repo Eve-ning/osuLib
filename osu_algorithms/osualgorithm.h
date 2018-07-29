@@ -150,9 +150,24 @@ OsuObjList moveTo(OsuObjList value,
 TimingPointList normalize(const TimingPointList &value, const double &referenceBPM);
 
 // Copy Objects from ObjList to other ObjList's offset
-TimingPointList copyTo(const TimingPointList &from,
-                       const HitObjectList &to,
-                       bool anchorOnStart = true);
+template<class CopyFrom, class CopyTo>
+CopyFrom copyTo(const CopyFrom &from,
+                const CopyTo &to,
+                bool anchorOnStart = true){
+
+    CopyFrom output = {};
+
+    QList<double> to_offsetList = {};
+    to_offsetList = to.offsetList();
+
+    std::for_each(to_offsetList.begin(), to_offsetList.end(), [=, &output](double &offset) mutable {
+        CopyFrom newFrom = moveTo(from, offset, anchorOnStart).clone();
+        output.append(newFrom);
+    });
+
+    qDebug() << output.toStringList();
+    return output;
+}
 
 // Get Unique Offset List
 template<class OsuObjList>

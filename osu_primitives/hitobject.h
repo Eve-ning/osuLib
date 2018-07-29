@@ -10,6 +10,8 @@ public:
     virtual ~HitObject() {
     }
 
+    virtual std::shared_ptr<HitObject> clone() = 0;
+
     int column() const;
     void setColumn(const int &column);
 
@@ -87,6 +89,11 @@ public:
         m_volume       = volume;
         m_hitsoundFile = hitsoundFile;
     }
+
+    std::shared_ptr<HitObject> clone() override {
+        return std::make_shared<NormalNote>(*this);
+    }
+
     void debugInfo() const override;
     QString toString(const int &keys) const override;
 };
@@ -126,6 +133,11 @@ public:
         m_hitsoundFile = hitsoundFile;
         m_offsetEnd    = offsetEnd;
     }
+
+    std::shared_ptr<HitObject> clone() {
+        return std::make_shared<LongNote>(*this);
+    }
+
     void debugInfo() const override;
     QString toString(const int &keys) const override;
 

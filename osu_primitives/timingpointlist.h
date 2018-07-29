@@ -8,8 +8,27 @@ class TimingPointList
 public:    
     // Load from String
     TimingPointList(QStringList stringList);
-
+    TimingPointList(QList<std::shared_ptr<TimingPoint>> value) : m_value(value){}
+    TimingPointList(const TimingPointList& value) : m_value(value.m_value){}
+    TimingPointList& operator =(const TimingPointList &value){
+        m_value = std::move(value.m_value);
+        return *this;
+    }
+    TimingPointList& operator =(TimingPointList &&value) &{
+        m_value = std::move(value.m_value);
+        return *this;
+    }
     TimingPointList();
+
+    TimingPointList clone() {
+        QList<std::shared_ptr<TimingPoint>> output;
+
+        std::for_each(m_value.begin(), m_value.end(), [&](const std::shared_ptr<TimingPoint> &value){
+            output.append(value->clone());
+        });
+
+        return TimingPointList(output);
+    }
 
     ~TimingPointList(){}
 

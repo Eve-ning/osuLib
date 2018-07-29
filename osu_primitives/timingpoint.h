@@ -10,6 +10,8 @@ public:
     virtual ~TimingPoint(){
     }
 
+    virtual std::shared_ptr<TimingPoint> clone() = 0;
+
     virtual double code() const = 0;
     virtual void setCode(const double &code) = 0;
 
@@ -76,6 +78,10 @@ public:
         m_isKiai         = isKiai;
     }
 
+    std::shared_ptr<TimingPoint> clone() {
+        return std::make_shared<SliderVelocity>(*this);
+    }
+
     void debugInfo() const override;
     QString toString() const override;
 
@@ -136,6 +142,10 @@ public:
         m_sampleSetIndex = sampleSetIndex;
         m_volume         = volume;
         m_isKiai         = isKiai;{}
+    }
+
+    std::shared_ptr<TimingPoint> clone() {
+        return std::make_shared<BPM>(*this);
     }
 
     void debugInfo() const override;

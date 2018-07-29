@@ -12,7 +12,6 @@ public:
     HitObjectList(QStringList stringList, const int &keys);
     HitObjectList(QList<std::shared_ptr<HitObject>> value) : m_value(value){}
     HitObjectList(const HitObjectList& value) : m_value(value.m_value){}
-
     HitObjectList& operator =(const HitObjectList &value){
         m_value = std::move(value.m_value);
         return *this;
@@ -23,6 +22,18 @@ public:
     }
 
     ~HitObjectList(){}
+
+    HitObjectList clone() const {
+        QList<std::shared_ptr<HitObject>> output;
+
+//        std::for_each(m_value.begin(), m_value.end(), [&](const std::shared_ptr<HitObject> &value){
+//            output.append(std::make_shared<HitObject>(*value));
+//        });
+
+        output = std::move(m_value);
+
+        return HitObjectList(output);
+    }
 
     std::shared_ptr<HitObject> operator [](int i) const { return at(i); }
     std::shared_ptr<HitObject> at(int i) const {

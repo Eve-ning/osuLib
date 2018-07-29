@@ -51,18 +51,3 @@ HitObjectList OsuAlgorithm::readEHO(const QString &value)
     return HOList;
 }
 
-TimingPointList OsuAlgorithm::copyTo(const TimingPointList &from, const HitObjectList &to, bool anchorOnStart){
-
-    TimingPointList output = {};
-
-    QList<double> to_offsetList = {};
-    to_offsetList = to.offsetList();
-
-    std::for_each(to_offsetList.begin(), to_offsetList.end(), [=, &output](double &offset) mutable {
-        auto newFrom = moveTo(from, offset, anchorOnStart);
-        output.append(newFrom);
-    });
-
-    qDebug() << output.toStringList();
-    return output;
-}
