@@ -161,8 +161,7 @@ CopyFrom copyTo(const CopyFrom &from,
     to_offsetList = to.offsetList();
 
     std::for_each(to_offsetList.begin(), to_offsetList.end(), [=, &output](double &offset) mutable {
-        CopyFrom newFrom = moveTo(from, offset, anchorOnStart).clone();
-        output.append(newFrom);
+        output.append(moveTo(from, offset, anchorOnStart).clone());
     });
 
     qDebug() << output.toStringList();
