@@ -45,6 +45,9 @@ public:
         }
     }
 
+    bool operator ==(const HitObjectList &HOList) { return m_value == HOList.m_value; }
+    bool operator !=(const HitObjectList &HOList) { return m_value != HOList.m_value; }
+
     void operator +=(std::shared_ptr<HitObject> HO) { append(HO);}
     HitObjectList operator +(std::shared_ptr<HitObject> HO) { append(HO); return *this;}
 

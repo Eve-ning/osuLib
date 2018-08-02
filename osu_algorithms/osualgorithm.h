@@ -36,7 +36,7 @@ int countInRange(const OsuObjList &value,
 
 // Adjusts the whole TimingPointList so that it reaches the specified average SV
 template<class AdjustType>
-TimingPointList adjustToAverage(const TimingPointList &value,
+TimingPointList adjustToAverage(TimingPointList value,
                                 const int &index,
                                 const double &newAverage)
 {
@@ -48,16 +48,14 @@ TimingPointList adjustToAverage(const TimingPointList &value,
         return TimingPointList();
     }
 
-    TimingPointList c_value = value;
-
     // Distance: Offset * Value
-    double curDistance = c_value.distance();
-    double newDistance = newAverage * c_value.length();
+    double curDistance = value.distance();
+    double newDistance = newAverage * value.length();
     double netDistance = newDistance - curDistance;
 
     // We get the parameters of the index that wants to be adjusted
-    double indexCurValue = c_value[index]->value();
-    double indexCurLength = c_value.length(index);
+    double indexCurValue = value[index]->value();
+    double indexCurLength = value.length(index);
 
     // Note that Net is the DIFFERENCE, New is the value we want to adjust to
     double indexNetValue = netDistance / indexCurLength;
@@ -69,9 +67,9 @@ TimingPointList adjustToAverage(const TimingPointList &value,
     }
 
     // Adjust to that value
-    c_value[index]->setValue(indexNewValue);
+    value[index]->setValue(indexNewValue);
 
-    return c_value;
+    return value;
 }
 
 enum class SCALE_OPTIONS {
@@ -81,10 +79,9 @@ enum class SCALE_OPTIONS {
 
 // Scales ObjectList
 template<class OsuObjList>
-OsuObjList scale(const OsuObjList &value,
-                 const double &scaleFactor,
-                 const double &scaleReference) {
-    OsuObjList c_value = value;
+OsuObjList scale (OsuObjList value,
+                  const double &scaleFactor,
+                  const double &scaleReference) {
 
     auto v_offsetList = c_value.offsetList();
     std::for_each(v_offsetList.begin(),
@@ -95,7 +92,7 @@ OsuObjList scale(const OsuObjList &value,
         offset += scaleReference;
     });
     c_value.setOffsetList(v_offsetList);
-    return c_value;
+    return value;
 }
 
 template<class OsuObjList>
@@ -117,15 +114,14 @@ OsuObjList scale(const OsuObjList &value,
 
 // Moves List by an ms value
 template<class OsuObjList>
-OsuObjList moveBy(const OsuObjList &value,
+OsuObjList moveBy(OsuObjList value,
                   const double &moveFactor){
-    OsuObjList c_value = value;
-    QList<double> v_offsetList = c_value.offsetList();
+    QList<double> v_offsetList = .offsetList();
     std::for_each(v_offsetList.begin(), v_offsetList.end(),
                   [&](double &offset) { offset += moveFactor; });
-    c_value.setOffsetList(v_offsetList);
+    .setOffsetList(v_offsetList);
 
-    return c_value;
+    return ;
 }
 
 // Moves List by an ms value
@@ -283,7 +279,20 @@ TimingPointList stutter(const OsuObjList &value,
     return stutterList;
 }
 
+template<class TPType = SliderVelocity>
+TimingPointList supImp_add(const TimingPointList &base,
+                           const TimingPointList &factor) {
+    if (base.size() != factor.size()) {
+        qDebug() << __FUNCTION__ << " failed due to length mismatch.";
+        qDebug() << "Base: " << base.size() << " Factor: " << factor.size();
+        return TimingPointList();
+    }
 
+    QList<double> base_vList = base.valueList();
+    QList<double> fact_vList = factor.valueList();
+
+
+}
 }
 
 #endif // OSUALGORITHM_H
