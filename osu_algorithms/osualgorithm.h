@@ -83,7 +83,7 @@ OsuObjList scale (OsuObjList value,
                   const double &scaleFactor,
                   const double &scaleReference) {
 
-    auto v_offsetList = c_value.offsetList();
+    auto v_offsetList = value.offsetList();
     std::for_each(v_offsetList.begin(),
                   v_offsetList.end(),
                   [&](double &offset) {
@@ -91,7 +91,7 @@ OsuObjList scale (OsuObjList value,
         offset *= scaleFactor; // Scale it
         offset += scaleReference;
     });
-    c_value.setOffsetList(v_offsetList);
+    value.setOffsetList(v_offsetList);
     return value;
 }
 
@@ -116,12 +116,12 @@ OsuObjList scale(const OsuObjList &value,
 template<class OsuObjList>
 OsuObjList moveBy(OsuObjList value,
                   const double &moveFactor){
-    QList<double> v_offsetList = .offsetList();
+    QList<double> v_offsetList = value.offsetList();
     std::for_each(v_offsetList.begin(), v_offsetList.end(),
                   [&](double &offset) { offset += moveFactor; });
-    .setOffsetList(v_offsetList);
+    value.setOffsetList(v_offsetList);
 
-    return ;
+    return value;
 }
 
 // Moves List by an ms value

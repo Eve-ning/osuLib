@@ -21,18 +21,18 @@ void TimingPointList::setValue(const QList<std::shared_ptr<TimingPoint> > &value
     m_value = value;
 }
 
-void TimingPointList::sort(bool isAscending)
-{
-    std::sort(m_value.begin(), m_value.end(),
-              [isAscending](std::shared_ptr<TimingPoint> a,
-                            std::shared_ptr<TimingPoint> b){
-        if (isAscending) {
-            return a->offset() < b->offset();
-        } else {
-            return a->offset() > b->offset();
-        }
-    });
-}
+//void TimingPointList::sort(bool isAscending)
+//{
+//    std::sort(m_value.begin(), m_value.end(),
+//              [isAscending](std::shared_ptr<TimingPoint> a,
+//                            std::shared_ptr<TimingPoint> b){
+//        if (isAscending) {
+//            return a->offset() < b->offset();
+//        } else {
+//            return a->offset() > b->offset();
+//        }
+//    });
+//}
 
 double TimingPointList::distance() const
 {
@@ -50,11 +50,11 @@ double TimingPointList::average() const
     return dist / length();
 }
 
-QList<double> TimingPointList::offsetList() const {
-    QList<double> output = {};
-    for (std::shared_ptr<TimingPoint> TP : m_value) { output.append(TP->offset()); }
-    return output;
-}
+//QList<double> TimingPointList::offsetList() const {
+//    QList<double> output = {};
+//    for (std::shared_ptr<TimingPoint> TP : m_value) { output.append(TP->offset()); }
+//    return output;
+//}
 
 QList<double> TimingPointList::valueList() const
 {
@@ -99,14 +99,14 @@ QList<bool> TimingPointList::isKiaiList() const {
     return output;
 }
 
-void TimingPointList::setOffsetList(const QList<double> &value) {
-    if (!sameSize(value)) {
-        return;
-    }
-    for (int i = 0; i < size(); ++i) {
-        m_value[i]->setOffset(value[i]);
-    }
-}
+//void TimingPointList::setOffsetList(const QList<double> &value) {
+//    if (!sameSize(value)) {
+//        return;
+//    }
+//    for (int i = 0; i < size(); ++i) {
+//        m_value[i]->setOffset(value[i]);
+//    }
+//}
 void TimingPointList::setCodeList(const QList<double> &value) {
     if (!sameSize(value)) {
         return;

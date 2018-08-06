@@ -21,18 +21,18 @@ void HitObjectList::setValue(const QList<std::shared_ptr<HitObject> > &value)
     m_value = value;
 }
 
-void HitObjectList::sort(bool isAscending)
-{
-    std::sort(m_value.begin(), m_value.end(),
-              [isAscending](std::shared_ptr<HitObject> a,
-                            std::shared_ptr<HitObject> b){
-        if (isAscending) {
-            return a->offset() < b->offset();
-        } else {
-            return a->offset() > b->offset();
-        }
-    });
-}
+//void HitObjectList::sort(bool isAscending)
+//{
+//    std::sort(m_value.begin(), m_value.end(),
+//              [isAscending](std::shared_ptr<HitObject> a,
+//                            std::shared_ptr<HitObject> b){
+//        if (isAscending) {
+//            return a->offset() < b->offset();
+//        } else {
+//            return a->offset() > b->offset();
+//        }
+//    });
+//}
 
 
 QList<int> HitObjectList::columnList() const {
@@ -41,11 +41,11 @@ QList<int> HitObjectList::columnList() const {
     return output;
 }
 
-QList<double> HitObjectList::offsetList() const {
-    QList<double> output = {};
-    for (std::shared_ptr<HitObject> HO : m_value) { output.append(HO->offset()); }
-    return output;
-}
+//QList<double> HitObjectList::offsetList() const {
+//    QList<double> output = {};
+//    for (std::shared_ptr<HitObject> HO : m_value) { output.append(HO->offset()); }
+//    return output;
+//}
 
 QList<SampleSet> HitObjectList::hitsoundList() const {
     QList<SampleSet> output = {};
@@ -91,14 +91,14 @@ void HitObjectList::setColumnList(const QList<int> &value) {
         m_value[i]->setColumn(value[i]);
     }
 }
-void HitObjectList::setOffsetList(const QList<double> &value) {
-    if (!sameSize(value)) {
-        return;
-    }
-    for (int i = 0; i < size(); ++i) {
-        m_value[i]->setOffset(value[i]);
-    }
-}
+//void HitObjectList::setOffsetList(const QList<double> &value) {
+//    if (!sameSize(value)) {
+//        return;
+//    }
+//    for (int i = 0; i < size(); ++i) {
+//        m_value[i]->setOffset(value[i]);
+//    }
+//}
 void HitObjectList::setHitsoundList(const QList<SampleSet> &value) {
     if (!sameSize(value)) {
         return;

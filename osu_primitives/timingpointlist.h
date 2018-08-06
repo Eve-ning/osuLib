@@ -3,13 +3,13 @@
 #include "timingpoint.h"
 #include "osuobjectlist.h"
 
-class TimingPointList
+class TimingPointList final : public OsuObjectList<TimingPoint>
 {
 public:    
     // Load from String
     TimingPointList(QStringList stringList);
-    TimingPointList(QList<std::shared_ptr<TimingPoint>> value) : m_value(value){}
-    TimingPointList(const TimingPointList& value) : m_value(value.m_value){}
+    TimingPointList(QList<std::shared_ptr<TimingPoint>> value) : OsuObjectList<TimingPoint>(value){}
+    TimingPointList(const TimingPointList& value) : OsuObjectList<TimingPoint>(value.m_value){}
     TimingPointList& operator =(const TimingPointList &value){
         m_value = std::move(value.m_value);
         return *this;
@@ -20,15 +20,7 @@ public:
     }
     TimingPointList();
 
-    TimingPointList clone() {
-        QList<std::shared_ptr<TimingPoint>> output;
-
-        std::for_each(m_value.begin(), m_value.end(), [&](const std::shared_ptr<TimingPoint> &value){
-            output.append(value->clone());
-        });
-
-        return TimingPointList(output);
-    }
+    std::shared_ptr<TimingPointList> clone() const { return std::static_pointer_cast<TimingPointList>(doClone()); }
 
     ~TimingPointList(){}
 
@@ -36,15 +28,15 @@ public:
     void append(std::shared_ptr<TimingPoint> TP) { m_value.append(TP); }
     void append(TimingPointList TPList) { m_value.append(TPList.value()); }
 
-    std::shared_ptr<TimingPoint> operator [](int i) const { return at(i); }
-    std::shared_ptr<TimingPoint> at(int i) const {
-        if (i < size() && i >= 0) {
-            return m_value.at(i);
-        } else {
-            qDebug() << "Index on TimingPointList out of range.";
-            return m_value.at(0);
-        }
-    }
+//    std::shared_ptr<TimingPoint> operator [](int i) const { return at(i); }
+//    std::shared_ptr<TimingPoint> at(int i) const {
+//        if (i < size() && i >= 0) {
+//            return m_value.at(i);
+//        } else {
+//            qDebug() << "Index on TimingPointList out of range.";
+//            return m_value.at(0);
+//        }
+//    }
 
     void operator +=(std::shared_ptr<TimingPoint> TP) { append(TP);}
     TimingPointList operator +(std::shared_ptr<TimingPoint> TP) { append(TP); return *this;}
@@ -55,35 +47,30 @@ public:
     QList<std::shared_ptr<TimingPoint>> value() const;
     void setValue(const QList<std::shared_ptr<TimingPoint>> &value);
 
-    void sort(bool isAscending = true);
-    double length() const {
-        return max() - min();
-    }
+//    void sort(bool isAscending = true);
+//    double length() const {
+//        return max() - min();
+//    }
 
-    int size() const {
-        return m_value.size();
-    }
-    double min() const {
-        auto offset_list = offsetList();
-        return *std::min_element(offset_list.begin(), offset_list.end());
-    }
-    double max() const {
-        auto offset_list = offsetList();
-        return *std::max_element(offset_list.begin(), offset_list.end());
-    }
-
-    auto begin() const {
-        return m_value.begin();
-    }
-    auto end() const {
-        return m_value.end();
-    }
+//    int size() const {
+//        return m_value.size();
+//    }
+//    double min() const {
+//        auto offset_list = offsetList();
+//        return *std::min_element(offset_list.begin(), offset_list.end());
+//    }
+//    double max() const {
+//        auto offset_list = offsetList();
+//        return *std::max_element(offset_list.begin(), offset_list.end());
+//    }
 
     double distance() const;
     double average() const;
+
+    using OsuObjectList::length;
     double length(int index) const;
 
-    QList<double> offsetList() const;
+//    QList<double> offsetList() const;
     QList<double> valueList() const;
     QList<double> codeList() const;
     QList<int> metronomeList() const;
@@ -92,7 +79,7 @@ public:
     QList<int> volumeList() const;
     QList<bool> isKiaiList() const;
 
-    void setOffsetList         (const QList<double>    &value);
+//    void setOffsetList         (const QList<double>    &value);
     void setCodeList           (const QList<double>    &value);
     void setMetronomeList      (const QList<int>       &value);
     void setSampleList         (const QList<SampleSet> &value);
@@ -107,11 +94,18 @@ public:
 
 protected:
 
-    template <typename T>
-    bool sameSize(QList<T> compare){
-        return this->size() == compare.size();
+
+
+private:
+    std::shared_ptr<OsuObjectList> doClone() const override {
+        QList<std::shared_ptr<TimingPoint>> output;
+
+        std::for_each(m_value.begin(), m_value.end(), [&](const std::shared_ptr<TimingPoint> &value){
+            output.append(value->clone());
+        });
+
+        return std::make_shared<TimingPointList>(output);
     }
-    QList<std::shared_ptr<TimingPoint>> m_value = {};
 
 };
 
