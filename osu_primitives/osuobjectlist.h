@@ -48,7 +48,7 @@ public:
     }
     virtual double max() const {
         auto offset_list = offsetList();
-        return *std::min_element(offset_list.begin(), offset_list.end());
+        return *std::max_element(offset_list.begin(), offset_list.end());
     }
 
     virtual int size() const {

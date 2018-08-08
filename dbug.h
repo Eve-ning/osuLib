@@ -78,6 +78,10 @@ public:
         if (debug_copyTo()) { DEBUGPASS("copyTo"); }
         DEBUGSEP;
 
+        DEBUGTITLE("supImp");
+        if (debug_supImp()) { DEBUGPASS("supImp"); }
+        DEBUGSEP;
+
         DEBUGPASS("Debug");
     }
 
@@ -98,6 +102,7 @@ private:
     static bool debug_normalize();
     static bool debug_stutterSV();
     static bool debug_copyTo();
+    static bool debug_supImp();
 
     static bool compareDebug(const double &expected,
                              const double &given);

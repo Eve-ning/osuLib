@@ -305,6 +305,22 @@ bool Dbug::debug_copyTo()
     return true;
 }
 
+bool Dbug::debug_supImp()
+{
+    TimingPointList factTP = TimingPointList({"0,-200,4,1,1,45,0,0"});
+
+    TimingPointList baseTP = TimingPointList({"100,-200,4,1,1,45,0,0",
+                                              "200,-50,4,1,1,45,0,0"});
+
+    baseTP = OsuAlgorithm::supImp(baseTP, factTP, [](double base, double fact) -> double {
+                             return base + fact;
+    });
+
+    qDebug() << baseTP.toStringList();
+
+    return true;
+}
+
 // -------------------- HELPER FUNCTIONS --------------------
 
 bool Dbug::compareDebug(const double &expected, const double &given)

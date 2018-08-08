@@ -99,6 +99,15 @@ QList<bool> TimingPointList::isKiaiList() const {
     return output;
 }
 
+void TimingPointList::setValueList(const QList<double> &value) {
+    if (!sameSize(value)) {
+        return;
+    }
+    for (int i = 0; i < size(); ++i) {
+        m_value[i]->setValue(value[i]);
+    }
+}
+
 //void TimingPointList::setOffsetList(const QList<double> &value) {
 //    if (!sameSize(value)) {
 //        return;

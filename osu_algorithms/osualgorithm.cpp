@@ -51,3 +51,29 @@ HitObjectList OsuAlgorithm::readEHO(const QString &value)
     return HOList;
 }
 
+
+TimingPointList OsuAlgorithm::supImp(TimingPointList base, const TimingPointList &factor, double (*fptr)(double, double)) {
+
+    QList<double> base_vList = base.valueList();
+    QList<double> fact_vList = factor.valueList();
+
+    fact_vList.append(std::numeric_limits<double>::max());
+
+    for (int b = 0, f = 0; (b < base_vList.length() && f < fact_vList.length() - 1);) {
+        if (base_vList[b] < fact_vList[f]) { // f must always be behind b to factor correctly
+            b ++;
+            continue;
+        }
+        if (base_vList[b] > fact_vList[f + 1]) { // Index will never throw exceptions due to conditions
+            f ++;
+            continue;
+        }
+        base_vList[b] = fptr(base_vList[b], fact_vList[f]);
+
+
+        b ++; // If factoring successful, we move b forward
+    }
+
+    base.setValueList(base_vList);
+    return base;
+}

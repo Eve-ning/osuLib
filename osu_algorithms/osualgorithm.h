@@ -279,20 +279,9 @@ TimingPointList stutter(const OsuObjList &value,
     return stutterList;
 }
 
-template<class TPType = SliderVelocity>
-TimingPointList supImp_add(const TimingPointList &base,
-                           const TimingPointList &factor) {
-    if (base.size() != factor.size()) {
-        qDebug() << __FUNCTION__ << " failed due to length mismatch.";
-        qDebug() << "Base: " << base.size() << " Factor: " << factor.size();
-        return TimingPointList();
-    }
-
-    QList<double> base_vList = base.valueList();
-    QList<double> fact_vList = factor.valueList();
-
-
-}
+TimingPointList superimpose(TimingPointList base,
+                            const TimingPointList &factor,
+                            double (*fptr)(double, double));
 }
 
 #endif // OSUALGORITHM_H
