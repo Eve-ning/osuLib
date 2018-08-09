@@ -170,22 +170,6 @@ OsuObjList_From copyTo(const OsuObjList_From &from,
     return output;
 }
 
-// Get Unique Offset List
-template<class OsuObjList>
-QList<double> unqOffsetList(const OsuObjList &value) {
-    QList<double> v_offsetList = value.offsetList();
-    QList<double> unq_offsetList = {};
-
-    std::for_each(v_offsetList.begin(), v_offsetList.end(), [&](double &offset) {
-        if (unq_offsetList.indexOf(offset) < 0) {
-            unq_offsetList.append(offset);
-        }
-    });
-
-    return unq_offsetList;
-}
-// Convert Editor HitObject to HitObjectList
-
 // Generate Stutter SVs in between offsets in OsuObjectList
 template<class ReturnType = SliderVelocity, class OsuObjList>
 TimingPointList stutter(const OsuObjList &value,
@@ -259,7 +243,7 @@ TimingPointList stutter(const OsuObjList &value,
 
     // Create the output
     TimingPointList stutterList = {};
-    QList<double> v_offsetList = unqOffsetList(value);
+    QList<double> v_offsetList = value.unqOffsetList();
     double length = 0;
 
     // Note that we only access every index except the last

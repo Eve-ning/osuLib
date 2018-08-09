@@ -75,6 +75,19 @@ public:
     virtual typename QList<std::shared_ptr<ObjType>>::const_iterator begin() const { return m_value.begin(); }
     virtual typename QList<std::shared_ptr<ObjType>>::const_iterator end() const { return m_value.end(); }
 
+    QList<double> unqOffsetList() const {
+        QList<double> v_offsetList = offsetList();
+        QList<double> unq_offsetList = {};
+
+        std::for_each(v_offsetList.begin(), v_offsetList.end(), [&](double &offset) {
+            if (unq_offsetList.indexOf(offset) < 0) {
+                unq_offsetList.append(offset);
+            }
+        });
+
+        return unq_offsetList;
+    }
+
 protected:
 
     QList<std::shared_ptr<ObjType>> m_value = {};
