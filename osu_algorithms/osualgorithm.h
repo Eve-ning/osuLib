@@ -34,6 +34,15 @@ int countInRange(const OsuObjList &value,
     return counter;
 }
 
+// References countInRange and gets density
+template<class OsuObjList>
+double densityInRange(const OsuObjList &value,
+                      const double &lowerBound,
+                      const double &upperBound,
+                      const bool &inclusive = true){
+    return (countInRange(value, lowerBound, upperBound, inclusive) / (upperBound - lowerBound));
+}
+
 // Adjusts the whole TimingPointList so that it reaches the specified average SV
 template<class AdjustType>
 TimingPointList adjustToAverage(TimingPointList value,
@@ -79,9 +88,9 @@ enum class SCALE_OPTIONS {
 
 // Scales ObjectList
 template<class OsuObjList>
-OsuObjList scale (OsuObjList value,
-                  const double &scaleFactor,
-                  const double &scaleReference) {
+OsuObjList scale(OsuObjList value,
+                 const double &scaleFactor,
+                 const double &scaleReference) {
 
     auto v_offsetList = value.offsetList();
     std::for_each(v_offsetList.begin(),
@@ -142,16 +151,13 @@ OsuObjList moveTo(OsuObjList value,
     return moveBy(value, moveFactor);
 }
 
-// Generate Normalize SVs
-TimingPointList normalize(const TimingPointList &value, const double &referenceBPM);
-
 // Copy Objects from ObjList to other ObjList's offset
-template<class CopyFrom, class CopyTo>
-CopyFrom copyTo(const CopyFrom &from,
-                const CopyTo &to,
+template<class OsuObjList_From, class OsuObjList_To>
+OsuObjList_From copyTo(const OsuObjList_From &from,
+                const OsuObjList_To &to,
                 bool anchorOnStart = true){
 
-    CopyFrom output = {};
+    OsuObjList_From output = {};
 
     QList<double> to_offsetList = {};
     to_offsetList = to.offsetList();
@@ -178,9 +184,7 @@ QList<double> unqOffsetList(const OsuObjList &value) {
 
     return unq_offsetList;
 }
-
 // Convert Editor HitObject to HitObjectList
-HitObjectList readEHO(const QString &value);
 
 // Generate Stutter SVs in between offsets in OsuObjectList
 template<class ReturnType = SliderVelocity, class OsuObjList>
@@ -279,9 +283,9 @@ TimingPointList stutter(const OsuObjList &value,
     return stutterList;
 }
 
-TimingPointList superimpose(TimingPointList base,
-                            const TimingPointList &factor,
-                            double (*fptr)(double, double));
+
+
+
 }
 
 #endif // OSUALGORITHM_H

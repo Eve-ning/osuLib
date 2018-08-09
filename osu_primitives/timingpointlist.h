@@ -63,6 +63,13 @@ public:
     TimingPointList toSliderVelocity();
     TimingPointList toBPM();
 
+    TimingPointList normalize(const double &referenceBPM) const ;
+
+    // Takes one other TimingPointList and "superimposes" together (cross mutliply)
+    void superimpose(const TimingPointList &factor,
+                     double (*fptr)(double, double));
+
+
 protected:
 
 private:

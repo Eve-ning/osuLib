@@ -11,6 +11,34 @@ HitObjectList::HitObjectList(QStringList stringList, const int &keys)
     setValue(input);
 }
 
+HitObjectList HitObjectList::readEHO(const QString &value)
+{
+    QString rValue = value;
+    QTextStream ts(&rValue);
+
+    char delim;
+
+    // Find the open bracket
+    while (delim != '(' && !ts.atEnd()) {
+        ts >> delim;
+    }
+
+    double offset = 0;
+    double column = 0;
+
+    HitObjectList HOList = {};
+
+    while (!ts.atEnd()) {
+        ts >> offset >> delim >> column >> delim;
+        HOList.append(std::make_shared<NormalNote>(NormalNote(column, offset)));
+        if (delim == ')') {
+            break;
+        }
+    }
+
+    return HOList;
+}
+
 QList<std::shared_ptr<HitObject> > HitObjectList::value() const
 {
     return m_value;

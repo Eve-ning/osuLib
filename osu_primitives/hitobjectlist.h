@@ -26,6 +26,9 @@ public:
 
     std::shared_ptr<HitObjectList> clone() const { return std::static_pointer_cast<HitObjectList>(doClone()); }
 
+    // Convert Editor HitObject to HitObjectList
+    static HitObjectList readEHO(const QString &value);
+
     bool operator ==(const HitObjectList &HOList) { return m_value == HOList.m_value; }
     bool operator !=(const HitObjectList &HOList) { return m_value != HOList.m_value; }
 

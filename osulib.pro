@@ -24,7 +24,8 @@ SOURCES += main.cpp \
     osu_primitives/timingpointlist.cpp \
     osu_algorithms/osualgorithm.cpp \
     osu_primitives/osuobject.cpp \
-    osu_primitives/osuobjectlist.cpp
+    osu_primitives/osuobjectlist.cpp \
+    osustream.cpp
 
 HEADERS += \
     primitives/bounded/boundedint.h \
@@ -37,7 +38,8 @@ HEADERS += \
     osu_primitives/timingpointlist.h \
     osu_algorithms/osualgorithm.h \
     osu_primitives/osuobject.h \
-    osu_primitives/osuobjectlist.h
+    osu_primitives/osuobjectlist.h \
+    osustream.h
 
 DISTFILES += \
     eg_hitObjectList.txt \

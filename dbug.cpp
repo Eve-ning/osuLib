@@ -268,7 +268,7 @@ bool Dbug::debug_normalize()
                                                  "100,150,4,1,1,45,1,0",   // BPM: 400
                                                  "200,300,4,1,1,45,1,0"}); // BPM: 200
 
-    TimingPointList test = OsuAlgorithm::normalize(eg_TPList, 200);
+    TimingPointList test = eg_TPList.normalize(200);
 
     DEBUGLABEL("Normalize");
     compareDebug(QList<double>({2.0, 0.5, 1.0}), test.valueList());
@@ -283,7 +283,7 @@ bool Dbug::debug_stutterSV()
 
 //    TimingPointList test = OsuAlgorithm::stutterSV(eg_TPList, 0.5, 1.0, 1.0);
 
-    HitObjectList eg_HOList = HitObjectList(OsuAlgorithm::readEHO("00:00:000 (0|1,100|1,400|1) - "));
+    HitObjectList eg_HOList = HitObjectList::readEHO("00:00:000 (0|1,100|1,400|1) - ");
     TimingPointList test = OsuAlgorithm::stutter<BPM>(eg_HOList, 0.5, 1.0, 1.0, BPM::minBound(), 100000);
 
     DEBUGLABEL("StutterSV");
@@ -297,7 +297,7 @@ bool Dbug::debug_copyTo()
     TimingPointList TPList = TimingPointList({"0,-200,4,1,1,45,0,0",
                                               "100,-166,4,1,1,45,0,0"});
 
-    HitObjectList HOList = OsuAlgorithm::readEHO("00:01:000 (1000|1,2000|1) - ");
+    HitObjectList HOList = HitObjectList::readEHO("00:01:000 (1000|1,2000|1) - ");
 
     OsuAlgorithm::copyTo(TPList,
                          HOList, true);
@@ -312,8 +312,8 @@ bool Dbug::debug_supImp()
     TimingPointList baseTP = TimingPointList({"100,-200,4,1,1,45,0,0",
                                               "200,-50,4,1,1,45,0,0"});
 
-    baseTP = OsuAlgorithm::supImp(baseTP, factTP, [](double base, double fact) -> double {
-                             return base + fact;
+    baseTP.superimpose(factTP, [](double base, double fact) -> double {
+        return base + fact;
     });
 
     qDebug() << baseTP.toStringList();
