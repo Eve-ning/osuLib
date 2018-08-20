@@ -22,23 +22,23 @@
     <Filter Include="Header Files\redact">
       <UniqueIdentifier>{bc97adb2-ba3c-46c6-aaf6-3afd7f429cff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\osu_primitives">
+      <UniqueIdentifier>{bffbfc6d-9a06-470a-b73e-f92533fc8c6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\osu_primitives">
+      <UniqueIdentifier>{7acf3d68-7408-4955-bc37-03a925f4a095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\osuobj_primitives">
+      <UniqueIdentifier>{2d723e7b-d522-44d0-b3d8-cb7fb91c9163}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\osuobj_primitives">
+      <UniqueIdentifier>{aeb6bc73-0a22-4c61-ba03-3e9492eaa0fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TimingPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HitObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HitObjectList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TimingPointList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BoundedDouble.h">
       <Filter>Header Files\primitives</Filter>
     </ClInclude>
@@ -47,12 +47,6 @@
     </ClInclude>
     <ClInclude Include="SampleSet.h">
       <Filter>Header Files\primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="OsuObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OsuObjectList.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files\redact</Filter>
@@ -64,7 +58,31 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OsuAlgorithm.h">
+      <Filter>Header Files\osu_primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="OsuObject.h">
+      <Filter>Header Files\osu_primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="OsuObjectList.h">
+      <Filter>Header Files\osu_primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="HitObject.h">
+      <Filter>Header Files\osuobj_primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="HitObjectList.h">
+      <Filter>Header Files\osuobj_primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="TimingPoint.h">
+      <Filter>Header Files\osuobj_primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="TimingPointList.h">
+      <Filter>Header Files\osuobj_primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteObject.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OsuException.h">
+      <Filter>Header Files\osu_primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -72,24 +90,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="osuParse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TimingPoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HitObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HitObjectList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TimingPointList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OsuObj.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OsuObjList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BoundedDouble.cpp">
@@ -102,7 +102,31 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OsuAlgorithm.cpp">
+      <Filter>Source Files\osu_primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="OsuObj.cpp">
+      <Filter>Source Files\osu_primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="OsuObjList.cpp">
+      <Filter>Source Files\osu_primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="TimingPoint.cpp">
+      <Filter>Source Files\osuobj_primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="TimingPointList.cpp">
+      <Filter>Source Files\osuobj_primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="HitObjectList.cpp">
+      <Filter>Source Files\osuobj_primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="HitObject.cpp">
+      <Filter>Source Files\osuobj_primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteObject.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OsuException.cpp">
+      <Filter>Source Files\osu_primitives</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

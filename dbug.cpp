@@ -303,7 +303,7 @@ bool Dbug::debug_copyTo()
 	// "448,192,197504,1,0,0:0:0:0:"
 	// }), 4);
 
-	OsuAlgorithm::copyTo(TPList, HOList, true);
+	TPList = OsuAlgorithm::copyTo(TPList, HOList, true);
 
 	printStringList(TPList.toStringList());
 

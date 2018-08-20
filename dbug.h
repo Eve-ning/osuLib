@@ -1,3 +1,4 @@
+#pragma once
 #ifndef DBUG_H
 #define DBUG_H
 

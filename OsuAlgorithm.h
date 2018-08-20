@@ -126,19 +126,21 @@ namespace OsuAlgorithm
 
 	// Moves List by an ms value
 	template<class OsuObjList>
-	OsuObjList moveBy(OsuObjList value,
+	OsuObjList moveBy(const OsuObjList &value,
 		const double &moveFactor) {
+		OsuObjList output = value;
+
 		std::vector<double> v_offsetList = value.offsetList();
 		std::for_each(v_offsetList.begin(), v_offsetList.end(),
 			[&](double &offset) { offset += moveFactor; });
-		value.setOffsetList(v_offsetList);
+		output.setOffsetList(v_offsetList);
 
-		return value;
+		return output;
 	}
 
 	// Moves List by an ms value
 	template<class OsuObjList>
-	OsuObjList moveTo(OsuObjList value,
+	OsuObjList moveTo(const OsuObjList &value,
 		const double &moveReference,
 		bool anchorOnStart = true) {
 		// Anchor on start means that the whole pattern will START ON specified moveReference value
@@ -166,15 +168,10 @@ namespace OsuAlgorithm
 		std::vector<double> to_offsetList = {};
 		to_offsetList = to.offsetList();
 
-		//std::for_each(to_offsetList.begin(), to_offsetList.end(), [=, &output](double &offset) mutable {
-		//	output.append(moveTo(from, offset, anchorOnStart).clone());
-		//});
-
 		for (int i = 0; i < to_offsetList.size(); i ++) {
 			output.append(moveTo(from, to_offsetList[i], anchorOnStart).clone());
 		}
 
-		//std::cout << output.toStringList();
 		return output;
 	}
 

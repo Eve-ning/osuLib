@@ -98,7 +98,11 @@ protected:
 
 	template <typename T>
 	bool sameSize(std::vector<T> compare) {
-		return this->size() == compare.size();
+		if (this->size() == compare.size()) {
+			return true;
+		}
+
+		throw OsuException(OsuException::ID::MISMATCH_SET_LENGTH);
 	}
 
 	virtual std::shared_ptr<OsuObjectList> doClone() const {

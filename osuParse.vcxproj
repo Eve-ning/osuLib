@@ -151,9 +151,11 @@
     <ClInclude Include="HitObject.h" />
     <ClInclude Include="HitObjectList.h" />
     <ClInclude Include="OsuAlgorithm.h" />
+    <ClInclude Include="OsuException.h" />
     <ClInclude Include="OsuObject.h" />
     <ClInclude Include="OsuObjectList.h" />
     <ClInclude Include="SampleSet.h" />
+    <ClInclude Include="SpriteObject.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimingPoint.h" />
@@ -166,9 +168,11 @@
     <ClCompile Include="HitObject.cpp" />
     <ClCompile Include="HitObjectList.cpp" />
     <ClCompile Include="OsuAlgorithm.cpp" />
+    <ClCompile Include="OsuException.cpp" />
     <ClCompile Include="OsuObj.cpp" />
     <ClCompile Include="OsuObjList.cpp" />
     <ClCompile Include="osuParse.cpp" />
+    <ClCompile Include="SpriteObject.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -6,6 +6,7 @@
 #include "BoundedDouble.h"
 #include "BoundedInt.h"
 #include "SampleSet.h"
+#include "OsuException.h"
 #include <boost/fusion/container/list.hpp>
 #include <boost/fusion/include/list.hpp>
 #include <boost/fusion/container/list/list_fwd.hpp>

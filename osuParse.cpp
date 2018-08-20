@@ -6,13 +6,23 @@
 
 int main()
 {
+	// Changes std::cout << (bool) outputs to True & False instead of 1 or 0.
 	std::cout << std::boolalpha;
 
-	Dbug::primitive_debug();
-	Dbug::algorithm_debug();
+	bool DEBUG_FLAG = true;
 
-	int test = 0;
-	std::cin >> test;
+	if (DEBUG_FLAG) {
+		// Debug functions
+		Dbug::primitive_debug();
+		Dbug::algorithm_debug();
+	}
+
+
+	
+	// Pauses progam before closing
+	int PAUSE = 0;
+	std::cout << "Enter any key to EXIT. ";
+	std::cin >> PAUSE;
     return 0;
 }
 
