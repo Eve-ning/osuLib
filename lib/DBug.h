@@ -7,8 +7,8 @@
 #define DEBUGLABEL(title) std::cout << "[ ## " << title << " ## ]" << std::endl
 #define DEBUGSEP std::cout << std::endl << "- - - - - - - -" << std::endl
 
-#include "TimingPointList.h"
-#include "HitObjectList.h"
+#include "primitives/derived_chart/TimingPointList.h"
+#include "primitives/derived_chart/HitObjectList.h"
 #include "OsuAlgorithm.h"
 #include <fstream>
 

@@ -2,8 +2,8 @@
 #ifndef OSUALGORITHM_H
 #define OSUALGORITHM_H
 
-#include "HitObjectList.h"
-#include "TimingPointlist.h"
+#include "primitives/derived_chart/TimingPointList.h"
+#include "primitives/derived_chart/HitObjectList.h"
 
 namespace OsuAlgorithm
 {

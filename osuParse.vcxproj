@@ -145,42 +145,39 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoundedDouble.h" />
-    <ClInclude Include="BoundedInt.h" />
-    <ClInclude Include="DBug.h" />
-    <ClInclude Include="HitObject.h" />
-    <ClInclude Include="HitObjectList.h" />
-    <ClInclude Include="OsuAlgorithm.h" />
-    <ClInclude Include="OsuException.h" />
-    <ClInclude Include="OsuObject.h" />
-    <ClInclude Include="OsuObjectList.h" />
-    <ClInclude Include="SampleSet.h" />
-    <ClInclude Include="SpriteObject.h" />
+    <ClInclude Include="lib\DBug.h" />
+    <ClInclude Include="lib\OsuAlgorithm.h" />
+    <ClInclude Include="lib\OsuException.h" />
+    <ClInclude Include="lib\primitives\bounded\BoundedDouble.h" />
+    <ClInclude Include="lib\primitives\bounded\BoundedInt.h" />
+    <ClInclude Include="lib\primitives\derived_chart\HitObject.h" />
+    <ClInclude Include="lib\primitives\derived_chart\HitObjectList.h" />
+    <ClInclude Include="lib\primitives\derived_chart\TimingPoint.h" />
+    <ClInclude Include="lib\primitives\derived_chart\TimingPointList.h" />
+    <ClInclude Include="lib\primitives\derived_sb\SpriteObject.h" />
+    <ClInclude Include="lib\primitives\enums\SampleSet.h" />
+    <ClInclude Include="lib\primitives\OsuObject.h" />
+    <ClInclude Include="lib\primitives\OsuObjectList.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TimingPoint.h" />
-    <ClInclude Include="TimingPointList.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BoundedDouble.cpp" />
-    <ClCompile Include="BoundedInt.cpp" />
-    <ClCompile Include="DBug.cpp" />
-    <ClCompile Include="HitObject.cpp" />
-    <ClCompile Include="HitObjectList.cpp" />
-    <ClCompile Include="OsuAlgorithm.cpp" />
-    <ClCompile Include="OsuException.cpp" />
-    <ClCompile Include="OsuObj.cpp" />
-    <ClCompile Include="OsuObjList.cpp" />
+    <ClCompile Include="lib\DBug.cpp" />
+    <ClCompile Include="lib\OsuAlgorithm.cpp" />
+    <ClCompile Include="lib\OsuException.cpp" />
+    <ClCompile Include="lib\primitives\derived_chart\HitObject.cpp" />
+    <ClCompile Include="lib\primitives\derived_chart\HitObjectList.cpp" />
+    <ClCompile Include="lib\primitives\derived_chart\TimingPoint.cpp" />
+    <ClCompile Include="lib\primitives\derived_chart\TimingPointList.cpp" />
+    <ClCompile Include="lib\primitives\derived_sb\SpriteObject.cpp" />
+    <ClCompile Include="lib\primitives\OsuObject.cpp" />
     <ClCompile Include="osuParse.cpp" />
-    <ClCompile Include="SpriteObject.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TimingPoint.cpp" />
-    <ClCompile Include="TimingPointList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

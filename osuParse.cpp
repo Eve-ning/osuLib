@@ -1,8 +1,7 @@
 // osuParse.cpp : Defines the entry point for the console application.
-//
 
 #include "stdafx.h"
-#include "DBug.h"
+#include "lib/DBug.h"
 
 int main()
 {

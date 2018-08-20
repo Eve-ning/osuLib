@@ -1,5 +1,5 @@
 #pragma once
-#include "osuobject.h"
+#include "../OsuObject.h"
 
 class TimingPoint : public OsuObject
 {

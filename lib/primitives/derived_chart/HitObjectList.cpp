@@ -39,17 +39,6 @@ HitObjectList::HitObjectList(std::string EHO)
 		std::shared_ptr<HitObject> tempUPtr = std::make_shared<NormalNote>(NormalNote(column, offset));
 		m_value.push_back(std::move(tempUPtr));
 	}
-
-	if (*it != ')') {
-		std::cout << std::endl;
-		std::cout << *it << std::endl;
-		std::cout << std::endl;
-	}
-	else {
-		std::cout << std::endl;
-		std::cout << "OKAY" << std::endl;
-		std::cout << std::endl;
-	}
 }
 
 std::vector<std::shared_ptr<HitObject> > HitObjectList::value() const

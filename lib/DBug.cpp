@@ -266,8 +266,8 @@ bool Dbug::debug_moveTo()
 bool Dbug::debug_normalize()
 {
 	TimingPointList eg_TPList = TimingPointList({ "0,600,4,1,1,45,1,0",     // BPM: 100
-		"100,150,4,1,1,45,1,0",   // BPM: 400
-		"200,300,4,1,1,45,1,0" }); // BPM: 200
+											      "100,150,4,1,1,45,1,0",   // BPM: 400
+											      "200,300,4,1,1,45,1,0" });// BPM: 200
 
 	TimingPointList test = eg_TPList.normalize(200);
 
@@ -279,13 +279,8 @@ bool Dbug::debug_normalize()
 
 bool Dbug::debug_stutter()
 {
-	//    TimingPointList eg_TPList = TimingPointList({"0,-200,4,1,1,45,0,0",
-	//                                                 "100,-166,4,1,1,45,0,0"});
-
-	//    TimingPointList test = OsuAlgorithm::stutterSV(eg_TPList, 0.5, 1.0, 1.0);
-
 	HitObjectList eg_HOList = HitObjectList("00:00:000 (0|1,100|1,400|1) - ");
-	TimingPointList test = OsuAlgorithm::stutter<BPM>(eg_HOList, 0.5, 1.0, 1.0, BPM::minBound(), 100000);
+	TimingPointList test = OsuAlgorithm::stutter<SliderVelocity>(eg_HOList, 0.5, 0.5, 1.0);
 
 	DEBUGLABEL("StutterSV");
 	printStringList(test.toStringList());
@@ -299,27 +294,26 @@ bool Dbug::debug_copyTo()
 																		"100,-166,4,1,1,45,0,0" }));
 
 	HitObjectList HOList = HitObjectList("00:01:000 (1000|1,2000|1) - ");
-	//	HitObjectList HOList = HitObjectList(std::vector<std::string>({ "192,192,197406,1,0,0:0:0:0:",
-	// "448,192,197504,1,0,0:0:0:0:"
-	// }), 4);
 
 	TPList = OsuAlgorithm::copyTo(TPList, HOList, true);
 
-	printStringList(TPList.toStringList());
+	compareDebug(std::vector<double> {1000, 1100, 2000, 2100}, TPList.offsetList());
 
 	return true;
 }
 
 bool Dbug::debug_supImp()
 {
-	TimingPointList factTP = TimingPointList({ "0,-200,4,1,1,45,0,0" });
+	TimingPointList factTP = TimingPointList({ "0,-200,4,1,1,45,0,0" }); // 0.5
 
-	TimingPointList baseTP = TimingPointList(std::vector<std::string>({ "100,-200,4,1,1,45,0,0",
-																		"200,-50,4,1,1,45,0,0" }));
+	TimingPointList baseTP = TimingPointList(std::vector<std::string>({ "100,-200,4,1,1,45,0,0",    // 0.5
+																		"200,-50,4,1,1,45,0,0" })); // 2.0
 
 	baseTP.superimpose(factTP, [](double base, double fact) -> double {
-		return base + fact;
+		return base * fact;
 	});
+
+	compareDebug(std::vector<double> {0.25, 1.0}, baseTP.valueList());
 
 	printStringList(baseTP.toStringList());
 

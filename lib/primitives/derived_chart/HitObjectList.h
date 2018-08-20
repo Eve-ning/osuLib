@@ -1,6 +1,6 @@
 #pragma once
 #include "hitobject.h"
-#include "osuobjectlist.h"
+#include "../OsuObjectList.h"
 
 class HitObjectList final : public OsuObjectList<HitObject>
 {

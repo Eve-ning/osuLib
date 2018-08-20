@@ -72,8 +72,10 @@ std::shared_ptr<TimingPoint> TimingPoint::fromString(std::string string)
 	int		isBPM;
 	int		isKiai;
 
+	bool parse_flag = true;
+
 	// Breaks down into TimingPoint parameters
-	qi::parse(it, string.end(),
+	parse_flag = qi::parse(it, string.end(),
 		qi::double_ >> char(',') >>
 		qi::double_ >> char(',') >>
 		qi::int_ >> char(',') >>
@@ -83,6 +85,10 @@ std::shared_ptr<TimingPoint> TimingPoint::fromString(std::string string)
 		qi::int_ >> char(',') >>
 		qi::int_,
 		offset, code, metronome, sample, sampleSetIndex, volume, isBPM, isKiai);
+
+	if (!parse_flag) {
+		throw OsuException(OsuException::ID::PARSE_FAIL);
+	}
 
 	// With respect to the isBPM value, we assign different values
 	if (isBPM) {
@@ -105,6 +111,8 @@ std::shared_ptr<TimingPoint> TimingPoint::fromString(std::string string)
 				volume,
 				isKiai));
 	}
+
+
 }
 
 

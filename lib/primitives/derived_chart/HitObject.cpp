@@ -106,30 +106,36 @@ std::shared_ptr<HitObject> HitObject::fromString(std::string string,
 
 	auto it = string.begin();
 
+	bool parse_flag = true;
+
 	// Breaks down the HitObject Format Pt.1
-	qi::parse(it, string.end(),
+	parse_flag = qi::parse(it, string.end(),
 		qi::int_ >> char(',') >>		// xAxis
 		qi::int_ >> char(',') >>		// yAxis
 		qi::double_ >> char(',') >>		// offset
 		qi::int_ >> char(',') >>		// noteType
 		qi::int_ >> char(',')			// hitsound
-		,xAxis, yAxis, offset, noteType, hitsound);
+		, xAxis, yAxis, offset, noteType, hitsound);
 	
 	// If it's a Long Note, there should be an additional parameter here
 	if (isLongNote) {
-		qi::parse(it, string.end(),
+		parse_flag &= qi::parse(it, string.end(),
 			qi::double_ >> char(':'),
 			offsetEnd);
 	}
 
 	// Breaks down the HitObject Format Pt.2
-	qi::parse(it, string.end(),
+	parse_flag &= qi::parse(it, string.end(),
 		qi::int_ >> char(':') >>		// sample
 		qi::int_ >> char(':') >>		// addition
 		qi::int_ >> char(':') >>		// custom
 		qi::int_ >> char(':') >>		// volume
 		*qi::char_,						// hitsoundFile
 		sample, addition, custom, volume, hitsoundFile);
+
+	if (!parse_flag) {
+		throw OsuException(OsuException::ID::PARSE_FAIL);
+	}
 
 	// Create Objects according to Criteria
 	if (isLongNote) {

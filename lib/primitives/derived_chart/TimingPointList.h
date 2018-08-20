@@ -1,6 +1,6 @@
 #pragma once
 #include "timingpoint.h"
-#include "osuobjectlist.h"
+#include "../OsuObjectList.h"
 
 class TimingPointList final : public OsuObjectList<TimingPoint>
 {

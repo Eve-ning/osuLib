@@ -3,10 +3,10 @@
 #include <boost/spirit/include/qi.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
-#include "lib/primitives/bounded/BoundedDouble.h"
-#include "lib/primitives/bounded/BoundedInt.h"
-#include "lib/primitives/enums/SampleSet.h"
-#include "OsuException.h"
+#include "bounded/BoundedDouble.h"
+#include "bounded/BoundedInt.h"
+#include "enums/SampleSet.h"
+#include "../OsuException.h"
 #include <boost/fusion/container/list.hpp>
 #include <boost/fusion/include/list.hpp>
 #include <boost/fusion/container/list/list_fwd.hpp>
