@@ -2,3 +2,4 @@
 *.autosave
 Debug
 .vscode
+.vcxproj
