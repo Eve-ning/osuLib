@@ -154,6 +154,7 @@
     <ClInclude Include="lib\primitives\derived_chart\HitObjectList.h" />
     <ClInclude Include="lib\primitives\derived_chart\TimingPoint.h" />
     <ClInclude Include="lib\primitives\derived_chart\TimingPointList.h" />
+    <ClInclude Include="lib\primitives\derived_sb\SpriteCommand.h" />
     <ClInclude Include="lib\primitives\derived_sb\SpriteObject.h" />
     <ClInclude Include="lib\primitives\enums\SampleSet.h" />
     <ClInclude Include="lib\primitives\OsuObject.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="lib\primitives\derived_chart\HitObjectList.cpp" />
     <ClCompile Include="lib\primitives\derived_chart\TimingPoint.cpp" />
     <ClCompile Include="lib\primitives\derived_chart\TimingPointList.cpp" />
+    <ClCompile Include="lib\primitives\derived_sb\SpriteCommand.cpp" />
     <ClCompile Include="lib\primitives\derived_sb\SpriteObject.cpp" />
     <ClCompile Include="lib\primitives\OsuObject.cpp" />
     <ClCompile Include="osuParse.cpp" />

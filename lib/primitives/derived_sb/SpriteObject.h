@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "../../OsuException.h"
+#include "SpriteCommand.h"
 
 class SpriteObject
 {
@@ -33,5 +34,6 @@ private:
 	LAYER layer = LAYER::Foreground;
 	std::string filePath = "";
 	ORIGIN origin = ORIGIN::TopLeft;
+	std::vector<SpriteCommand> commands;
 };
 

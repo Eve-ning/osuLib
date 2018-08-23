@@ -9,6 +9,7 @@
 
 #include "primitives/derived_chart/TimingPointList.h"
 #include "primitives/derived_chart/HitObjectList.h"
+#include "primitives/derived_sb/SpriteCommand.h"
 #include "OsuAlgorithm.h"
 #include <fstream>
 
@@ -17,7 +18,7 @@ class Dbug
 public:
 
 	static void primitive_debug() {
-		DEBUGTITLE("Debug");
+		DEBUGTITLE("PRIMITIVE DEBUG");
 
 		DEBUGTITLE("BoundedInt");
 		if (debug_boundedInt()) { DEBUGPASS("BoundedInt"); }
@@ -46,7 +47,7 @@ public:
 		DEBUGPASS("Debug");
 	}
 	static void algorithm_debug() {
-		DEBUGTITLE("Debug");
+		DEBUGTITLE("ALGO DEBUG");
 
 		DEBUGTITLE("countInRange");
 		if (debug_countInRange()) { DEBUGPASS("countInRange"); }
@@ -86,6 +87,13 @@ public:
 
 		DEBUGPASS("Debug");
 	}
+	static void sb_debug() {
+		DEBUGTITLE("SB DEBUG");
+
+		DEBUGTITLE("allSBPrim");
+		if (debug_allSBPrim()) { DEBUGPASS("allSBPrim"); }
+		DEBUGSEP;
+	}
 
 private:
 
@@ -105,6 +113,8 @@ private:
 	static bool debug_stutter();
 	static bool debug_copyTo();
 	static bool debug_supImp();
+
+	static bool debug_allSBPrim();
 
 	static bool compareDebug(const double &expected,
 		const double &given);

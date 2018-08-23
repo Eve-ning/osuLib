@@ -19,12 +19,6 @@
     <Filter Include="Header Files\redact">
       <UniqueIdentifier>{bc97adb2-ba3c-46c6-aaf6-3afd7f429cff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\osu_primitives">
-      <UniqueIdentifier>{7acf3d68-7408-4955-bc37-03a925f4a095}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\osuobj_primitives">
-      <UniqueIdentifier>{2d723e7b-d522-44d0-b3d8-cb7fb91c9163}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\derived">
       <UniqueIdentifier>{d80e1688-9c74-4349-842b-874cb2c9ea9a}</UniqueIdentifier>
     </Filter>
@@ -36,6 +30,15 @@
     </Filter>
     <Filter Include="Source Files\base">
       <UniqueIdentifier>{0dd88023-f4cc-4728-8827-4a92d7f02a1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\redacted">
+      <UniqueIdentifier>{0823e229-b08b-4948-8174-fb32da542c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\sb">
+      <UniqueIdentifier>{97cc3d64-22ea-4231-a4cb-9405b4aa830e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\sb">
+      <UniqueIdentifier>{91216598-c44e-485a-a0ee-efb91a73bf4d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,9 +66,6 @@
     <ClInclude Include="lib\OsuException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\primitives\derived_sb\SpriteObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lib\primitives\enums\SampleSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -87,11 +87,14 @@
     <ClInclude Include="lib\primitives\OsuObjectList.h">
       <Filter>Header Files\base</Filter>
     </ClInclude>
+    <ClInclude Include="lib\primitives\derived_sb\SpriteCommand.h">
+      <Filter>Header Files\sb</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\primitives\derived_sb\SpriteObject.h">
+      <Filter>Header Files\sb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="osuParse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -99,9 +102,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lib\OsuAlgorithm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lib\primitives\derived_sb\SpriteObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lib\OsuException.cpp">
@@ -121,6 +121,15 @@
     </ClCompile>
     <ClCompile Include="lib\primitives\derived_chart\TimingPointList.cpp">
       <Filter>Source Files\derived</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files\redacted</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\primitives\derived_sb\SpriteCommand.cpp">
+      <Filter>Source Files\sb</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\primitives\derived_sb\SpriteObject.cpp">
+      <Filter>Source Files\sb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

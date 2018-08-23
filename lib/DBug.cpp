@@ -282,7 +282,7 @@ bool Dbug::debug_stutter()
 	HitObjectList eg_HOList = HitObjectList("00:00:000 (0|1,100|1,400|1) - ");
 	TimingPointList test = OsuAlgorithm::stutter<SliderVelocity>(eg_HOList, 0.5, 0.5, 1.0);
 
-	DEBUGLABEL("StutterSV");
+	DEBUGLABEL("Stutter");
 	printStringList(test.toStringList());
 
 	return true;
@@ -316,6 +316,21 @@ bool Dbug::debug_supImp()
 	compareDebug(std::vector<double> {0.25, 1.0}, baseTP.valueList());
 
 	printStringList(baseTP.toStringList());
+
+	return true;
+}
+
+bool Dbug::debug_allSBPrim()
+{
+	auto move_test   = SCommand::Move(10, 20, 30, 40, SpriteCommand::EASING::Bounce_In);
+	auto fade_test   = SCommand::Fade(10, 20, SpriteCommand::EASING::Bounce_In);
+	auto rotate_test = SCommand::Rotate(10, 20, SpriteCommand::EASING::Bounce_In);
+	auto color_test  = SCommand::Color(255, 255, 255, 0, 0, 0, SpriteCommand::EASING::Bounce_In);
+
+	std::cout << move_test  .toString() << std::endl;
+	std::cout << fade_test  .toString() << std::endl;
+	std::cout << rotate_test.toString() << std::endl;
+	std::cout << color_test .toString() << std::endl;
 
 	return true;
 }
