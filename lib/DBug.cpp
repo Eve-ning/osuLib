@@ -164,12 +164,6 @@ bool Dbug::debug_countInRange()
 
 	compareDebug(2301, OsuAlgorithm::countInRange(eg_HOList, 108639, 290322, true));
 
-	/*int countInRange(const std::shared_ptr<OsuObjectList<T>> &value,
-	const double &lowerBound,
-	const double &upperBound,
-	const bool &inclusive = true);
-	*/
-
 	DEBUGLABEL("TimingPointList Count");
 	TimingPointList eg_TPList = getEgTP();
 
@@ -322,16 +316,39 @@ bool Dbug::debug_supImp()
 
 bool Dbug::debug_allSBPrim()
 {
-	auto move_test   = SCommand::Move(10, 20, 30, 40, SpriteCommand::EASING::Bounce_In);
-	auto fade_test   = SCommand::Fade(10, 20, SpriteCommand::EASING::Bounce_In);
-	auto rotate_test = SCommand::Rotate(10, 20, SpriteCommand::EASING::Bounce_In);
-	auto color_test  = SCommand::Color(255, 255, 255, 0, 0, 0, SpriteCommand::EASING::Bounce_In);
+	auto move_test   = Command::Move(200, 350, 10, 20, 30, 40, EASING::Bounce_In);
+	auto fade_test   = Command::Fade(200, 350, 10, 20, EASING::Bounce_Out);
+	auto rotate_test = Command::Rotate(200, 350, 10, 20, EASING::Bounce_InOut);
+	auto color_test  = Command::Color(200, 350, 255, 255, 255, 0, 0, 0, EASING::Linear);
 
 	std::cout << move_test  .toString() << std::endl;
 	std::cout << fade_test  .toString() << std::endl;
 	std::cout << rotate_test.toString() << std::endl;
 	std::cout << color_test .toString() << std::endl;
 
+	compareDebug("_M,32,200,350,10,20,30,40"	 ,move_test  .toString());
+	compareDebug("_F,33,200,350,10,20"			 ,fade_test  .toString());
+	compareDebug("_R,34,200,350,10,20"			 ,rotate_test.toString());
+	compareDebug("_C,0,200,350,255,255,255,0,0,0",color_test .toString());
+
+	SpriteObject sprite_test = SpriteObject("object.png", SpriteObject::LAYER::Background);
+	sprite_test.addCommand(move_test);
+	sprite_test.addCommand(fade_test);
+	sprite_test.addCommand(rotate_test);
+	sprite_test.addCommand(color_test);
+
+	sprite_test.getCommand(0)->setStartTime(30);
+
+	std::vector <std::string> spriteString_expected =
+		std::vector<std::string>{
+			"Sprite,Background,TopLeft,object.png,320,240",
+			"_M,32,30,350,10,20,30,40",
+			"_F,33,200,350,10,20",
+			"_R,34,200,350,10,20",
+			"_C,0,200,350,255,255,255,0,0,0"
+	};
+
+	compareDebug(spriteString_expected, sprite_test.toStringList());
 	return true;
 }
 

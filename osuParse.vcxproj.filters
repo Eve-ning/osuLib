@@ -66,9 +66,6 @@
     <ClInclude Include="lib\OsuException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\primitives\enums\SampleSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lib\primitives\derived_chart\HitObject.h">
       <Filter>Header Files\derived</Filter>
     </ClInclude>
@@ -92,6 +89,15 @@
     </ClInclude>
     <ClInclude Include="lib\primitives\derived_sb\SpriteObject.h">
       <Filter>Header Files\sb</Filter>
+    </ClInclude>
+    <ClInclude Include="OsuMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OsuMapSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\primitives\enums\SampleSet.h">
+      <Filter>Header Files\primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +136,12 @@
     </ClCompile>
     <ClCompile Include="lib\primitives\derived_sb\SpriteObject.cpp">
       <Filter>Source Files\sb</Filter>
+    </ClCompile>
+    <ClCompile Include="OsuMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OsuMapSettings.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

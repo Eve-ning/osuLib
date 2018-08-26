@@ -64,10 +64,6 @@ public:
 	// Takes one other TimingPointList and "superimposes" together (cross mutliply)
 	void superimpose(const TimingPointList &factor,
 		double(*fptr)(double, double));
-
-
-protected:
-
 private:
 	std::shared_ptr<OsuObjectList> doClone() const override {
 		std::vector<std::shared_ptr<TimingPoint>> output;

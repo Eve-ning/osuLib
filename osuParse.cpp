@@ -6,17 +6,22 @@
 
 int main()
 {
-	// Changes std::cout << (bool) outputs to True & False instead of 1 or 0.
-	std::cout << std::boolalpha;
+	try {
+		// Changes std::cout << (bool) outputs to True & False instead of 1 or 0.
+		std::cout << std::boolalpha;
 
-	bool DEBUG_FLAG = false;
+		bool DEBUG_FLAG = false;
 
-	if (DEBUG_FLAG) {
-		// Debug functions
-		Dbug::primitive_debug();
-		Dbug::algorithm_debug();
+		if (DEBUG_FLAG) {
+			// Debug functions
+			Dbug::primitive_debug();
+			Dbug::algorithm_debug();
+			Dbug::sb_debug();
+		}
 	}
-	Dbug::sb_debug();
+	catch (std::exception &e) {
+		std::cout << e.what() << std::endl;
+	}
 
 	
 	// Pauses progam before closing

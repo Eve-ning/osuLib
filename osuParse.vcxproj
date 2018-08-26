@@ -159,6 +159,8 @@
     <ClInclude Include="lib\primitives\enums\SampleSet.h" />
     <ClInclude Include="lib\primitives\OsuObject.h" />
     <ClInclude Include="lib\primitives\OsuObjectList.h" />
+    <ClInclude Include="OsuMap.h" />
+    <ClInclude Include="OsuMapSettings.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -173,6 +175,8 @@
     <ClCompile Include="lib\primitives\derived_sb\SpriteCommand.cpp" />
     <ClCompile Include="lib\primitives\derived_sb\SpriteObject.cpp" />
     <ClCompile Include="lib\primitives\OsuObject.cpp" />
+    <ClCompile Include="OsuMap.cpp" />
+    <ClCompile Include="OsuMapSettings.cpp" />
     <ClCompile Include="osuParse.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

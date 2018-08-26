@@ -9,7 +9,7 @@
 
 #include "primitives/derived_chart/TimingPointList.h"
 #include "primitives/derived_chart/HitObjectList.h"
-#include "primitives/derived_sb/SpriteCommand.h"
+#include "primitives/derived_sb/SpriteObject.h"
 #include "OsuAlgorithm.h"
 #include <fstream>
 
