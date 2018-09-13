@@ -1,20 +1,47 @@
-#include "stdafx.h"
-#include "OsuMap.h"
+#include "pch.h"
+#include "osuMap.h"
 
-OsuMap::OsuMap(std::string fileName)
+OsuMap::OsuMap(const std::string & filePath)
 {
-	std::ofstream fileStream;
-	fileStream.open(fileName);
+	std::ifstream ts(filePath);
+	std::stringstream ss;
+	ss << ts.rdbuf();
 
-	if (!fileStream.is_open()) {
-		throw OsuException(OsuException::ID::INVALID_MAP_FILE);
-	}
-}
+	std::vector<std::string> mapSettingsVector;
+	std::vector<std::string> mapTPVector;
+	std::vector<std::string> mapHOVector;
 
-OsuMap::OsuMap(HitObjectList hitObjectList, TimingPointList timingPointList) : m_hitObjectList(hitObjectList), m_timingPointList(timingPointList)
-{
+	segmentFile(ss, mapSettingsVector, "[TimingPoints]");
+	segmentFile(ss, mapTPVector, "[HitObjects]");
+	segmentFile(ss, mapHOVector, "");
+
+	MapSettings test = MapSettings(mapSettingsVector);
 }
 
 OsuMap::~OsuMap()
 {
+}
+
+void OsuMap::segmentFile(std::stringstream & ss, std::vector<std::string>& vectorToFill, const std::string & nextTag)
+{
+	std::string item;
+
+	while (std::getline(ss, item, '\n')) {
+		if (item == nextTag) { // If we hit any of the nextTag we break.
+			break;
+		}
+
+		if (item == "") { // If blank, skip
+			continue;
+		}
+		else if (
+			item.front() == '[' || item.back() == ']' || // If tag, we skip
+			item.front() == '/') { // If comment, we skip
+			continue;
+		}
+		else
+		{
+			vectorToFill.push_back(item);
+		}
+	}
 }
