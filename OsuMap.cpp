@@ -16,6 +16,9 @@ OsuMap::OsuMap(const std::string & filePath)
 	segmentFile(ss, mapHOVector, "");
 
 	MapSettings test = MapSettings(mapSettingsVector);
+
+	test.debugSettings();
+	
 }
 
 OsuMap::~OsuMap()
