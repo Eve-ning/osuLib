@@ -26,8 +26,8 @@ Artist:LeaF
 ArtistUnicode:LeaF
 Creator:Evening
 Version:Nirvana VIP
-Source:
-Tags:
+Source:BMS
+Tags:BMScore, Doppelganger
 BeatmapID:1754199
 BeatmapSetID:837840
 

@@ -15,9 +15,20 @@ OsuMap::OsuMap(const std::string & filePath)
 	segmentFile(ss, mapTPVector, "[HitObjects]");
 	segmentFile(ss, mapHOVector, "");
 
-	MapSettings test = MapSettings(mapSettingsVector);
+	// Map Settings Debug
+	MapSettings settings = MapSettings(mapSettingsVector);
+	settings.debugSettings();
 
-	test.debugSettings();
+	// TimingPoint Debug
+	std::vector<std::shared_ptr<TimingPoint>> TPList;
+
+	for (const std::string& str : mapTPVector) {
+		TPList.push_back(TimingPoint::allocate(str));
+	}
+
+	for (const auto TP : TPList) {
+		std::cout << TP->str() << std::endl;
+	}
 	
 }
 
@@ -25,6 +36,8 @@ OsuMap::~OsuMap()
 {
 }
 
+// Takes a stringstream and fills in the vector, breaks on specified tag
+// Skips all Tags and Comments
 void OsuMap::segmentFile(std::stringstream & ss, std::vector<std::string>& vectorToFill, const std::string & nextTag)
 {
 	std::string item;

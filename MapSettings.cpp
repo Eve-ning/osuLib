@@ -39,15 +39,15 @@ std::vector<std::string> MapSettings::m_parNameList = {
 
 MapSettings::MapSettings(const std::vector<std::string> &vec)
 {
+	// Splits the vector into a tuple, one holding the parameter name, one holding the parameter value
 	auto split = splitValues(vec, ':');
+
+	// Assigns the values according to the parameter names and values.
 	assignValues(std::get<0>(split), std::get<1>(split));
-
 }
 
-MapSettings::~MapSettings()
-{
-}
-
+// Splits the vector of strings with a delim,
+// returns Parameter Name Vector then Parameter Vector respectively.
 std::tuple<std::vector<std::string>, std::vector<std::string>> MapSettings::splitValues(const std::vector<std::string>& vec, char delimeter)
 {
 	std::string parName;
@@ -69,8 +69,8 @@ std::tuple<std::vector<std::string>, std::vector<std::string>> MapSettings::spli
 		}
 
 		// Trim off whitespace
-		boost::erase_all(vectorSplit[0], " "); 
-		boost::erase_all(vectorSplit[1], " ");
+		boost::trim(vectorSplit[0]);
+		boost::trim(vectorSplit[1]);
 		
 		parNameList.push_back(vectorSplit[0]);
 		parValueList.push_back(vectorSplit[1]);
@@ -79,7 +79,7 @@ std::tuple<std::vector<std::string>, std::vector<std::string>> MapSettings::spli
 	// We assume the background is the last element
 	std::string last;
 	last = vec.back();
-	last = last.substr(last.find("\"") + 1, last.find("\",") - 4); // We Substring between " and ", so we get the background
+	last = last.substr(last.find("\"") + 1, last.find("\",") - 5); // We Substring between " and ", so we get the background
 
 	parNameList.push_back("Background"); // We manually push background
 	parValueList.push_back(last);
@@ -87,6 +87,7 @@ std::tuple<std::vector<std::string>, std::vector<std::string>> MapSettings::spli
 	return std::make_tuple(parNameList, parValueList);
 }
 
+// Assigns values as provided, throws an exception if the parameter name is mismatched.
 void MapSettings::assignValues(const std::vector<std::string>& parNameList, const std::vector<std::string>& parValueList)
 {
 	for (size_t i = 0; (i < parNameList.size()) && (i < m_parNameList.size()); i++) {
@@ -140,40 +141,57 @@ void MapSettings::assignValues(const std::vector<std::string>& parNameList, cons
 	
 }
 
+// Joins Int to return a readable std::string
+std::string MapSettings::joinIntVector(const std::vector<int>& vect, std::string delim)
+{
+	std::string output = "";
+	for (const int &part : vect) {
+		output.append(boost::lexical_cast<std::string>(part));
+		output.append(delim);
+	}
+
+	for (size_t count = 0; count < delim.size(); count++) {
+		output.pop_back();
+	}
+
+	return output;
+}
+
+// Prints out all values as std::cout
 void MapSettings::debugSettings()
 {
 	std::cout
-	<< std::endl << m_audioFileName
-	<< std::endl << m_audioLeadIn
-	<< std::endl << m_previewTime
-	<< std::endl << m_countdown
-	<< std::endl << Osu::stringFromSample(m_sampleSet)
-	<< std::endl << m_stackLeniency
-	<< std::endl << Osu::stringFromMode(m_mode)
-	<< std::endl << m_letterboxInBreaks
-	<< std::endl << m_specialStyle
-	<< std::endl << m_widescreenStoryboard
-	<< std::endl/* << boost::algorithm::join(m_bookmarks, ",")*/
-	<< std::endl << m_distanceSpacing
-	<< std::endl << m_beatDivisor
-	<< std::endl << m_gridSize
-	<< std::endl << m_timelineZoom
-	<< std::endl << m_title
-	<< std::endl << m_titleUnicode
-	<< std::endl << m_artist
-	<< std::endl << m_artistUnicode
-	<< std::endl << m_creator
-	<< std::endl << m_version
-	<< std::endl << m_source
-	<< std::endl /*<< boost::algorithm::join(m_tags, ",")*/
-	<< std::endl << m_beatmapID
-	<< std::endl << m_beatmapSetID
-	<< std::endl << m_HPDrainRate
-	<< std::endl << m_circleSize
-	<< std::endl << m_overallDifficulty
-	<< std::endl << m_approachRate
-	<< std::endl << m_sliderMultiplier
-	<< std::endl << m_sliderTickRate
-	<< std::endl << m_background
-	<< std::endl;
+		<< std::endl << "AudioFilename: "			<< m_audioFileName
+		<< std::endl << "AudioLeadIn: "				<< m_audioLeadIn
+		<< std::endl << "PreviewTime: "				<< m_previewTime
+		<< std::endl << "Countdown: "				<< m_countdown
+		<< std::endl << "SampleSet: "				<< Osu::stringFromSample(m_sampleSet)
+		<< std::endl << "StackLeniency: "			<< m_stackLeniency
+		<< std::endl << "Mode: "					<< Osu::stringFromMode(m_mode)
+		<< std::endl << "LetterboxInBreaks: "		<< m_letterboxInBreaks
+		<< std::endl << "SpecialStyle: "			<< m_specialStyle
+		<< std::endl << "WidescreenStoryboard: "	<< m_widescreenStoryboard
+		<< std::endl << "Bookmarks: "				<< joinIntVector(m_bookmarks)
+		<< std::endl << "DistanceSpacing: "			<< m_distanceSpacing
+		<< std::endl << "BeatDivisor: "				<< m_beatDivisor
+		<< std::endl << "GridSize: "				<< m_gridSize
+		<< std::endl << "TimelineZoom: "			<< m_timelineZoom
+		<< std::endl << "Title: "					<< m_title
+		<< std::endl << "TitleUnicode: "			<< m_titleUnicode
+		<< std::endl << "Artist: "					<< m_artist
+		<< std::endl << "ArtistUnicode: "			<< m_artistUnicode
+		<< std::endl << "Creator: "					<< m_creator
+		<< std::endl << "Version: "					<< m_version
+		<< std::endl << "Source: "					<< m_source
+		<< std::endl << "Tags: "					<< boost::algorithm::join(m_tags, ",")
+		<< std::endl << "BeatmapID: "				<< m_beatmapID
+		<< std::endl << "BeatmapSetID: "			<< m_beatmapSetID
+		<< std::endl << "HPDrainRate: "				<< m_HPDrainRate
+		<< std::endl << "CircleSize: "				<< m_circleSize
+		<< std::endl << "OverallDifficulty: "		<< m_overallDifficulty
+		<< std::endl << "ApproachRate: "			<< m_approachRate
+		<< std::endl << "SliderMultiplier: "		<< m_sliderMultiplier
+		<< std::endl << "SliderTickRate: "			<< m_sliderTickRate
+		<< std::endl << "Background: "				<< m_background
+		<< std::endl;
 }

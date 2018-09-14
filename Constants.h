@@ -3,14 +3,14 @@
 class Osu {
 public:
 
-	static enum class MODE
+	enum class MODE
 	{
 		STANDARD,
 		TAIKO,
 		CATCH,
 		MANIA
 	};
-	static enum class SAMPLESET {
+    enum class SAMPLESET {
 		AUTO,
 		SOFT,
 		NORMAL,
