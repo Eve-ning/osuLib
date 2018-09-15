@@ -91,6 +91,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,13 +152,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="class\HitObject.h" />
+    <ClInclude Include="class\MapSettings.h" />
+    <ClInclude Include="class\OsuMap.h" />
+    <ClInclude Include="class\TimingPoint.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="constant\Constants.h" />
+    <ClInclude Include="HitObject.h" />
     <ClInclude Include="MapSettings.h" />
     <ClInclude Include="OsuMap.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="TimingPoint.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="class\HitObject.cpp" />
+    <ClCompile Include="class\MapSettings.cpp" />
+    <ClCompile Include="class\OsuMap.cpp" />
+    <ClCompile Include="class\TimingPoint.cpp" />
+    <ClCompile Include="HitObject.cpp" />
     <ClCompile Include="MapSettings.cpp" />
     <ClCompile Include="OsuMap.cpp" />
     <ClCompile Include="main.cpp" />
