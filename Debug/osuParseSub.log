@@ -1,7 +1,19 @@
-﻿  pch.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(944,5): warning MSB8027: Two or more files with the name of HitObject.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are class\HitObject.cpp, HitObject.cpp.
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(944,5): warning MSB8027: Two or more files with the name of MapSettings.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are class\MapSettings.cpp, MapSettings.cpp.
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(944,5): warning MSB8027: Two or more files with the name of OsuMap.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are class\OsuMap.cpp, OsuMap.cpp.
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(944,5): warning MSB8027: Two or more files with the name of TimingPoint.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are class\TimingPoint.cpp, TimingPoint.cpp.
+  pch.cpp
+  HitObject.cpp
   MapSettings.cpp
   OsuMap.cpp
   TimingPoint.cpp
+  HitObject.cpp
+c1xx : fatal error C1083: Cannot open source file: 'HitObject.cpp': No such file or directory
+  MapSettings.cpp
+c1xx : fatal error C1083: Cannot open source file: 'MapSettings.cpp': No such file or directory
+  OsuMap.cpp
+c1xx : fatal error C1083: Cannot open source file: 'OsuMap.cpp': No such file or directory
   main.cpp
+  TimingPoint.cpp
+c1xx : fatal error C1083: Cannot open source file: 'TimingPoint.cpp': No such file or directory
   Generating Code...
-  osuParseSub.vcxproj -> C:\Users\user\source\repos\osuParseSub\Debug\osuParseSub.exe
