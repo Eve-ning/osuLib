@@ -28,7 +28,7 @@ public:
 	static SAMPLESET samplesetFromString(std::string str) {
 		std::transform(str.begin(), str.end(), str.begin(), ::toupper);
 		
-		if (str == "AUTO") {
+		if (str == "AUTO" || str == "NONE") {
 			return SAMPLESET::AUTO;
 		}
 		else if (str == "SOFT")

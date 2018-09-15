@@ -1,2 +1,9 @@
-﻿  main.cpp
+﻿  pch.cpp
+c:\users\user\source\repos\osuparsesub\osuparsesub\class\hitobject.h(75): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+  HitObject.cpp
+  MapSettings.cpp
+  OsuMap.cpp
+  TimingPoint.cpp
+  main.cpp
+  Generating Code...
   osuParseSub.vcxproj -> C:\Users\user\source\repos\osuParseSub\Debug\osuParseSub.exe
