@@ -16,6 +16,13 @@ public:
 		NORMAL,
 		DRUM
 	};
+
+	// These are all bitwise (base 2)
+	enum class HITSOUNDS {
+		WHISTLE = 2,
+		FINISH = 4,
+		CLAP = 8
+	};
 	
 	// Converts String (case insensitive) to SAMPLESET
 	static SAMPLESET samplesetFromString(std::string str) {

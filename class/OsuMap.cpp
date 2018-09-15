@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "pch.h"
 #include "osuMap.h"
 
@@ -30,6 +31,17 @@ OsuMap::OsuMap(const std::string & filePath)
 		std::cout << TP->str() << std::endl;
 	}
 	
+	// TimingPoint Debug
+	std::vector<std::shared_ptr<HitObject>> HOList;
+
+	for (const std::string& str : mapHOVector) {
+		HOList.push_back(HitObject::allocate(str, 7));
+	}
+
+	for (const auto HO : HOList) {
+		std::cout << HO->str() << std::endl;
+	}
+
 }
 
 OsuMap::~OsuMap()
