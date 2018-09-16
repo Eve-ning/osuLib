@@ -1,8 +1,11 @@
 #pragma once
+#include "../constant/Constants.h"
 
 // We will allow HitObject creation in 2 ways:
 // Via static HitObject::allocate(std::string) as osu! generated code -> Outputs s_ptr<HitObject>
 // Via NormalNote/LongNote(parameters ...) as actual columns
+
+
 
 class HitObject
 {
@@ -158,3 +161,6 @@ private:
 		return m_offsetEnd;
 	}
 };
+
+typedef std::vector<NormalNote> NormalNoteList;
+typedef std::vector<LongNote> LongNoteList;

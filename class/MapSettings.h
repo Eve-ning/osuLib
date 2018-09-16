@@ -1,4 +1,6 @@
 #pragma once
+#include "../constant/Constants.h"
+
 class MapSettings
 {
 public:

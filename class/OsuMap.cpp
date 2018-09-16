@@ -1,6 +1,6 @@
 #include "../pch.h"
-#include "pch.h"
 #include "osuMap.h"
+#include "pch.h"
 
 OsuMap::OsuMap(const std::string & filePath)
 {
@@ -16,32 +16,21 @@ OsuMap::OsuMap(const std::string & filePath)
 	segmentFile(ss, mapTPVector, "[HitObjects]");
 	segmentFile(ss, mapHOVector, "");
 
-	// Map Settings Debug
-	MapSettings settings = MapSettings(mapSettingsVector);
-	settings.debugSettings();
+	std::cout << "Loading Map Settings: " << std::endl;
+	m_mapSettings = std::make_shared<MapSettings>(mapSettingsVector);
+	std::cout << "Complete!" << std::endl;
 
-	// TimingPoint Debug
-	std::vector<std::shared_ptr<TimingPoint>> TPList;
-
+	std::cout << "Loading Timing Points: ";
 	for (const std::string& str : mapTPVector) {
-		TPList.push_back(TimingPoint::allocate(str));
+		derive(TimingPoint::allocate(str));
 	}
+	std::cout << "Complete!" << std::endl;
 
-	for (const auto TP : TPList) {
-		std::cout << TP->str() << std::endl;
-	}
-	
-	// TimingPoint Debug
-	std::vector<std::shared_ptr<HitObject>> HOList;
-
+	std::cout << "Loading Hit Objects: ";
 	for (const std::string& str : mapHOVector) {
-		HOList.push_back(HitObject::allocate(str, 7));
+		derive(HitObject::allocate(str, 7));
 	}
-
-	for (const auto HO : HOList) {
-		std::cout << HO->str() << std::endl;
-	}
-
+	std::cout << "Complete!" << std::endl;
 }
 
 OsuMap::~OsuMap()
@@ -72,4 +61,43 @@ void OsuMap::segmentFile(std::stringstream & ss, std::vector<std::string>& vecto
 			vectorToFill.push_back(item);
 		}
 	}
+}
+
+// Derive is used to convert shared_ptr to objects
+void OsuMap::derive(const std::shared_ptr<TimingPoint> timingPoint)
+{
+	auto castSV = std::dynamic_pointer_cast<SliderVelocity>(timingPoint);
+
+	if (castSV) {
+		m_timingPointList.sliderVelocity.push_back(*castSV);
+		return;
+	}
+
+	auto castBPM = std::dynamic_pointer_cast<BPM>(timingPoint);
+
+	if (castBPM) {
+		m_timingPointList.bpm.push_back(*castBPM);
+		return;
+	}
+
+	throw new std::exception("Fail to derive TimingPoint.");
+}
+// Derive is used to convert shared_ptr to objects
+void OsuMap::derive(const std::shared_ptr<HitObject> hitObject)
+{
+	auto castNN = std::dynamic_pointer_cast<NormalNote>(hitObject);
+
+	if (castNN) {
+		m_hitObjectList.normalNote.push_back(*castNN);
+		return;
+	}
+
+	auto castLN = std::dynamic_pointer_cast<LongNote>(hitObject);
+
+	if (castLN) {
+		m_hitObjectList.longNote.push_back(*castLN);
+		return;
+	}
+
+	throw new std::exception("Fail to derive HitObject.");
 }

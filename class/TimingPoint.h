@@ -1,4 +1,5 @@
 #pragma once
+#include "../constant/Constants.h"
 
 // We will allow TimingPoint creation in 2 ways:
 // Via static TimingPoint::allocate(std::string) as osu! generated code -> Outputs s_ptr<TimingPoint>
@@ -129,3 +130,6 @@ private:
 		return 1;
 	}
 };
+
+typedef std::vector<SliderVelocity> SliderVelocityList;
+typedef std::vector<BPM> BPMList;
