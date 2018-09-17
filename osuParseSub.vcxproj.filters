@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="map.txt" />
+    <Text Include="output.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

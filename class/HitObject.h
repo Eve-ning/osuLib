@@ -75,7 +75,7 @@ protected:
 
 	// Column returned starts from 1
 	static int convertToColumn(const double &code, const int &keys) {
-		return round((code / 256.0 * keys - 1.0) / 2.0) + 1;
+		return (int) round((code / 256.0 * keys - 1.0) / 2.0) + 1;
 	}
 
 	// Column input starts from 1

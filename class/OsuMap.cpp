@@ -1,6 +1,7 @@
 #include "../pch.h"
 #include "osuMap.h"
 #include "pch.h"
+#include <vector>
 
 OsuMap::OsuMap(const std::string & filePath)
 {
