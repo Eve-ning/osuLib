@@ -30,7 +30,7 @@ OsuMap::OsuMap(const std::string & filePath)
 
 	std::cout << "Loading Hit Objects: ";
 	for (const std::string& str : mapHOVector) {
-		derive(HitObject::allocate(str, m_mapSettings->circleSize()));
+		derive(HitObject::allocate(str, (int) m_mapSettings->circleSize()));
 	}
 	std::cout << "Complete!" << std::endl;
 }

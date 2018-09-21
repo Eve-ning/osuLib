@@ -2,60 +2,61 @@
 #include "pch.h"
 #include "MapSettings.h"
 
-// Defines what the Parameter List should match EXACTLY, else we throw an exception
-std::vector<std::string> MapSettings::m_parNameList = {
-	"AudioFilename",
-	"AudioLeadIn",
-	"PreviewTime",
-	"Countdown",
-	"SampleSet",
-	"StackLeniency",
-	"Mode",
-	"LetterboxInBreaks",
-	"SpecialStyle",
-	"WidescreenStoryboard",
-	"Bookmarks",
-	"DistanceSpacing",
-	"BeatDivisor",
-	"GridSize",
-	"TimelineZoom",
-	"Title",
-	"TitleUnicode",
-	"Artist",
-	"ArtistUnicode",
-	"Creator",
-	"Version",
-	"Source",
-	"Tags",
-	"BeatmapID",
-	"BeatmapSetID",
-	"HPDrainRate",
-	"CircleSize",
-	"OverallDifficulty",
-	"ApproachRate",
-	"SliderMultiplier",
-	"SliderTickRate",
-	"Background"
-};
+
+// OLD: now we use a map function that uses the value directly instead of index (it's confusing and redundant)
+//// Defines what the Parameter List should match EXACTLY, else we throw an exception
+//std::vector<std::string> MapSettings::m_parNameList = {
+//	"AudioFilename",
+//	"AudioLeadIn",
+//	"PreviewTime",
+//	"Countdown",
+//	"SampleSet",
+//	"StackLeniency",
+//	"Mode",
+//	"LetterboxInBreaks",
+//	"SpecialStyle",
+//	"WidescreenStoryboard",
+//	"Bookmarks",
+//	"DistanceSpacing",
+//	"BeatDivisor",
+//	"GridSize",
+//	"TimelineZoom",
+//	"Title",
+//	"TitleUnicode",
+//	"Artist",
+//	"ArtistUnicode",
+//	"Creator",
+//	"Version",
+//	"Source",
+//	"Tags",
+//	"BeatmapID",
+//	"BeatmapSetID",
+//	"HPDrainRate",
+//	"CircleSize",
+//	"OverallDifficulty",
+//	"ApproachRate",
+//	"SliderMultiplier",
+//	"SliderTickRate",
+//	"Background"
+//};
 
 MapSettings::MapSettings(const std::vector<std::string> &vec) 
 {
 	// Splits the vector into a tuple, one holding the parameter name, one holding the parameter value
-	auto split = splitValues(vec, ':');
+	auto data = splitValues(vec, ':');
 
 	// Assigns the values according to the parameter names and values.
-	assignValues(std::get<0>(split), std::get<1>(split));
+	assignValues(data);
 }
 
 // Splits the vector of strings with a delim,
 // returns Parameter Name Vector then Parameter Vector respectively.
-std::tuple<std::vector<std::string>, std::vector<std::string>> MapSettings::splitValues(const std::vector<std::string>& vec, char delimeter)
+MapSettingsData MapSettings::splitValues(const std::vector<std::string>& vec, char delimeter)
 {
 	std::string parName;
 	std::string parValue;
 
-	std::vector<std::string> parNameList;
-	std::vector<std::string> parValueList;
+	MapSettingsData data;
 
 	std::vector<std::string> vectorSplit;
 
@@ -73,84 +74,90 @@ std::tuple<std::vector<std::string>, std::vector<std::string>> MapSettings::spli
 		boost::trim(vectorSplit[0]);
 		boost::trim(vectorSplit[1]);
 		
-		parNameList.push_back(vectorSplit[0]);
-		parValueList.push_back(vectorSplit[1]);
+		data[vectorSplit[0]] = vectorSplit[1];
 	}
 
 	// We assume the background is the last element
 	std::string last;
-	last = vec.back();
-	last = last.substr(last.find("\"") + 1, last.find("\",") - 5); // We Substring between " and ", so we get the background
+	last = vec.back(); // Get last element
+	last = last.substr(last.find("\"") + 1, last.find("\",") - 5); // We Substring between " and ", so we get the background name
 
-	parNameList.push_back("Background"); // We manually push background
-	parValueList.push_back(last);
+	data["Background"] = last; // We manually push background
 
-	return std::make_tuple(parNameList, parValueList);
+	return data;
 }
 
 // Assigns values as provided, throws an exception if the parameter name is mismatched.
-void MapSettings::assignValues(std::vector<std::string> parNameList, std::vector<std::string> parValueList)
+void MapSettings::assignValues(MapSettingsData data)
 {
 	// If "Bookmarks" tag doesn't exist, we insert it in on index 10
-	if (std::find(parNameList.begin(), parNameList.end(), "Bookmarks") == parNameList.end()) {
-		parNameList.insert(parValueList.begin() + 10, "Bookmarks");
-		parValueList.insert(parValueList.begin() + 10, "");
+	if (data.find("Bookmarks") == data.end()) {
+		data["Bookmarks"] = "";
 	}
 
+	//for (size_t i = 0; (i < parNameList.size()) && (i < m_parNameList.size()); i++) {
+	//	if (parNameList[i] != m_parNameList[i]) {
+	//		std::string message;
 
-	for (size_t i = 0; (i < parNameList.size()) && (i < m_parNameList.size()); i++) {
-		if (parNameList[i] != m_parNameList[i]) {
-			std::string message;
+	//		message = "Name Mismatch: " + parNameList[i] + " != " + m_parNameList[i];
+	//		std::cout << message << '\n';
+	//		throw new std::exception(message.c_str());
+	//	}
+	//}
 
-			message = "Name Mismatch: " + parNameList[i] + " != " + m_parNameList[i];
-			std::cout << message << '\n';
-			throw new std::exception(message.c_str());
+	try {
+		m_audioFileName  		=	data["AudioFilename"];
+		m_audioLeadIn  			=	std::stoi(data["AudioLeadIn"]);
+		m_previewTime  			=	std::stoi(data["PreviewTime"]);
+		m_countdown  			=	std::stoi(data["Countdown"]);
+		m_sampleSet				=   Osu::samplesetFromString(data["SampleSet"]);
+		m_stackLeniency  		=	std::stod(data["StackLeniency"]);
+		m_mode  				=	(Osu::MODE) std::stoi(data["Mode"]);
+		m_letterboxInBreaks  	=	std::stoi(data["LetterboxInBreaks"]);
+		m_specialStyle  		=	std::stoi(data["SpecialStyle"]);
+		m_widescreenStoryboard 	=	std::stoi(data["WidescreenStoryboard"]);
+
+		if (data["Bookmarks"] == "") { // Means there's no Bookmarks
+			m_bookmarks = {};
 		}
-	}
-
-	m_audioFileName  		=	parValueList[0];
-	m_audioLeadIn  			=	std::stoi(parValueList[1]);
-	m_previewTime  			=	std::stoi(parValueList[2]);
-	m_countdown  			=	std::stoi(parValueList[3]);
-	m_sampleSet  			=	Osu::samplesetFromString(parValueList[4]);
-	m_stackLeniency  		=	std::stod(parValueList[5]);
-	m_mode  				=	(Osu::MODE) std::stoi(parValueList[6]);
-	m_letterboxInBreaks  	=	std::stoi(parValueList[7]);
-	m_specialStyle  		=	std::stoi(parValueList[8]);
-	m_widescreenStoryboard 	=	std::stoi(parValueList[9]);
-
-	if (parValueList[10] == ""){
-		m_bookmarks = {};
-	}
-	else {
-		std::vector<std::string> temp_m_bookmarks = {};
-		boost::split(temp_m_bookmarks, parValueList[10], boost::is_any_of(",*"));
-		for (auto bookmark : temp_m_bookmarks) {
-			m_bookmarks.push_back(std::stoi(bookmark));
+		else {
+			std::vector<std::string> temp_m_bookmarks = {};
+			std::string temp = data["Bookmarks"];
+			boost::split(temp_m_bookmarks, temp, boost::is_any_of(",*"));
+			for (auto bookmark : temp_m_bookmarks) {
+				m_bookmarks.push_back(std::stoi(bookmark));
+			}
 		}
+
+		m_distanceSpacing  		=	std::stoi(data["DistanceSpacing"]);
+		m_beatDivisor  			=	std::stoi(data["BeatDivisor"]);
+		m_gridSize  			=	std::stoi(data["GridSize"]);
+		m_timelineZoom  		=	std::stod(data["TimelineZoom"]);
+		m_title  				=	data["Title"];
+		m_titleUnicode  		=	data["TitleUnicode"];
+		m_artist  				=	data["Artist"];
+		m_artistUnicode  		=	data["ArtistUnicode"];
+		m_creator  				=	data["Creator"];
+		m_version  				=	data["Version"];
+		m_source  				=	data["Source"];
+
+		std::string temp_tagsStr = data["Tags"];
+		boost::split(m_tags, temp_tagsStr, boost::is_any_of(",*"));
+
+		m_beatmapID  			=	std::stoi(data["BeatmapID"]);
+		m_beatmapSetID  		=	std::stoi(data["BeatmapSetID"]);
+		m_HPDrainRate  			=	std::stod(data["HPDrainRate"]);
+		m_circleSize  			=	std::stod(data["CircleSize"]);
+		m_overallDifficulty  	=	std::stod(data["OverallDifficulty"]);
+		m_approachRate  		=	std::stod(data["ApproachRate"]);
+		m_sliderMultiplier  	=	std::stod(data["SliderMultiplier"]);
+		m_sliderTickRate  		=	std::stoi(data["SliderTickRate"]);
+		m_background			=   data["Background"];
+	}
+	catch (...) {
+		throw new std::exception("Tag Mismatch in MapSettings.");
 	}
 
-	m_distanceSpacing  		=	std::stoi(parValueList[11]);
-	m_beatDivisor  			=	std::stoi(parValueList[12]);
-	m_gridSize  			=	std::stoi(parValueList[13]);
-	m_timelineZoom  		=	std::stod(parValueList[14]);
-	m_title  				=	parValueList[15];
-	m_titleUnicode  		=	parValueList[16];
-	m_artist  				=	parValueList[17];
-	m_artistUnicode  		=	parValueList[18];
-	m_creator  				=	parValueList[19];
-	m_version  				=	parValueList[20];
-	m_source  				=	parValueList[21];
-	boost::split(m_tags, parValueList[22], boost::is_any_of(",*"));
-	m_beatmapID  			=	std::stoi(parValueList[23]);
-	m_beatmapSetID  		=	std::stoi(parValueList[24]);
-	m_HPDrainRate  			=	std::stod(parValueList[25]);
-	m_circleSize  			=	std::stod(parValueList[26]);
-	m_overallDifficulty  	=	std::stod(parValueList[27]);
-	m_approachRate  		=	std::stod(parValueList[28]);
-	m_sliderMultiplier  	=	std::stod(parValueList[29]);
-	m_sliderTickRate  		=	std::stoi(parValueList[30]);
-	m_background			=   parValueList[31];
 	
 }
 

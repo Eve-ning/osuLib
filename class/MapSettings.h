@@ -1,9 +1,13 @@
 #pragma once
 #include "../constant/Constants.h"
+#include <map>
+
+typedef std::map<std::string, std::string> MapSettingsData;
 
 class MapSettings : std::enable_shared_from_this<MapSettings>
 {
 public:
+
 	// Load Settings by Vector
 	MapSettings(const std::vector<std::string> &vec);
 
@@ -82,12 +86,10 @@ private:
 
 	// Splits the vector of strings with a delim,
 	// returns Parameter Name Vector then Parameter Vector respectively.
-	std::tuple<std::vector<std::string>, std::vector<std::string>>
-		splitValues(const std::vector<std::string> &vec, char delimeter = ':');
+	MapSettingsData splitValues(const std::vector<std::string> &vec, char delimeter = ':');
 
 	// Assigns values as provided, throws an exception if the parameter name is mismatched.
-	void assignValues(std::vector<std::string> parNameList,
-					  std::vector<std::string> parValueList);
+	void assignValues(MapSettingsData data);
 
 	// Joins Int to return a readable std::string
 	std::string joinIntVector(const std::vector<int> &vect, std::string delim = ", ");
