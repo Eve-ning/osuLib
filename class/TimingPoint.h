@@ -5,7 +5,7 @@
 // Via static TimingPoint::allocate(std::string) as osu! generated code -> Outputs s_ptr<TimingPoint>
 // Via SliderVelocity/BPM(parameters ...) as actual values
 
-class TimingPoint
+class TimingPoint : std::enable_shared_from_this<TimingPoint>
 {
 public:
 	// Create a TimingPoint by allocate, it will automatically return a shared_ptr<TimingPoint>

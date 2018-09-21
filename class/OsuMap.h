@@ -14,15 +14,90 @@ typedef std::shared_ptr<MapSettings> MapSettings_sptr;
 struct HitObjectList {
 	NormalNoteList normalNote;
 	LongNoteList longNote;
+
+	// Returns a shared_ptr vector of HitObject
+	HitObjectList_sptr sptr() const {
+		HitObjectList_sptr output = {};
+		for (auto NN : normalNote) {
+			output.push_back(std::make_shared<NormalNote>(NN));
+		}
+		for (auto LN : longNote) {
+			output.push_back(std::make_shared<LongNote>(LN));
+		}
+		return output;
+	}
+
+	// Converts sptr list back to original objects
+	void derive(HitObjectList_sptr sptr) {
+
+		normalNote.clear();
+		longNote.clear();
+
+		for (auto obj_sptr : sptr) {
+			auto castNN = std::dynamic_pointer_cast<NormalNote>(obj_sptr);
+
+			if (castNN) {
+				normalNote.push_back(*castNN);
+				continue;
+			}
+
+			auto castLN = std::dynamic_pointer_cast<LongNote>(obj_sptr);
+
+			if (castLN) {
+				longNote.push_back(*castLN);
+				continue;
+			}
+
+			throw new std::exception("Fail to derive HitObject.");
+		}
+	}
 };
 
 struct TimingPointList {
-
 	SliderVelocityList sliderVelocity;
 	BPMList bpm;
+
+	// Returns a shared_ptr vector of TimingPoint
+	TimingPointList_sptr sptr() const {
+		TimingPointList_sptr output = {};
+		for (auto SV : sliderVelocity) {
+			output.push_back(std::make_shared<SliderVelocity>(SV));
+		}
+		for (auto BPM_ : bpm) {
+			output.push_back(std::make_shared<BPM>(BPM_));
+		}
+		return output;
+	}
+
+	// Converts sptr list back to original objects
+	void derive(TimingPointList_sptr sptr) {
+
+		sliderVelocity.clear();
+		bpm.clear();
+
+		for (auto obj_sptr : sptr) {
+			auto castSV = std::dynamic_pointer_cast<SliderVelocity>(obj_sptr);
+
+			if (castSV) {
+				sliderVelocity.push_back(*castSV);
+				continue;
+			}
+
+			auto castBPM = std::dynamic_pointer_cast<BPM>(obj_sptr);
+
+			if (castBPM) {
+				bpm.push_back(*castBPM);
+				continue;
+			}
+
+			throw new std::exception("Fail to derive TimingPoint.");
+		}
+
+		
+	}
 };
 
-class OsuMap
+class OsuMap : std::enable_shared_from_this<OsuMap>
 {
 public:
 	// Loads the map from file path
@@ -32,6 +107,10 @@ public:
 	HitObjectList hitObjectList() const { return m_hitObjectList; }
 	TimingPointList timingPointList() const { return m_timingPointList; }
 	MapSettings mapSettings() const { return *m_mapSettings; }
+
+	void setHitObjectList(HitObjectList list) { m_hitObjectList = list; }
+	void setTimingPointList(TimingPointList list) { m_timingPointList = list; }
+	void setMapSettings(MapSettings settings) { m_mapSettings = std::make_shared<MapSettings>(settings); }
 
 private:
 

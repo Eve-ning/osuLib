@@ -1,2 +1,5 @@
-﻿main.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-  osuParseSub.vcxproj -> C:\Users\user\source\repos\ConsoleApplication1\Debug\osuParseSub.lib
+﻿  MapSettings.cpp
+  main.cpp
+  Generating Code...
+main.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  osuParseSub.vcxproj -> C:\Users\user\source\repos\osuParseSub\Debug\osuParseSub.lib

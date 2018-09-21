@@ -13,7 +13,6 @@ SpecialStyle: 0
 WidescreenStoryboard: 1
 
 [Editor]
-Bookmarks: 91790,128990,164990,182990,203390,365390
 DistanceSpacing: 2
 BeatDivisor: 4
 GridSize: 16

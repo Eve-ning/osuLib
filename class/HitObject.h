@@ -7,7 +7,7 @@
 
 
 
-class HitObject
+class HitObject : std::enable_shared_from_this<HitObject>
 {
 public:
 	// Create a HitObject by allocate, it will automatically return a shared_ptr<HitObject>

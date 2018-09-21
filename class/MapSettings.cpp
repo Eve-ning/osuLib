@@ -38,7 +38,7 @@ std::vector<std::string> MapSettings::m_parNameList = {
 	"Background"
 };
 
-MapSettings::MapSettings(const std::vector<std::string> &vec)
+MapSettings::MapSettings(const std::vector<std::string> &vec) 
 {
 	// Splits the vector into a tuple, one holding the parameter name, one holding the parameter value
 	auto split = splitValues(vec, ':');
@@ -89,8 +89,15 @@ std::tuple<std::vector<std::string>, std::vector<std::string>> MapSettings::spli
 }
 
 // Assigns values as provided, throws an exception if the parameter name is mismatched.
-void MapSettings::assignValues(const std::vector<std::string>& parNameList, const std::vector<std::string>& parValueList)
+void MapSettings::assignValues(std::vector<std::string> parNameList, std::vector<std::string> parValueList)
 {
+	// If "Bookmarks" tag doesn't exist, we insert it in on index 10
+	if (std::find(parNameList.begin(), parNameList.end(), "Bookmarks") == parNameList.end()) {
+		parNameList.insert(parValueList.begin() + 10, "Bookmarks");
+		parValueList.insert(parValueList.begin() + 10, "");
+	}
+
+
 	for (size_t i = 0; (i < parNameList.size()) && (i < m_parNameList.size()); i++) {
 		if (parNameList[i] != m_parNameList[i]) {
 			std::string message;
@@ -112,10 +119,15 @@ void MapSettings::assignValues(const std::vector<std::string>& parNameList, cons
 	m_specialStyle  		=	std::stoi(parValueList[8]);
 	m_widescreenStoryboard 	=	std::stoi(parValueList[9]);
 
-	std::vector<std::string> temp_m_bookmarks = {};
-	boost::split(temp_m_bookmarks, parValueList[10], boost::is_any_of(",*"));
-	for (auto bookmark : temp_m_bookmarks) {
-		m_bookmarks.push_back(std::stoi(bookmark));
+	if (parValueList[10] == ""){
+		m_bookmarks = {};
+	}
+	else {
+		std::vector<std::string> temp_m_bookmarks = {};
+		boost::split(temp_m_bookmarks, parValueList[10], boost::is_any_of(",*"));
+		for (auto bookmark : temp_m_bookmarks) {
+			m_bookmarks.push_back(std::stoi(bookmark));
+		}
 	}
 
 	m_distanceSpacing  		=	std::stoi(parValueList[11]);
@@ -172,7 +184,7 @@ void MapSettings::debugSettings()
 		<< std::endl << "LetterboxInBreaks: "		<< m_letterboxInBreaks
 		<< std::endl << "SpecialStyle: "			<< m_specialStyle
 		<< std::endl << "WidescreenStoryboard: "	<< m_widescreenStoryboard
-		<< std::endl << "Bookmarks: "				<< joinIntVector(m_bookmarks)
+		<< std::endl << "Bookmarks: "				<< (m_bookmarks.empty() ?  "" : joinIntVector(m_bookmarks))
 		<< std::endl << "DistanceSpacing: "			<< m_distanceSpacing
 		<< std::endl << "BeatDivisor: "				<< m_beatDivisor
 		<< std::endl << "GridSize: "				<< m_gridSize

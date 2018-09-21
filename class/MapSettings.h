@@ -1,7 +1,7 @@
 #pragma once
 #include "../constant/Constants.h"
 
-class MapSettings
+class MapSettings : std::enable_shared_from_this<MapSettings>
 {
 public:
 	// Load Settings by Vector
@@ -86,8 +86,8 @@ private:
 		splitValues(const std::vector<std::string> &vec, char delimeter = ':');
 
 	// Assigns values as provided, throws an exception if the parameter name is mismatched.
-	void assignValues(const std::vector<std::string> &parNameList,
-					  const std::vector<std::string> &parValueList);
+	void assignValues(std::vector<std::string> parNameList,
+					  std::vector<std::string> parValueList);
 
 	// Joins Int to return a readable std::string
 	std::string joinIntVector(const std::vector<int> &vect, std::string delim = ", ");

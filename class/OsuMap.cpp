@@ -1,5 +1,6 @@
 #include "../pch.h"
 #include "osuMap.h"
+#include "MapSettings.h"
 #include "pch.h"
 #include <vector>
 
@@ -18,7 +19,7 @@ OsuMap::OsuMap(const std::string & filePath)
 	segmentFile(ss, mapHOVector, "");
 
 	std::cout << "Loading Map Settings: " << std::endl;
-	m_mapSettings = std::make_shared<MapSettings>(mapSettingsVector);
+	m_mapSettings = std::make_shared<MapSettings>(MapSettings(mapSettingsVector));
 	std::cout << "Complete!" << std::endl;
 
 	std::cout << "Loading Timing Points: ";
@@ -29,7 +30,7 @@ OsuMap::OsuMap(const std::string & filePath)
 
 	std::cout << "Loading Hit Objects: ";
 	for (const std::string& str : mapHOVector) {
-		derive(HitObject::allocate(str, 7));
+		derive(HitObject::allocate(str, m_mapSettings->circleSize()));
 	}
 	std::cout << "Complete!" << std::endl;
 }
@@ -102,3 +103,4 @@ void OsuMap::derive(const std::shared_ptr<HitObject> hitObject)
 
 	throw new std::exception("Fail to derive HitObject.");
 }
+
