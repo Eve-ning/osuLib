@@ -90,9 +90,12 @@ MapSettingsData MapSettings::splitValues(const std::vector<std::string>& vec, ch
 // Assigns values as provided, throws an exception if the parameter name is mismatched.
 void MapSettings::assignValues(MapSettingsData data)
 {
+	std::cout << "Setting Beatmap Settings..." << std::endl;
+
 	// If "Bookmarks" tag doesn't exist, we insert it in on index 10
 	if (data.find("Bookmarks") == data.end()) {
 		data["Bookmarks"] = "";
+		std::cout << "Added Bookmark Tag." << std::endl;
 	}
 
 	//for (size_t i = 0; (i < parNameList.size()) && (i < m_parNameList.size()); i++) {

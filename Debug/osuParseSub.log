@@ -1,8 +1,2 @@
-﻿  pch.cpp
-  HitObject.cpp
-  MapSettings.cpp
-  OsuMap.cpp
-  TimingPoint.cpp
-  main.cpp
-  Generating Code...
+﻿  OsuMap.cpp
   osuParseSub.vcxproj -> C:\Users\user\source\repos\osuParseSub\Debug\osuParseSub.exe

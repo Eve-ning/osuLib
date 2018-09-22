@@ -112,6 +112,8 @@ public:
 	void setTimingPointList(TimingPointList list) { m_timingPointList = list; }
 	void setMapSettings(MapSettings settings) { m_mapSettings = std::make_shared<MapSettings>(settings); }
 
+	std::vector<std::string> exportMap() const;
+
 private:
 
 	// Takes a stringstream and fills in the vector, breaks on specified tag
@@ -130,6 +132,8 @@ private:
 
 	// This is a shared_ptr are there isn't any default for MapSettings()
 	MapSettings_sptr m_mapSettings;
+
+
 };
 
 template<class T>

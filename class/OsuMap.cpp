@@ -39,6 +39,109 @@ OsuMap::~OsuMap()
 {
 }
 
+std::vector<std::string> OsuMap::exportMap() const
+{
+	std::vector<std::string> output = {};
+
+	std::ifstream ts("MAPTEMPLATE.txt");
+	std::stringstream ss;
+	ss << ts.rdbuf();
+
+	// we will use the template and replace certain keywords
+	
+	// Define a small function so I don't have to keep writing output.push_back
+
+	std::string buffer = "";
+
+	// Helps insert the next parameter (based on _____)<5 Underscores>
+	auto insertNext = [&](const std::string &str) {
+		bool insertable = false;
+
+		while (!insertable && !ss.eof()) { // While it is not insertable AND not the end of the stream, we getline
+			std::getline(ss, buffer, '\n');
+			if (buffer[0] == '[') { // If it's a tag, we push into the output
+				output.push_back(buffer);
+			}
+			else { // Else we replace _____
+				insertable = true;
+			}
+		}
+		if (ss.eof()) {
+			throw new std::exception("Exporting replacing function out of index."); // Fail to insert
+		}
+
+		boost::replace_first(buffer, "_____", str); // Replace str
+		output.push_back(buffer);
+	};
+
+	insertNext("14"); // Version Number
+
+	// General
+	insertNext(m_mapSettings->audioFileName());
+	insertNext(std::to_string(m_mapSettings->audioLeadIn()));
+	insertNext(std::to_string(m_mapSettings->previewTime()));
+	insertNext(std::to_string(m_mapSettings->countdown()));
+	insertNext(Osu::stringFromSample(m_mapSettings->sampleSet()));
+	insertNext(std::to_string(m_mapSettings->stackLeniency()));
+	insertNext(std::to_string((int)m_mapSettings->mode()));
+	insertNext(std::to_string(m_mapSettings->letterboxInBreaks()));
+	insertNext(std::to_string(m_mapSettings->specialStyle()));
+	insertNext(std::to_string(m_mapSettings->widescreenStoryboard()));
+
+	// Editor
+	auto concatBookmarks = [](const std::vector<int> bookmarks) -> std::string {
+		std::string output = "";
+		for (auto bookmark : bookmarks) {
+			output.append(std::to_string(bookmark));
+			output.append(",");
+		}
+		if (!output.empty()) {
+			output.pop_back(); // Remove the last comma
+		}
+		return output;
+	};
+
+	insertNext(concatBookmarks(m_mapSettings->bookmarks()));
+	insertNext(std::to_string(m_mapSettings->distanceSpacing()));
+	insertNext(std::to_string(m_mapSettings->beatDivisor()));
+	insertNext(std::to_string(m_mapSettings->gridSize()));
+	insertNext(std::to_string(m_mapSettings->timelineZoom()));
+
+	// Metadata
+	insertNext(m_mapSettings->title());
+	insertNext(m_mapSettings->titleUnicode());
+	insertNext(m_mapSettings->artist());
+	insertNext(m_mapSettings->artistUnicode());
+	insertNext(m_mapSettings->creator());
+	insertNext(m_mapSettings->version());
+	insertNext(m_mapSettings->source());
+	insertNext(boost::join(m_mapSettings->tags(), ",")); // Tags will be joined by ","
+	insertNext(std::to_string(m_mapSettings->beatmapID()));
+	insertNext(std::to_string(m_mapSettings->beatmapSetID()));
+
+	// Difficulty
+	insertNext(std::to_string(m_mapSettings->HPDrainRate()));
+	insertNext(std::to_string(m_mapSettings->circleSize()));
+	insertNext(std::to_string(m_mapSettings->overallDifficulty()));
+	insertNext(std::to_string(m_mapSettings->approachRate()));
+	insertNext(std::to_string(m_mapSettings->sliderMultiplier()));
+	insertNext(std::to_string(m_mapSettings->sliderTickRate()));
+	insertNext(m_mapSettings->background());
+	
+	// Objects
+	output.push_back("[TimingPoints]");
+	for (auto TP : m_timingPointList.sptr()) {
+		output.push_back(TP->str());
+	}
+
+	output.push_back("[HitObjects]");
+	for (auto HO : m_hitObjectList.sptr()) {
+		output.push_back(HO->str());
+	}
+
+	return output;
+}
+
 // Takes a stringstream and fills in the vector, breaks on specified tag
 // Skips all Tags and Comments
 void OsuMap::segmentFile(std::stringstream & ss, std::vector<std::string>& vectorToFill, const std::string & nextTag)

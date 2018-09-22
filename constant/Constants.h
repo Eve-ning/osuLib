@@ -57,13 +57,13 @@ public:
 		switch (sample)
 		{
 		case SAMPLESET::AUTO:
-			return "AUTO";
+			return "Auto";
 		case SAMPLESET::SOFT:
-			return "SOFT";
+			return "Soft";
 		case SAMPLESET::NORMAL:
-			return "NORMAL";
+			return "Normal";
 		case SAMPLESET::DRUM:
-			return "DRUM";
+			return "Drum";
 		default:
 			throw new std::exception(std::string("Failed to convert SAMPLESET to String").c_str());
 			break;
@@ -102,13 +102,13 @@ public:
 		switch (sample)
 		{
 		case MODE::STANDARD:
-			return "STANDARD";
+			return "Standard";
 		case MODE::TAIKO:
-			return "TAIKO";
+			return "Taiko";
 		case MODE::CATCH:
-			return "CATCH";
+			return "Catch";
 		case MODE::MANIA:
-			return "MANIA";
+			return "Mania";
 		default:
 			throw new std::exception(std::string("Failed to convert MODE to String").c_str());
 			break;
